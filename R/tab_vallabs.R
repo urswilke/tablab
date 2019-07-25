@@ -5,21 +5,19 @@
 #' @param val Name of the value column in the resulting dataframe.
 #' @param vallab Name of the value label column in the resulting dataframe.
 #' @return Dataframe consisting of three columns \code{var}, \code{val}  and \code{vallab}, showing all value labels in \code{df}.
+#' @describeIn ccc
 #' @export
 #' @examples
 #' # load spss data
 #' path <- system.file("examples", "iris.sav", package = "haven")
 #' df <- haven::read_sav(path)
 #' tab_vallabs(df)
-tab_vallabs <- function(df, var = "var", val = "val", vallab = "vallab") {
+tab_vallabs <- vall <- function(df, var = "var", val = "val", vallab = "vallab") {
   # argument checks
   assertthat::assert_that(is.data.frame(df))
-  assertthat::assert_that(is.character(var))
-  assertthat::assert_that(is.character(val))
-  assertthat::assert_that(is.character(varlab))
-  assertthat::assert_that(length(var) == 1)
-  assertthat::assert_that(length(val) == 1)
-  assertthat::assert_that(length(varlab) == 1)
+  assertthat::is.string(var)
+  assertthat::is.string(val)
+  assertthat::is.string(vallab)
 
   # check if dataframe has labelled variables:
   if (any(purrr::map_lgl(df, haven::is.labelled))) {

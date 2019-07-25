@@ -11,13 +11,11 @@
 #' df <- haven::read_sav(path)
 #' attr(df$Sepal.Width, "label") <- "width of the sepal"
 #' tab_varlabs(df)
-tab_varlabs <- function(df, var = "var", varlab = "varlab") {
+tab_varlabs <- varl <- function(df, var = "var", varlab = "varlab") {
   # argument checks
   assertthat::assert_that(is.data.frame(df))
-  assertthat::assert_that(is.character(var))
-  assertthat::assert_that(is.character(varlab))
-  assertthat::assert_that(length(var) == 1)
-  assertthat::assert_that(length(varlab) == 1)
+  assertthat::is.string(var)
+  assertthat::is.string(varlab)
 
   # function body
   df %>%
