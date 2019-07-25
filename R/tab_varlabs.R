@@ -14,10 +14,18 @@
 tab_varlabs <- varl <- function(df, var = "var", varlab = "varlab") {
   # argument checks
   assertthat::assert_that(is.data.frame(df))
+  assertthat::not_empty(df)
   assertthat::is.string(var)
   assertthat::is.string(varlab)
 
-  # function body
-  df %>%
-    purrr::map_dfr(~attr(.x, "label", exact = TRUE) %>% tibble::enframe(name = NULL, value = varlab), .id = var)
+  # check if dataframe has labelled variables:
+  if (any(purrr::map_lgl(df, ~assertthat::has_attr(.x, "label")))) {
+    df %>%
+      purrr::map_dfr(~attr(.x, "label", exact = TRUE) %>% tibble::enframe(name = NULL, value = varlab), .id = var)
+  }
+  else {
+    message("No variable in the data.frame has a variable label")
+    tibble::tibble(var = character(), varlab = character())
+  }
+
 }

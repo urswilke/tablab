@@ -14,6 +14,7 @@
 tab_vallabs <- vall <- function(df, var = "var", val = "val", vallab = "vallab") {
   # argument checks
   assertthat::assert_that(is.data.frame(df))
+  assertthat::not_empty(df)
   assertthat::is.string(var)
   assertthat::is.string(val)
   assertthat::is.string(vallab)
