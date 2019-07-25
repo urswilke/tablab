@@ -15,6 +15,7 @@
 tab_labs <- labs <- function(df, var = "var", varlab = "varlab", val = "val", vallab = "vallab"){#, format.spss = NULL, r_type = NULL) {
   # argument checks
   assertthat::assert_that(is.data.frame(df))
+  assertthat::not_empty(df)
   assertthat::is.string(var)
   assertthat::is.string(varlab)
   assertthat::is.string(val)
@@ -31,8 +32,8 @@ tab_labs <- labs <- function(df, var = "var", varlab = "varlab", val = "val", va
   #   select(var, varlab = label, val = labels, vallab, format.spss, r_type = class)
 
   tibble::tibble(var = names(df)) %>%
-    dplyr::full_join(df %>% varl()) %>%
-    dplyr::full_join(df %>% vall())
+    dplyr::full_join(df %>% varl(), by = var) %>%
+    dplyr::full_join(df %>% vall(), by = var)
   # df %>%
   #   purrr::map(attributes) %>%
   #   purrr::map(~{.x$vallab <- .x$labels %>% names; .x}) %>%
