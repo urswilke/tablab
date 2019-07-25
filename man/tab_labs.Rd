@@ -17,10 +17,6 @@ tab_labs(df, var = "var", varlab = "varlab", val = "val",
 \item{val}{Name of the value column in the resulting dataframe.}
 
 \item{vallab}{Name of the value label column in the resulting dataframe.}
-
-\item{format.spss}{Name of the spss format string generated in the resulting dataframe. TODO: not sure what this yields with haven::read_dta}
-
-\item{r_type}{Name of the type the variable class in R  in the resulting dataframe.}
 }
 \value{
 Dataframe consisting of 4 columns \code{var}, \code{varlab}, \code{val}  and \code{vallab}, showing all variable & value labels in \code{df}.

@@ -5,11 +5,8 @@
 #' @param varlab Name of the variable label column in the resulting dataframe.
 #' @param val Name of the value column in the resulting dataframe.
 #' @param vallab Name of the value label column in the resulting dataframe.
-#' @param format.spss Name of the spss format string generated in the resulting dataframe. TODO: not sure what this yields with haven::read_dta
-#' @param r_type Name of the type the variable class in R  in the resulting dataframe.
 #' @return Dataframe consisting of 4 columns \code{var}, \code{varlab}, \code{val}  and \code{vallab}, showing all variable & value labels in \code{df}.
 #' @export
-#' @importFrom rlang .data
 #' @examples
 #' # load spss data
 #' path <- system.file("examples", "iris.sav", package = "haven")
@@ -33,14 +30,16 @@ tab_labs <- labs <- function(df, var = "var", varlab = "varlab", val = "val", va
   #   map_dfr(~tibble(!!!.x), .id = "var") %>%
   #   select(var, varlab = label, val = labels, vallab, format.spss, r_type = class)
 
-
-  df %>%
-    purrr::map(attributes) %>%
-    purrr::map(~{.x$vallab <- .x$labels %>% names; .x}) %>%
-    purrr::map_dfr(~tibble::tibble(!!!.x), .id = var) %>%
-    # the use of .data$ ... is explained here:
-    # https://dplyr.tidyverse.org/articles/programming.html
-    dplyr::select(var, varlab = .data$label, val = labels, vallab)#, .data$format.spss, r_type = .data$class)
+  tibble::tibble(var = names(df)) %>%
+    dplyr::full_join(df %>% varl()) %>%
+    dplyr::full_join(df %>% vall())
+  # df %>%
+  #   purrr::map(attributes) %>%
+  #   purrr::map(~{.x$vallab <- .x$labels %>% names; .x}) %>%
+  #   purrr::map_dfr(~tibble::tibble(!!!.x), .id = var) %>%
+  #   # the use of .data$ ... is explained here:
+  #   # https://dplyr.tidyverse.org/articles/programming.html
+  #   dplyr::select(var, varlab = .data$label, val = labels, vallab)#, .data$format.spss, r_type = .data$class)
 
 
 #   }
