@@ -5,7 +5,6 @@
 #' @param val Name of the value column in the resulting dataframe.
 #' @param vallab Name of the value label column in the resulting dataframe.
 #' @return Dataframe consisting of three columns \code{var}, \code{val}  and \code{vallab}, showing all value labels in \code{df}.
-#' @describeIn ccc
 #' @export
 #' @examples
 #' # load spss data
