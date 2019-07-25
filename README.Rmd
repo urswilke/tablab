@@ -19,37 +19,70 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/dcmisc)](https://cran.r-project.org/package=dcmisc)
 <!-- badges: end -->
 
-The goal of dcmisc is to ...
+The goal of dcmisc is to deal with variable/value label tables
 
 ## Installation
 
-You can install the released version of dcmisc from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("dcmisc")
+```{r}
+# install.packages("K:/Tools/R/self-written packages/dcmisc/", type = "source", repos = NULL)
 ```
+
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r}
 library(dcmisc)
-## basic example code
+
+# Stata-Datensatz laden:
+# df <- haven::read_dta("K:/Projects/DW Hilti Software Strategy/Daten/10_MergeFiles.dta")
+# geht natürlich auch mit SPSS Datensätzen:
+# df <- haven::read_sav("K:/Projects/DW Hilti Software Strategy/Daten/10_MergeFiles.sav")
+# beide Befehle ohne Kommentar schreiben. Das versteht R natürlich nur auf dem  Windows-System...
+# alternativ:
+path <- system.file("examples", "iris.sav", package = "haven")
+df <- haven::read_sav(path)
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+dcmisc besteht bisher aus 2 Funktionen:
 
-```{r cars}
-summary(cars)
+```{r}
+# variable label-Tabelle erstellen:
+tab_varlabs(df)
+
+# value label-Tabelle erstellen:
+tab_vallabs(df)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
-You can also embed plots, for example:
+## weitere infos
 
-```{r pressure, echo = FALSE}
-plot(pressure)
+Hilfe anzeigen lassen über: ?tab_varlabs oder ?tab_vallabs oder durch
+Mit-cursor-auf-eine-der-Funktionen-Gehen und F1 drücken (das geht aber nicht
+im Kommentar) und nur nachdem die library schon geladen wurde
+
+```{r}
+  
+# message, wenn keine value label im data.frame sind
+tab_vallabs(data.frame(NA))
+
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+informative Fehler-Nachricht wenn df kein data.frame ist:
+
+```{r}
+# tab_vallabs(1)
+```
+
+erzeugt den Fehler:
+
+```{r}
+# Error: df is not a data frame
+```
+
+
+wenn Du anfängst eine der Funktionen zu schreiben, kommt dann auch eine kleine
+informative Hilfe-Box für die geforderten Eingangs-Argumente, sobald die
+autocomplete-Vorschäge erscheinen (so wie das Excel auch macht...)
+
