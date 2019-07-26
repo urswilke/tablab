@@ -65,6 +65,9 @@ compare_counts <- function(l, id = "id", var = "var", val = "val", vallab = "val
   # argument checks
   assert_that(length(l) >= 2)
   walk(l, ~ assert_that(is.data.frame(.x)))
+  walk(l, ~ assert_that(id %in% names(.x), msg = "The data.frame doesn't have the specified id."))
+  walk(l, ~ assert_that(ncol(.x) >= 2, msg = "The data.frame has less than two columns."))
+  walk(l, ~ assert_that(length(.x[[id]]) == length(unique(.x[[id]])), msg = "The key in the data.frame is not unique."))
   # assert_that(is.data.frame(df1))
   # assert_that(is.data.frame(df2))
   walk(l, ~ assert_that(not_empty(.x)))
@@ -85,7 +88,8 @@ compare_counts <- function(l, id = "id", var = "var", val = "val", vallab = "val
   longed_list <-
     l %>%
     set_names(df_colnames) %>%
-    map(~longen(.x) %>% full_join(vall(.x), by = c(var, val))) %>%
+    map(~longen(.x, id = {{ id }}, var = {{ var }}, val = {{ val }}) %>%
+          full_join(vall(.x, var = {{var}}, val = {{val}}, vallab = {{vallab}}), by = c(var, val))) %>%
     imap(~mutate(.x, !!.y := .y))
   longed_list <-
     map2(longed_list, suffixes, ~rename(.x, !!paste0(val, .y) := val))

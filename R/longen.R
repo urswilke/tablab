@@ -27,6 +27,6 @@ longen <- function(df, id = "id", var = "var", val = "val") {
   df %>%
     # remove attributes to prevent warning when gathering
     mutate_all(as.vector) %>%
-    gather(var, val, -{{ id }}) %>%
-    mutate(val = as.numeric(val))
+    gather({{ var }}, {{ val }}, -{{ id }}) %>%
+    mutate({{val}} := as.numeric({{val}}))
 }

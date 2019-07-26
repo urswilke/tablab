@@ -7,6 +7,9 @@
 #' @param vallab Name of the value label column in the resulting dataframe.
 #' @return Dataframe consisting of 4 columns \code{var}, \code{varlab}, \code{val}  and \code{vallab}, showing all variable & value labels in \code{df}.
 #' @export
+#' @importFrom assertthat assert_that not_empty is.string
+#' @importFrom dplyr full_join
+#' @importFrom tibble tibble
 #' @examples
 #' # load spss data
 #' path <- system.file("examples", "iris.sav", package = "haven")
@@ -14,12 +17,12 @@
 #' tab_labs(df)
 tab_labs <- labs <- function(df, var = "var", varlab = "varlab", val = "val", vallab = "vallab"){#, format.spss = NULL, r_type = NULL) {
   # argument checks
-  assertthat::assert_that(is.data.frame(df))
-  assertthat::not_empty(df)
-  assertthat::is.string(var)
-  assertthat::is.string(varlab)
-  assertthat::is.string(val)
-  assertthat::is.string(vallab)
+  assert_that(is.data.frame(df))
+  not_empty(df)
+  is.string(var)
+  is.string(varlab)
+  is.string(val)
+  is.string(vallab)
 
   # # check if dataframe has labelled variables:
   # if (any(purrr::map_lgl(df, haven::is.labelled))) {
@@ -31,9 +34,9 @@ tab_labs <- labs <- function(df, var = "var", varlab = "varlab", val = "val", va
   #   map_dfr(~tibble(!!!.x), .id = "var") %>%
   #   select(var, varlab = label, val = labels, vallab, format.spss, r_type = class)
 
-  tibble::tibble(var = names(df)) %>%
-    dplyr::full_join(df %>% varl(), by = var) %>%
-    dplyr::full_join(df %>% vall(), by = var)
+  tibble({{var}} := names(df)) %>%
+    full_join(df %>% varl({{var}}, {{varlab}}), by = var) %>%
+    full_join(df %>% vall({{var}}, {{val}}, {{vallab}}), by = var)
   # df %>%
   #   purrr::map(attributes) %>%
   #   purrr::map(~{.x$vallab <- .x$labels %>% names; .x}) %>%

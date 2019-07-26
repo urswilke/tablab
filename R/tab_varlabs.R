@@ -5,6 +5,9 @@
 #' @param varlab Name of the variable label column in the resulting dataframe.
 #' @return Dataframe consisting of two columns \code{var} and \code{varlab}, showing all variable labels in \code{df}.
 #' @export
+#' @importFrom purrr map_lgl map_dfr
+#' @importFrom tibble tibble enframe
+#' @importFrom assertthat assert_that not_empty is.string has_attr
 #' @examples
 #' # load spss data
 #' path <- system.file("examples", "iris.sav", package = "haven")
@@ -13,19 +16,19 @@
 #' tab_varlabs(df)
 tab_varlabs <- varl <- function(df, var = "var", varlab = "varlab") {
   # argument checks
-  assertthat::assert_that(is.data.frame(df))
-  assertthat::not_empty(df)
-  assertthat::is.string(var)
-  assertthat::is.string(varlab)
+  assert_that(is.data.frame(df))
+  not_empty(df)
+  is.string(var)
+  is.string(varlab)
 
   # check if dataframe has labelled variables:
-  if (any(purrr::map_lgl(df, ~assertthat::has_attr(.x, "label")))) {
+  if (any(map_lgl(df, ~has_attr(.x, "label")))) {
     df %>%
-      purrr::map_dfr(~attr(.x, "label", exact = TRUE) %>% tibble::enframe(name = NULL, value = varlab), .id = var)
+      map_dfr(~attr(.x, "label", exact = TRUE) %>% enframe(name = NULL, value = varlab), .id = var)
   }
   else {
     message("No variable in the data.frame has a variable label")
-    tibble::tibble(var = character(), varlab = character())
+    tibble(var = character(), varlab = character())
   }
 
 }

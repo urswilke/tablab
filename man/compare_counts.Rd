@@ -30,12 +30,14 @@ path <- system.file("examples", "iris.sav", package = "haven")
 df1 <- haven::read_sav(path) \%>\%
   # add id column
   tibble::rownames_to_column("id")
+
 # create a modified copy:
 df2 <- df1
 df2[1, "Species"] <- 2
 # modify the value label of "setosa"
 df2$Species <- haven::labelled(df2$Species,
                                labels = c(setosa_mod = 1, versicolor = 2, virginica = 3))
+
 # compare the dataframes counts:
 compare_counts(list(df1, df2))
 # compare the dataframes and only show the counts where values have changed:
@@ -49,10 +51,12 @@ df3[2, "Species"] <- 3
 # modify the value label of "versicolor"
 df2$Species <- haven::labelled(df2$Species,
                                labels = c(setosa = 1, versicolor_mod = 2, virginica = 3))
+
 # compare the dataframes counts:
 l <- list(df1, df2, df3)
 cmp <- compare_counts(l)
 cmp
+
 # compare the dataframes and only show the counts where values have changed:
 # (HACK to calculate logical where values differ):
 library(dplyr)
@@ -63,7 +67,7 @@ vals_differ <-
   {rowSums(.) != length(l)}
 cmp \%>\% filter(vals_differ)
 
-# show where either values or value labels differ:
+# To show where either values or value labels differ:
 vallabs_differ <-
   cmp \%>\%
   select(matches("vallab\\\\d+$")) \%>\%
