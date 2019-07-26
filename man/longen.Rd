@@ -4,19 +4,15 @@
 \alias{longen}
 \title{make long format of dataframe}
 \usage{
-longen(df, id = "id", var = "var", val = "val")
+longen(df, id = "id")
 }
 \arguments{
 \item{df}{Dataframe with a key variable (\code{id}).}
 
 \item{id}{name of the key variable in the dataframe.}
-
-\item{var}{Name of the variable column in the resulting dataframe.}
-
-\item{val}{Name of the value column in the resulting dataframe.}
 }
 \value{
-Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val}, containing the dataframe in long format (based on dplyr::gather).
+Dataframe consisting of 3 columns id, var & val, containing the dataframe in long format (based on dplyr::gather).
 }
 \description{
 make long format of dataframe
