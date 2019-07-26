@@ -4,13 +4,17 @@
 \alias{tab_varlabs}
 \title{Create a variable label dataframe}
 \usage{
-tab_varlabs(df)
+tab_varlabs(df, var = "var", varlab = "varlab")
 }
 \arguments{
 \item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta functions  of the package haven.}
+
+\item{var}{Name of the variable column in the resulting dataframe.}
+
+\item{varlab}{Name of the variable label column in the resulting dataframe.}
 }
 \value{
-Dataframe consisting of two columns var and varlab, showing all variable labels in \code{df}.
+Dataframe consisting of two columns \code{var} and \code{varlab}, showing all variable labels in \code{df}.
 }
 \description{
 Create a variable label dataframe
