@@ -22,4 +22,5 @@ Imports:
     haven,
     dplyr,
     assertthat,
-    rlang
+    rlang,
+    tidyr
