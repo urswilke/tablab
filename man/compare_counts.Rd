@@ -4,16 +4,12 @@
 \alias{compare_counts}
 \title{Compare counts and labels of a list dataframes}
 \usage{
-compare_counts(l, id = "id", var = "var", val = "val")
+compare_counts(l, id = "id")
 }
 \arguments{
 \item{l}{List of dataframes.}
 
 \item{id}{name of the key variable in the dataframes.}
-
-\item{var}{Name of the variable column in the resulting dataframe.}
-
-\item{val}{Name of the value column in the resulting dataframe.}
 }
 \value{
 Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.

@@ -2,9 +2,6 @@
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
-#' @param var Name of the variable column in the resulting dataframe.
-#' @param val Name of the value column in the resulting dataframe.
-#' @param vallab Name of the value label column in the resulting dataframe.
 #' @return Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.
 #' @importFrom dplyr full_join count group_by_at tally rename ungroup select matches mutate_at arrange_at group_by row_number
 #' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl
@@ -52,7 +49,7 @@
 #' # To show where either values or value labels differ:
 #' cmp %>% dplyr::filter(vals_differ | vallabs_differ)
 
-cmp_cts_n_labs <- function(l, id = "id", var = "var", val = "val", vallab = "vallab") {
+cmp_cts_n_labs <- function(l, id = "id"){#, var = "var", val = "val", vallab = "vallab") {
   # argument checks
   assert_that(length(l) >= 2)
   walk(l, ~ assert_that(is.data.frame(.x)))
@@ -65,14 +62,12 @@ cmp_cts_n_labs <- function(l, id = "id", var = "var", val = "val", vallab = "val
   # not_empty(df1)
   # not_empty(df2)
   is.string(id)
-  is.string(var)
-  is.string(val)
 
   suffixes <- 1:length(l) %>% as.character()
   df_cols <- paste0("df", suffixes)
-  val_cols <- paste0(val, suffixes)
+  val_cols <- paste0("val", suffixes)
   varlab_cols <- paste0("varlab", suffixes)
-  vallab_cols <- paste0(vallab, suffixes)
+  vallab_cols <- paste0("vallab", suffixes)
 
   l_vallabs <-
     map2(l %>% map(tab_vallabs),
@@ -83,7 +78,7 @@ cmp_cts_n_labs <- function(l, id = "id", var = "var", val = "val", vallab = "val
          suffixes,
          ~{names(.x)[2] <- paste0(names(.x)[2], .y); .x})
 
-  df_cnt <- compare_counts(l)
+  df_cnt <- compare_counts(l, {{id}})
   df_cmp <-
     reduce(l_vallabs, ~full_join(.x, .y, by = names(.y)[-3]), .init = df_cnt)
   df_cmp <-
@@ -103,8 +98,8 @@ cmp_cts_n_labs <- function(l, id = "id", var = "var", val = "val", vallab = "val
       varlabs_differ = rowSums(same(df_varlabs)) != length(l),
       vallabs_differ = rowSums(same(df_vallabs)) != length(l)
       ) %>%
-    mutate(var = factor(var, levels = unique(c(l[[1]]$var, var)))) %>%
-    group_by(var) %>%
+    mutate(var = factor(.data$var, levels = unique(c(names(l[[1]]), .data$var)))) %>%
+    group_by(.data$var) %>%
     # set the logical to false for each entry that's not the first of the grouping:
     mutate(varlabs_differ = ifelse(row_number() == 1, .data$varlabs_differ, FALSE)) %>%
     # the ifelse function puts NAs first (in order to make the variable labels

@@ -4,16 +4,10 @@
 \alias{tab_vallabs}
 \title{Create a value label dataframe}
 \usage{
-tab_vallabs(df, var = "var", val = "val", vallab = "vallab")
+tab_vallabs(df)
 }
 \arguments{
 \item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta functions  of the package haven.}
-
-\item{var}{Name of the variable column in the resulting dataframe.}
-
-\item{val}{Name of the value column in the resulting dataframe.}
-
-\item{vallab}{Name of the value label column in the resulting dataframe.}
 }
 \value{
 Dataframe consisting of three columns \code{var}, \code{val}  and \code{vallab}, showing all value labels in \code{df}.

@@ -2,8 +2,6 @@
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
-#' @param var Name of the variable column in the resulting dataframe.
-#' @param val Name of the value column in the resulting dataframe.
 #' @return Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.
 #' @importFrom dplyr full_join count group_by_at tally rename ungroup select matches mutate_at
 #' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl
@@ -38,7 +36,7 @@
 #' cmp %>% dplyr::filter(vals_differ)
 #'
 
-compare_counts <- function(l, id = "id", var = "var", val = "val") {
+compare_counts <- function(l, id = "id") {
   # argument checks
   assert_that(length(l) >= 2)
   walk(l, ~ assert_that(is.data.frame(.x)))
@@ -49,27 +47,29 @@ compare_counts <- function(l, id = "id", var = "var", val = "val") {
   walk(l, ~ assert_that(not_empty(.x)))
 
   is.string(id)
-  is.string(var)
-  is.string(val)
 
   suffixes <- 1:length(l) %>% as.character()
   df_colnames <- paste0("df", suffixes)
+  val_cols <- paste0("val", suffixes)
+
   result_cols <-
     c(df_colnames,
-      var,
-      paste0(val, suffixes))
+      "var",
+      paste0("val", suffixes))
 
   longed_list <-
     l %>%
     set_names(df_colnames) %>%
-    map(~longen(.x, id = {{ id }}, var = {{ var }}, val = {{ val }})) %>%
-    imap(~mutate(.x, !!.y := TRUE))
+    imap(~longen(.x, id = {{ id }}) %>% mutate(!!.y := TRUE))
+    # imap(~mutate(.x, !!ensym(.y) := TRUE))
   longed_list <-
-    map2(longed_list, suffixes, ~rename(.x, !!paste0(val, .y) := val))
+    map2(longed_list, val_cols, ~rename(.x, !!.y := "val"))
 
   df_cmp <-
     longed_list %>%
-    reduce(full_join, by = c(id, var)) %>%
+    reduce(full_join, by = c(id, "var"))
+  df_cmp <-
+    df_cmp %>%
     # mutate(var = factor(var, levels = unique(var))) %>%
     group_by_at(result_cols) %>%
     tally() %>%
