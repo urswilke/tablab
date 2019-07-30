@@ -1,13 +1,12 @@
-#' Compare counts of two dataframes
+#' Compare counts and labels of a list dataframes
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
 #' @param var Name of the variable column in the resulting dataframe.
 #' @param val Name of the value column in the resulting dataframe.
-#' @param vallab Name of the value label column in the resulting dataframe.
-#' @return Dataframe consisting of 7 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format.
-#' @importFrom dplyr full_join count group_by_at tally rename ungroup
-#' @importFrom purrr map imap reduce walk set_names map2
+#' @return Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.
+#' @importFrom dplyr full_join count group_by_at tally rename ungroup select matches mutate_at
+#' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl
 #' @importFrom assertthat assert_that not_empty is.string
 #' @export
 #' @examples
@@ -20,23 +19,15 @@
 #' # create a modified copy:
 #' df2 <- df1
 #' df2[1, "Species"] <- 2
-#' # modify the value label of "setosa"
-#' df2$Species <- haven::labelled(df2$Species,
-#'                                labels = c(setosa_mod = 1, versicolor = 2, virginica = 3))
 #'
 #' # compare the dataframes counts:
 #' compare_counts(list(df1, df2))
 #' # compare the dataframes and only show the counts where values have changed:
 #' compare_counts(list(df1, df2)) %>% dplyr::filter(val1 != val2)
-#' # compare the dataframes and only show the counts where value labels have changed:
-#' compare_counts(list(df1, df2)) %>% dplyr::filter(vallab1 != vallab2)
 #'
 #' # Create another modified copy
 #' df3 <- df2
 #' df3[2, "Species"] <- 3
-#' # modify the value label of "versicolor"
-#' df2$Species <- haven::labelled(df2$Species,
-#'                                labels = c(setosa = 1, versicolor_mod = 2, virginica = 3))
 #'
 #' # compare the dataframes counts:
 #' l <- list(df1, df2, df3)
@@ -44,35 +35,19 @@
 #' cmp
 #'
 #' # compare the dataframes and only show the counts where values have changed:
-#' # (HACK to calculate logical where values differ):
-#' library(dplyr)
-#' vals_differ <-
-#'   cmp %>%
-#'   select(matches("val\\d+$")) %>%
-#'   {. == cmp$val1} %>%
-#'   {rowSums(.) != length(l)}
-#' cmp %>% filter(vals_differ)
+#' cmp %>% dplyr::filter(vals_differ)
 #'
-#' # To show where either values or value labels differ:
-#' vallabs_differ <-
-#'   cmp %>%
-#'   select(matches("vallab\\d+$")) %>%
-#'   {. == cmp$val1} %>%
-#'   {rowSums(.) != length(l)}
-#' cmp %>% filter(vals_differ | vallabs_differ)
 
-compare_counts <- function(l, id = "id", var = "var", val = "val", vallab = "vallab") {
+compare_counts <- function(l, id = "id", var = "var", val = "val") {
   # argument checks
   assert_that(length(l) >= 2)
   walk(l, ~ assert_that(is.data.frame(.x)))
-  walk(l, ~ assert_that(id %in% names(.x), msg = "The data.frame doesn't have the specified id."))
-  walk(l, ~ assert_that(ncol(.x) >= 2, msg = "The data.frame has less than two columns."))
+  walk(l, ~ assert_that(id %in% names(.x), msg = "At least one data.frame doesn't have the specified id."))
+  walk(l, ~ assert_that(ncol(.x) >= 2, msg = "At least one data.frame has less than two columns."))
   walk(l, ~ assert_that(length(.x[[id]]) == length(unique(.x[[id]])), msg = "The key in the data.frame is not unique."))
-  # assert_that(is.data.frame(df1))
-  # assert_that(is.data.frame(df2))
+
   walk(l, ~ assert_that(not_empty(.x)))
-  # not_empty(df1)
-  # not_empty(df2)
+
   is.string(id)
   is.string(var)
   is.string(val)
@@ -82,22 +57,31 @@ compare_counts <- function(l, id = "id", var = "var", val = "val", vallab = "val
   result_cols <-
     c(df_colnames,
       var,
-      paste0(val, suffixes),
-      paste0(vallab, suffixes))
+      paste0(val, suffixes))
 
   longed_list <-
     l %>%
     set_names(df_colnames) %>%
-    map(~longen(.x, id = {{ id }}, var = {{ var }}, val = {{ val }}) %>%
-          full_join(vall(.x, var = {{var}}, val = {{val}}, vallab = {{vallab}}), by = c(var, val))) %>%
-    imap(~mutate(.x, !!.y := .y))
+    map(~longen(.x, id = {{ id }}, var = {{ var }}, val = {{ val }})) %>%
+    imap(~mutate(.x, !!.y := TRUE))
   longed_list <-
     map2(longed_list, suffixes, ~rename(.x, !!paste0(val, .y) := val))
 
-  map2(longed_list, suffixes, ~rename(.x, !!paste0(vallab, .y) := vallab)) %>%
+  df_cmp <-
+    longed_list %>%
     reduce(full_join, by = c(id, var)) %>%
-    mutate(var = factor(var, levels = unique(var))) %>%
+    # mutate(var = factor(var, levels = unique(var))) %>%
     group_by_at(result_cols) %>%
     tally() %>%
     ungroup()
-}
+
+  # create the columns vals_differ & vallabs_differ:
+  df_vals <- select(df_cmp, matches("val\\d+$"))
+  same <- function(df) {
+    df %>% map_dfr(~map2_lgl(.x, df[[1]], ~all.equal(.x, .y) %>% isTRUE))
+  }
+  df_cmp %>%
+    mutate(
+      vals_differ = rowSums(same(df_vals)) != length(l)
+      )
+  }
