@@ -21,7 +21,8 @@ longen <- function(df, id = "id") {
   not_empty(df)
   is.string(id)
 
-  # val <- "val"
+  # select the id variable and all numeric variables:
+  df <- df %>% select({{ id }}, which(sapply(df, class) != "character"))
   df %>%
     # remove attributes to prevent warning when gathering
     mutate_all(as.vector) %>%
