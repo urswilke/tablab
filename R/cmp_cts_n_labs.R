@@ -100,11 +100,11 @@ cmp_cts_n_labs <- function(l, id = "id"){#, var = "var", val = "val", vallab = "
       ) %>%
     mutate(var = factor(.data$var, levels = unique(c(names(l[[1]]), .data$var)))) %>%
     group_by(.data$var) %>%
-    # set the logical to false for each entry that's not the first of the grouping:
-    mutate(varlabs_differ = ifelse(row_number() == 1, .data$varlabs_differ, FALSE)) %>%
     # the ifelse function puts NAs first (in order to make the variable labels
     # appear first):
     arrange_at(val_cols, ~ifelse(is.na(.), is.na(.), .), .by_group = TRUE) %>%
+    # set the logical to false for each entry that's not the first of the grouping:
+    mutate(varlabs_differ = ifelse(row_number() == 1, .data$varlabs_differ, FALSE)) %>%
     ungroup()
   }
 
