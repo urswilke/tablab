@@ -12,12 +12,18 @@
 #' path <- system.file("examples", "iris.sav", package = "haven")
 #' df <- haven::read_sav(path)
 #' tab_labs(df)
-tab_labs <- labs <- function(df){#, format.spss = NULL, r_type = NULL) {
+tab_labs <- labs <- function(df, rm_non_labelled = FALSE){
   # argument checks
   assert_that(is.data.frame(df))
   not_empty(df)
 
-  tibble(var = names(df)) %>%
+  result <-
+    tibble(var = names(df)) %>%
     full_join(df %>% varl(), by = "var") %>%
     full_join(df %>% vall(), by = "var")
+  if (rm_non_labelled == TRUE){
+    result <-
+      result %>% filter(!(is.na(varlab) & is.na(val)))
+  }
+  result
 }
