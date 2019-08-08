@@ -57,6 +57,6 @@ cmp
 # compare the dataframes and only show the counts where values have changed:
 cmp \%>\% dplyr::filter(val_diff)
 
-# To show where either values or value labels differ:
+# Show where either values or value labels differ:
 cmp \%>\% dplyr::filter(val_diff | vallab_diff)
 }

@@ -4,12 +4,14 @@
 \alias{compare_counts}
 \title{Compare counts and labels of a list dataframes}
 \usage{
-compare_counts(l, id = "id")
+compare_counts(l, id = "id", include_ids = FALSE)
 }
 \arguments{
 \item{l}{List of dataframes.}
 
 \item{id}{name of the key variable in the dataframes.}
+
+\item{include_ids}{Logical denoting whether a list column of the ids should be included in the results. The ids in the list show at which values of \code{id} the variable \code{var} contains the value \code{val1}.}
 }
 \value{
 Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.
@@ -43,6 +45,6 @@ cmp <- compare_counts(l)
 cmp
 
 # compare the dataframes and only show the counts where values have changed:
-cmp \%>\% dplyr::filter(vals_differ)
+cmp \%>\% dplyr::filter(!(val1 == val2 & val2 == val3))
 
 }

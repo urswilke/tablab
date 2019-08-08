@@ -2,6 +2,7 @@
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
+#' @param include_ids Logical denoting whether a list column of the ids should be included in the results. The ids in the list show at which values of \code{id} the variable \code{var} contains the value \code{val1}.
 #' @return Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.
 #' @importFrom dplyr full_join count group_by_at tally rename ungroup select matches mutate_at
 #' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl
@@ -33,7 +34,7 @@
 #' cmp
 #'
 #' # compare the dataframes and only show the counts where values have changed:
-#' cmp %>% dplyr::filter(vals_differ)
+#' cmp %>% dplyr::filter(!(val1 == val2 & val2 == val3))
 #'
 
 compare_counts <- function(l, id = "id", include_ids = FALSE) {
@@ -48,11 +49,11 @@ compare_counts <- function(l, id = "id", include_ids = FALSE) {
 
   is.string(id)
 
-  l <- unname(l)
 
   df_cnt <-
     list_longed_ex(l, id) %>%
-    imap(~rename_at(.x, vars(c("val")), ~paste0(., !!.y))) %>%
+    # imap(~rename_at(.x, vars(c("val")), ~paste0(., !!.y))) %>%
+    add_list_suffix(c("val")) %>%
     reduce(full_join, by = c(id, "var")) %>%
     mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
     group_by_at(vars("var", matches("\\d+$"))) %>%
