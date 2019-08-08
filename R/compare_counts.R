@@ -36,7 +36,7 @@
 #' cmp %>% dplyr::filter(vals_differ)
 #'
 
-compare_counts <- function(l, id = "id") {
+compare_counts <- function(l, id = "id", include_ids = FALSE) {
   # argument checks
   assert_that(length(l) >= 2)
   walk(l, ~ assert_that(is.data.frame(.x)))
@@ -48,40 +48,18 @@ compare_counts <- function(l, id = "id") {
 
   is.string(id)
 
-  suffixes <- 1:length(l) %>% as.character()
-  df_colnames <- paste0("df", suffixes)
-  val_cols <- paste0("val", suffixes)
+  l <- unname(l)
 
-  result_cols <-
-    c(df_colnames,
-      "var",
-      paste0("val", suffixes))
-
-  longed_list <-
-    l %>%
-    set_names(df_colnames) %>%
-    imap(~longen(.x, id = {{ id }}) %>% mutate(!!.y := TRUE))
-    # imap(~mutate(.x, !!ensym(.y) := TRUE))
-  longed_list <-
-    map2(longed_list, val_cols, ~rename(.x, !!.y := "val"))
-
-  df_cmp <-
-    longed_list %>%
-    reduce(full_join, by = c(id, "var"))
-  df_cmp <-
-    df_cmp %>%
-    # mutate(var = factor(var, levels = unique(var))) %>%
-    group_by_at(result_cols) %>%
-    tally() %>%
+  df_cnt <-
+    l %>% imap(~longen(.x, id = {{ id }}) %>% mutate(!!paste0("ex", .y) := TRUE)) %>%
+    imap(~rename_at(.x, vars(c("val")), ~paste0(., !!.y))) %>%
+    reduce(full_join, by = c(id, "var")) %>%
+    mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
+    group_by_at(vars("var", matches("\\d+$"))) %>%
+    summarise(n = n(), ids = list(!!ensym(id))) %>%
     ungroup()
-
-  # create the columns vals_differ & vallabs_differ:
-  df_vals <- select(df_cmp, matches("val\\d+$"))
-  same <- function(df) {
-    df %>% map_dfr(~map2_lgl(.x, df[[1]], ~all.equal(.x, .y) %>% isTRUE))
+  if (include_ids == FALSE){
+    df_cnt <- df_cnt %>% select(-.data$ids)
   }
-  df_cmp %>%
-    mutate(
-      vals_differ = rowSums(same(df_vals)) != length(l)
-      )
+  df_cnt
   }
