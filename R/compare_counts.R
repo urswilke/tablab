@@ -51,7 +51,7 @@ compare_counts <- function(l, id = "id", include_ids = FALSE) {
   l <- unname(l)
 
   df_cnt <-
-    l %>% imap(~longen(.x, id = {{ id }}) %>% mutate(!!paste0("ex", .y) := TRUE)) %>%
+    list_longed_ex(l, id) %>%
     imap(~rename_at(.x, vars(c("val")), ~paste0(., !!.y))) %>%
     reduce(full_join, by = c(id, "var")) %>%
     mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
@@ -62,4 +62,10 @@ compare_counts <- function(l, id = "id", include_ids = FALSE) {
     df_cnt <- df_cnt %>% select(-.data$ids)
   }
   df_cnt
-  }
+
+}
+
+
+list_longed_ex <- function(l, id) {
+  l %>% imap(~longen(.x, id = {{ id }}) %>% mutate(!!paste0("ex", .y) := TRUE))
+}
