@@ -24,4 +24,4 @@ Imports:
     assertthat,
     rlang,
     tidyr,
-    readr
+    stringr
