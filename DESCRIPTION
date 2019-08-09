@@ -1,5 +1,5 @@
 Package: dcmisc
-Title: Miscelleneous function for labelled data
+Title: Miscellaneous functions for labelled data
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Urs",
