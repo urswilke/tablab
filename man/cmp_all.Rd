@@ -4,7 +4,8 @@
 \alias{cmp_all}
 \title{Compare counts and labels of a list dataframes}
 \usage{
-cmp_all(l, id = "id", include_ids = FALSE)
+cmp_all(l, id = "id", include_ids = FALSE, col_groups = c("index",
+  "spec"))
 }
 \arguments{
 \item{l}{List of dataframes.}
@@ -12,6 +13,8 @@ cmp_all(l, id = "id", include_ids = FALSE)
 \item{id}{name of the key variable in the dataframes.}
 
 \item{include_ids}{Logical denoting whether a list column of the ids should be included in the results. The ids in the list show at which values of \code{id} the variable \code{var} contains the value \code{val1}.}
+
+\item{col_groups}{String specifying the order of columns in the resulting dataframe. "index" groups columns by indices. "spec" groups columns by the specification types   c("ex", "varlab", "val", "vallab")}
 }
 \value{
 Dataframe consisting of columns \code{var}, \code{val1}, \code{val2}, ...,  \code{vallab1}, \code{vallab2}, ...,  \code{df1}, \code{df2}, ..., and \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the dataframes in long format. The indices denote the dataframes in \code{l}. \code{vals_diff} & \code{vallabs_diff} are logical columns indicating if all values, variable / value labels are equal.
