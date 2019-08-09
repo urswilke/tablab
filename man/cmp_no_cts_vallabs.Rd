@@ -2,7 +2,7 @@
 % Please edit documentation in R/cmp_no_cts_vallabs.R
 \name{cmp_no_cts_vallabs}
 \alias{cmp_no_cts_vallabs}
-\title{Compare counts and labels of a list dataframes}
+\title{Compare value labels not occuring in any of a list of dataframes}
 \usage{
 cmp_no_cts_vallabs(l, id = "id")
 }
@@ -15,7 +15,7 @@ cmp_no_cts_vallabs(l, id = "id")
 Dataframe consisting of columns \code{var}, \code{val1}, \code{val2}, ...,  \code{vallab1}, \code{vallab2}, ..., containing a comparison of the labelled variable values in the dataframes that don't occur in the data.
 }
 \description{
-Compare counts and labels of a list dataframes
+Compare value labels not occuring in any of a list of dataframes
 }
 \examples{
 # load spss data
@@ -26,11 +26,16 @@ df1 <- haven::read_sav(path) \%>\%
 
 # create a modified copy:
 df2 <- df1
-df2[1, "Species"] <- 2
-# modify the value label of "setosa"
-df2$Species <- haven::labelled(df2$Species,
-                               labels = c(setosa_mod = 1, versicolor = 2, virginica = 3),
-                               label = "Species")
+# Add some value labels to Sepal.Length in both dataframes:
+df1$Sepal.Length <- haven::labelled(df1$Sepal.Length,
+                                    labels=c(`Sepal.Length = 1` = 1,
+                                             `Sepal.Length = 6` = 6,
+                                             `Sepal.Length = 9` = 9))
+# Add some value labels to Sepal.Length
+df2$Sepal.Length <- haven::labelled(df1$Sepal.Length,
+                                    labels=c(`Sepal.Length = 1` = 1,
+                                             `Sepal.Length = 3` = 3,
+                                             `Sepal.Length = 5` = 5))
 
 # compare the dataframes counts:
 cmp_no_cts_vallabs(list(df1, df2))
