@@ -1,6 +1,6 @@
 ---
 output: 
-    github_document: default
+    # github_document: default
     html_document: default
 ---
 
@@ -9,10 +9,13 @@ output:
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  # cache = TRUE,
+  message = FALSE,
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+library(knitr)
 ```
 # dcmisc
 
@@ -21,36 +24,143 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/dcmisc)](https://cran.r-project.org/package=dcmisc)
 <!-- badges: end -->
 
-The goal of dcmisc is to deal with variable/value label tables
+The goal of dcmisc is to tabulate and compare variables' values and their labels of labelled dataframes.
 
 ## Installation
 
-```{r}
+Install the package via:
+
+```{r, install}
 # install.packages("K:/Tools/R/self-written packages/dcmisc/", type = "source", repos = NULL)
 ```
 
+## Introduction
+
+The package dcmisc consists of 2 families of functions:
+
+* `tab_*` tabulating count and label information of dataframes (denoted `df`), and
+* `cmp_*` comparing this data for all dataframes in a list `l`.
+
+The following attributes are tabulated / compared:
+
+* `var` The name of the variables in the dataframe(s).
+* `varlab` The variable label of the variable in the dataframe. 
+* `val` The value of the variable in the dataframe. 
+* `vallab` The value label of the variable in the dataframe. 
+
+Comparisons further include `ex`, denoting whether the value is existent in the dataframe.
 
 ## Example
 
 
-```{r}
+```{r data}
 library(dcmisc)
+library(tidyverse)
+
 
 path <- system.file("examples", "iris.sav", package = "haven")
 df <- haven::read_sav(path)
+df <- tibble(id = 1:10,
+       sex = haven::labelled(c(2, 1, 2, 1, 1, 2, 2, 1, 2, 1),
+                             label = "sex",
+                             labels = c(MALES = 1, FEMALES = 2)),
+       age = c(24, 23, 23, 41, 23, 39, 30, 18, 31, 48),
+       marital = haven::labelled(c(1, 7, 2, 6, 4, 5, 3, 8, 4, 2),
+                                 label = "marital status",
+                                 labels = c("single" = 1,
+                                            "steady relationship" = 2,
+                                            "living with partner" = 3,
+                                            "married first time" = 4,
+                                            "remarried" = 5,
+                                            "separated" = 6,
+                                            "divorced" = 7,
+                                            "widowed" = 8))
+       )
+df
+```
+
+
+Create modified copy:
+
+```{r, mod1}
+df2 <- 
+  df %>% 
+  # Remove rows 9 & 10:
+  slice(-c(9:10)) %>% 
+  # Create Variable new_var equal to 1:
+  mutate(new_var = 1)
+# Change variable label:
+attr(df2$new_var, "label")  <-  "new something"
+```
+
+Tabulate the variable labels for the dataframes in the list:
+
+```{r, tab_varl}
+list(df, df2) %>% map(tab_varlabs)
+```
+
+
+Change value:
+
+```{r, mod2}
+df2[1:2,"sex"] <- 3
+```
+
+Tabulate the count comparison:
+
+```{r, tab_cts}
+list(df, df2) %>% cmp_cts() %>% DT::datatable(class = "compact",                   
+                                  options = list(scrollX = TRUE))
 
 ```
 
-dcmisc besteht bisher aus 2 Funktionen:
+More label and value modifications:
 
-```{r}
-# variable label-Tabelle erstellen:
-tab_varlabs(df)
 
-# value label-Tabelle erstellen:
-tab_vallabs(df)
+```{r, more_mod}
+attr(df2$sex, "labels")  <-  c(male = 1, female = 2, `Third Gender` = 3)
+# Remove variable label:
+attr(df2$sex, "label")  <-  NULL
+# Change variable "marital" to 9 in rows 3 & 4:
+df2[3:4,"marital"] <- 9
+# Add another value label for the code 9:
+attr(df2$marital, "labels") <- c(attr(df2$marital, "labels"), c("other" = 9))
+
+df2
 ```
 
+Tabulate the variable labels for the dataframes in the list:
+
+```{r, tab_vall}
+list(df, df2) %>% map(tab_vallabs)
+```
+
+
+
+Tabulate the comparison of count and label data and only show rows with differences:
+
+```{r, anydiff}
+list(df, df2) %>% 
+  cmp_all() %>% 
+  filter(any_diff) %>% 
+  DT::datatable(class = "compact",                   
+                options = list(scrollX = TRUE))
+```
+
+Show all cases (including a column with the ids), where the values in the first dataframe are equal to 1 and 2:
+
+```{r, val1_1or2}
+list(df, df2) %>% 
+  cmp_all(include_ids = TRUE, 
+          spec_diffs = c("val"), 
+          col_groups = "spec") %>% 
+  filter(val1 %in% 1:2) %>% 
+  DT::datatable(class = "compact",                   
+                options = list(scrollX = TRUE))
+```
+
+
+# Alte Sachen
 
 ## weitere infos
 

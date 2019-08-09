@@ -68,6 +68,8 @@ cmp_all(list(df1, df2))
 cmp_all(list(df1, df2)) \%>\% dplyr::filter(val1 != val2)
 # This results in the same rows:
 cmp_all(list(df1, df2), spec_diffs = "val") \%>\% dplyr::filter(any_diff)
+# Or alternatively:
+cmp_all(list(df1, df2)) \%>\% dplyr::filter(val_diff)
 # compare the dataframes and only show the counts where value labels have changed:
 cmp_all(list(df1, df2)) \%>\% dplyr::filter(vallab1 != vallab2)
 
