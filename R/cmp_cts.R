@@ -58,7 +58,8 @@ cmp_cts <- function(l, id = "id", include_ids = FALSE) {
     mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
     group_by_at(vars("var", matches("\\d+$"))) %>%
     summarise(n = n(), ids = list(!!ensym(id))) %>%
-    ungroup()
+    ungroup() %>%
+    mutate(var = as.character(.data$var))
   if (include_ids == FALSE){
     df_cts <- df_cts %>% select(-.data$ids)
   }

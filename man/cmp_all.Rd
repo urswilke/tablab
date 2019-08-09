@@ -4,20 +4,31 @@
 \alias{cmp_all}
 \title{Compare counts and labels of a list of dataframes}
 \usage{
-cmp_all(l, id = "id", include_ids = FALSE, col_groups = c("index",
-  "spec"))
+cmp_all(l, id = "id", include_ids = FALSE, spec_diffs = c("ex",
+  "val", "vallab", "varlab"), include_diffs = TRUE,
+  col_groups = c("index", "spec"))
 }
 \arguments{
 \item{l}{List of dataframes.}
 
 \item{id}{name of the key variable in the dataframes.}
 
-\item{include_ids}{Logical denoting whether a list column of the ids should be included in the results. The ids in the list show at which values of \code{id} the variable \code{var} contains the value \code{val1}.}
+\item{include_ids}{Logical denoting whether a list column \code{ids} should be included in the results. The ids in each list show at which values of \code{id} the variable \code{var} contains the value \code{val1}, \code{val2}, ...}
+
+\item{spec_diffs}{Character vector (defaults to \code{c("ex", "varlab", "val", "vallab")}) specifying the attributes that should be compared in the resulting dataframe. If \code{include_diffs} = TRUE, this adds columns prefixed by spec_diffs, and each suffixed by "_diff". Additionally a column \code{any_diff} is added denoting if any of the former is TRUE.}
+
+\item{include_diffs}{Logical denoting whether in the resulting dataframe, logical columns suffixes "_diff" should be included, indicating if there are differences between the dataframes in \code{l} regarding the specification types given in \code{spec_diffs}.}
 
 \item{col_groups}{String specifying the order of columns in the resulting dataframe. "index" groups columns by indices. "spec" groups columns by the specification types   c("ex", "varlab", "val", "vallab")}
 }
 \value{
-Dataframe consisting of columns \code{var}, \code{val1}, \code{val2}, ...,  \code{vallab1}, \code{vallab2}, ...,  \code{df1}, \code{df2}, ..., and \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the dataframes in long format. The indices denote the dataframes in \code{l}. \code{vals_diff} & \code{vallabs_diff} are logical columns indicating if all values, variable / value labels are equal.
+Dataframe consisting of columns
+\code{var},
+\code{val1}, \code{val2}, ...,
+\code{vallab1}, \code{vallab2}, ...,
+\code{varlab1}, \code{varlab2}, ...,
+\code{ex1}, \code{ex2}, ..., and
+\code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the dataframes in long format. The indices denote the dataframes in \code{l}. \code{vals_diff} & \code{vallabs_diff} are logical columns indicating if all values, variable / value labels are equal.
 }
 \description{
 Compare counts and labels of a list of dataframes
@@ -41,6 +52,8 @@ df2$Species <- haven::labelled(df2$Species,
 cmp_all(list(df1, df2))
 # compare the dataframes and only show the counts where values have changed:
 cmp_all(list(df1, df2)) \%>\% dplyr::filter(val1 != val2)
+# This results in the same rows:
+cmp_all(list(df1, df2), spec_diffs = "val") \%>\% dplyr::filter(any_diff)
 # compare the dataframes and only show the counts where value labels have changed:
 cmp_all(list(df1, df2)) \%>\% dplyr::filter(vallab1 != vallab2)
 
