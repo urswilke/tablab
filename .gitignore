@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 R/playground/*
+README.html
+README_cache/html/*

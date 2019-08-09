@@ -56,6 +56,8 @@
 #' cmp_all(list(df1, df2)) %>% dplyr::filter(val1 != val2)
 #' # This results in the same rows:
 #' cmp_all(list(df1, df2), spec_diffs = "val") %>% dplyr::filter(any_diff)
+#' # Or alternatively:
+#' cmp_all(list(df1, df2)) %>% dplyr::filter(val_diff)
 #' # compare the dataframes and only show the counts where value labels have changed:
 #' cmp_all(list(df1, df2)) %>% dplyr::filter(vallab1 != vallab2)
 #'
@@ -126,17 +128,16 @@ cmp_all <- function(l, id = "id",
 
   if (col_groups == "index") {
     # This sorts the dataframe columns by ascending suffixes 1, ..., length(l):
-    match_exprs <- parse_exprs(paste0("matches('", 1:length(l), "$')"))
+    match_exprs <- parse_exprs(paste0("matches('", c(1:length(l), "_diff"), "$')"))
   }
   else if (col_groups == "spec") {
     # This sorts the dataframe columns by according to the sequence in spec_diffs:
-    match_exprs <- parse_exprs(paste0("matches('", spec_diffs, "(\\\\d+|_diff)$')"))
+    match_exprs <- parse_exprs(paste0("matches('", c(spec_diffs, "any"), "(\\\\d+|_diff)$')"))
   }
   df_all %>%
     select(.data$var,
            n,
-           !!!match_exprs,
-           everything()) %>%
+           !!!match_exprs) %>%
     mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
     arrange(.data$var, .data$val1) %>%
     mutate(var = as.character(.data$var))
