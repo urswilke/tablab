@@ -2,7 +2,7 @@
 % Please edit documentation in R/longen.R
 \name{longen}
 \alias{longen}
-\title{make long format of dataframe}
+\title{Create long format of a dataframe, keeping the id column.}
 \usage{
 longen(df, id = "id")
 }
@@ -15,7 +15,7 @@ longen(df, id = "id")
 Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val}, containing the dataframe in long format (based on dplyr::gather).
 }
 \description{
-make long format of dataframe
+Create long format of a dataframe, keeping the id column.
 }
 \examples{
 # load spss data

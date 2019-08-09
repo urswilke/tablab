@@ -2,8 +2,8 @@
 
 export("%>%")
 export(cmp_all)
+export(cmp_cts)
 export(cmp_no_cts_vallabs)
-export(compare_counts)
 export(longen)
 export(tab_labs)
 export(tab_no_cts_vallabs)
