@@ -1,7 +1,9 @@
 #' Create a variable label dataframe
 #'
-#' @param df Labelled dataframe, e.g., resulting of the read_sav / read_dta functions  of the package haven.
-#' @return Dataframe consisting of two columns \code{var} and \code{varlab}, showing all variable labels in \code{df}.
+#' @param df Labelled dataframe, e.g., resulting of the read_sav / read_dta
+#'   functions of the package haven.
+#' @return Dataframe consisting of two columns \code{var} and \code{varlab},
+#'   showing all variable labels in \code{df}.
 #' @export
 #' @importFrom assertthat assert_that not_empty has_attr
 #' @importFrom purrr map_lgl map_dfr

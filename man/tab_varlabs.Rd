@@ -7,10 +7,12 @@
 tab_varlabs(df)
 }
 \arguments{
-\item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta functions  of the package haven.}
+\item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta
+functions of the package haven.}
 }
 \value{
-Dataframe consisting of two columns \code{var} and \code{varlab}, showing all variable labels in \code{df}.
+Dataframe consisting of two columns \code{var} and \code{varlab},
+showing all variable labels in \code{df}.
 }
 \description{
 Create a variable label dataframe

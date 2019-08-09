@@ -1,7 +1,9 @@
 #' Create a value label dataframe
 #'
-#' @param df Labelled dataframe, e.g., resulting of the read_sav / read_dta functions  of the package haven.
-#' @return Dataframe consisting of three columns \code{var}, \code{val}  and \code{vallab}, showing all value labels in \code{df}.
+#' @param df Labelled dataframe, e.g., resulting of the read_sav / read_dta
+#'   functions  of the package haven.
+#' @return Dataframe consisting of three columns \code{var}, \code{val}  and
+#'   \code{vallab}, showing all value labels in \code{df}.
 #' @export
 #' @importFrom assertthat assert_that not_empty
 #' @importFrom purrr map_lgl map_dfr

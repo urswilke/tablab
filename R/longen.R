@@ -2,7 +2,8 @@
 #'
 #' @param df Dataframe with a key variable (\code{id}).
 #' @param id name of the key variable in the dataframe.
-#' @return Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val}, containing the dataframe in long format (based on dplyr::gather).
+#' @return Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val},
+#'   containing the dataframe in long format (based on dplyr::gather).
 #' @importFrom tidyr gather
 #' @importFrom dplyr mutate mutate_all arrange
 #' @importFrom assertthat assert_that not_empty is.string

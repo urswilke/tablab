@@ -12,7 +12,8 @@ longen(df, id = "id")
 \item{id}{name of the key variable in the dataframe.}
 }
 \value{
-Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val}, containing the dataframe in long format (based on dplyr::gather).
+Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val},
+containing the dataframe in long format (based on dplyr::gather).
 }
 \description{
 Create long format of a dataframe, keeping the id column.

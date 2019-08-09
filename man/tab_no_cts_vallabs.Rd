@@ -12,7 +12,9 @@ tab_no_cts_vallabs(df, id = "id")
 \item{id}{name of the key variable in the dataframes.}
 }
 \value{
-Dataframe consisting of columns \code{var}, \code{val} and \code{vallab}, containing a tabulation of the labelled variable values in the dataframe \code{df} that don't occur in the data.
+Dataframe consisting of columns \code{var}, \code{val} and
+\code{vallab}, containing a tabulation of the labelled variable values in
+the dataframe \code{df} that don't occur in the data.
 }
 \description{
 Compare value labels not occuring in any of a list of dataframes

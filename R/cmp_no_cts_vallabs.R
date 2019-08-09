@@ -2,7 +2,10 @@
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
-#' @return Dataframe consisting of columns \code{var}, \code{val1}, \code{val2}, ..., \code{ex1}, \code{ex2}, ...,  \code{vallab1}, \code{vallab2}, ..., containing a comparison of the labelled variable values in the dataframes that don't occur in the data.
+#' @return Dataframe consisting of columns \code{var}, \code{val1}, \code{val2},
+#'   ..., \code{ex1}, \code{ex2}, ...,  \code{vallab1}, \code{vallab2}, ...,
+#'   containing a comparison of the labelled variable values in the dataframes
+#'   that don't occur in the data.
 #' @importFrom dplyr left_join full_join anti_join  select
 #' @importFrom purrr map map2 reduce
 #' @importFrom rlang .data

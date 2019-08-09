@@ -1,10 +1,18 @@
-#' Compare counts of a list dataframes
+#' Compare counts of a list of dataframes
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
-#' @param include_ids Logical denoting whether a list column of the ids should be included in the results. The ids in the list show at which values of \code{id} the variable \code{var} contains the value \code{val1}.
-#' @return Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.
-#' @importFrom dplyr full_join count group_by_at tally rename ungroup select matches mutate_at
+#' @param include_ids Logical denoting whether a list column of the ids should
+#'   be included in the results. The ids in the list show at which values of
+#'   \code{id} the variable \code{var} contains the value \code{val1}.
+#' @return Dataframe consisting of 9 columns \code{var}, \code{val},
+#'   \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n},
+#'   containing a comparison of the counts of variable values (and their
+#'   respective value labels) of the two dataframes in long format.
+#'   \code{vals_differ} & \code{vallabs_differ} are logical columns indicating
+#'   if all values / value labels are equal.
+#' @importFrom dplyr full_join count group_by_at tally rename ungroup select
+#'   matches mutate_at
 #' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl
 #' @importFrom assertthat assert_that not_empty is.string
 #' @export

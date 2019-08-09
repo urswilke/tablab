@@ -2,7 +2,7 @@
 % Please edit documentation in R/cmp_cts.R
 \name{cmp_cts}
 \alias{cmp_cts}
-\title{Compare counts of a list dataframes}
+\title{Compare counts of a list of dataframes}
 \usage{
 cmp_cts(l, id = "id", include_ids = FALSE)
 }
@@ -11,13 +11,20 @@ cmp_cts(l, id = "id", include_ids = FALSE)
 
 \item{id}{name of the key variable in the dataframes.}
 
-\item{include_ids}{Logical denoting whether a list column of the ids should be included in the results. The ids in the list show at which values of \code{id} the variable \code{var} contains the value \code{val1}.}
+\item{include_ids}{Logical denoting whether a list column of the ids should
+be included in the results. The ids in the list show at which values of
+\code{id} the variable \code{var} contains the value \code{val1}.}
 }
 \value{
-Dataframe consisting of 9 columns \code{var}, \code{val}, \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the two dataframes in long format. \code{vals_differ} & \code{vallabs_differ} are logical columns indicating if all values / value labels are equal.
+Dataframe consisting of 9 columns \code{var}, \code{val},
+\code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n},
+containing a comparison of the counts of variable values (and their
+respective value labels) of the two dataframes in long format.
+\code{vals_differ} & \code{vallabs_differ} are logical columns indicating
+if all values / value labels are equal.
 }
 \description{
-Compare counts of a list dataframes
+Compare counts of a list of dataframes
 }
 \examples{
 # load spss data

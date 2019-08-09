@@ -7,10 +7,12 @@
 tab_vallabs(df)
 }
 \arguments{
-\item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta functions  of the package haven.}
+\item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta
+functions  of the package haven.}
 }
 \value{
-Dataframe consisting of three columns \code{var}, \code{val}  and \code{vallab}, showing all value labels in \code{df}.
+Dataframe consisting of three columns \code{var}, \code{val}  and
+\code{vallab}, showing all value labels in \code{df}.
 }
 \description{
 Create a value label dataframe

@@ -12,7 +12,10 @@ cmp_no_cts_vallabs(l, id = "id")
 \item{id}{name of the key variable in the dataframes.}
 }
 \value{
-Dataframe consisting of columns \code{var}, \code{val1}, \code{val2}, ..., \code{ex1}, \code{ex2}, ...,  \code{vallab1}, \code{vallab2}, ..., containing a comparison of the labelled variable values in the dataframes that don't occur in the data.
+Dataframe consisting of columns \code{var}, \code{val1}, \code{val2},
+..., \code{ex1}, \code{ex2}, ...,  \code{vallab1}, \code{vallab2}, ...,
+containing a comparison of the labelled variable values in the dataframes
+that don't occur in the data.
 }
 \description{
 Compare value labels not occuring in any of a list of dataframes

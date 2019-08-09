@@ -7,12 +7,16 @@
 tab_labs(df, rm_non_labelled = FALSE)
 }
 \arguments{
-\item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta functions  of the package haven.}
+\item{df}{Labelled dataframe, e.g., resulting of the read_sav / read_dta
+functions  of the package haven.}
 
-\item{rm_non_labelled}{Logical indicating whether the result should contain non-labelled variables (neither variable nor value labels).}
+\item{rm_non_labelled}{Logical indicating whether the result should contain
+non-labelled variables (neither variable nor value labels).}
 }
 \value{
-Dataframe consisting of 4 columns \code{var}, \code{varlab}, \code{val}  and \code{vallab}, showing all variable & value labels in \code{df}.
+Dataframe consisting of 4 columns \code{var}, \code{varlab},
+\code{val}  and \code{vallab}, showing all variable & value labels in
+\code{df}.
 }
 \description{
 Create a variable & value label dataframe

@@ -2,7 +2,9 @@
 #'
 #' @param df List of dataframes.
 #' @param id name of the key variable in the dataframes.
-#' @return Dataframe consisting of columns \code{var}, \code{val} and \code{vallab}, containing a tabulation of the labelled variable values in the dataframe \code{df} that don't occur in the data.
+#' @return Dataframe consisting of columns \code{var}, \code{val} and
+#'   \code{vallab}, containing a tabulation of the labelled variable values in
+#'   the dataframe \code{df} that don't occur in the data.
 #' @importFrom stringr str_remove
 #' @importFrom dplyr select
 #' @importFrom rlang .data
