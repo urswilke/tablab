@@ -1,4 +1,4 @@
-#' make long format of dataframe
+#' Create long format of a dataframe, keeping the id column.
 #'
 #' @param df Dataframe with a key variable (\code{id}).
 #' @param id name of the key variable in the dataframe.

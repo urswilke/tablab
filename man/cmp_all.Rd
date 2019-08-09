@@ -2,7 +2,7 @@
 % Please edit documentation in R/cmp_all.R
 \name{cmp_all}
 \alias{cmp_all}
-\title{Compare counts and labels of a list dataframes}
+\title{Compare counts and labels of a list of dataframes}
 \usage{
 cmp_all(l, id = "id", include_ids = FALSE, col_groups = c("index",
   "spec"))
@@ -20,7 +20,7 @@ cmp_all(l, id = "id", include_ids = FALSE, col_groups = c("index",
 Dataframe consisting of columns \code{var}, \code{val1}, \code{val2}, ...,  \code{vallab1}, \code{vallab2}, ...,  \code{df1}, \code{df2}, ..., and \code{n}, containing a comparison of the counts of variable values (and their respective value labels) of the dataframes in long format. The indices denote the dataframes in \code{l}. \code{vals_diff} & \code{vallabs_diff} are logical columns indicating if all values, variable / value labels are equal.
 }
 \description{
-Compare counts and labels of a list dataframes
+Compare counts and labels of a list of dataframes
 }
 \examples{
 # load spss data
