@@ -2,6 +2,7 @@
 
 export("%>%")
 export(cmp_all)
+export(cmp_no_cts_vallabs)
 export(compare_counts)
 export(longen)
 export(tab_labs)
@@ -54,5 +55,4 @@ importFrom(rlang,.data)
 importFrom(rlang,ensym)
 importFrom(tibble,enframe)
 importFrom(tibble,tibble)
-importFrom(tidyr,fill)
 importFrom(tidyr,gather)

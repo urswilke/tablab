@@ -8,7 +8,6 @@
 #' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl map_int
 #' @importFrom assertthat assert_that not_empty is.string
 #' @importFrom rlang .data
-#' @importFrom tidyr fill
 #' @importFrom readr parse_number
 #' @export
 #' @examples
@@ -62,23 +61,8 @@ cmp_all <- function(l, id = "id", include_ids = FALSE){
     add_list_suffix(c("val", "vallab")) %>%
     reduce(left_join, .init = df_cnt)
 
-  df_non_ex_vallabs <-
-    map2(l %>% map(tab_vallabs),
-         list_longed_ex(l, id) %>%
-           map(~distinct(.x, .data$var, .data$val)),
-         ~anti_join(.x, .y) %>% mutate(ex = FALSE)) %>%
-    add_list_suffix(c("val", "ex")) %>%
-    reduce(full_join)
+  df_non_ex_vallabs <-cmp_no_cts_vallabs(l, id)
 
-  df_non_ex_vallabs <-
-    # df_non_ex_vallabs %>%
-    reduce(l %>% map(tab_vallabs) %>% add_list_suffix(c("val", "vallab")),
-           left_join,
-           .init = df_non_ex_vallabs) %>%
-    select(-.data$vallab)
-
-  # bind_cols(rep(df_non_ex_vallabs %>% select(vallab), length(l)) %>%
-  #             set_names(paste0("vallab", 1:length(l))) %>% as_tibble()) %>%
   df_all_vallabs <-
     bind_rows(df_cnt_n_vallab,
               df_non_ex_vallabs)
@@ -89,20 +73,11 @@ cmp_all <- function(l, id = "id", include_ids = FALSE){
     add_list_suffix("varlab") %>%
     reduce(left_join, .init = df_all_vallabs)
 
-  # %>%
-  #   group_by(.data$var) %>%
-  #   fill(matches("^varlab\\d+$")) %>%
-  #   ungroup()
 
 
   suppressWarnings(
     df_all <-
       df_all %>%
-      # group_by(.data$var) %>%
-      # the ifelse function puts NAs first (in order to make the variable labels
-      # appear first):
-      # arrange_at(vars(matches("^val\\d+$")), ~ifelse(is.na(.), is.na(.), .), .by_group = TRUE) %>%
-      # ungroup()  %>%
       select(.data$var, n, names(df_all) %>% parse_number() %>% order()) %>%
       mutate(var = factor(.data$var, levels = l %>% map( ~ names(.x[-1])) %>% unlist() %>% unique())) %>%
       arrange(.data$var))
@@ -115,8 +90,6 @@ cmp_all <- function(l, id = "id", include_ids = FALSE){
   # df_cnt %>% mutate(val_diff = select(df_cnt, matches("^val\\d+$")) %>% t %>% as.data.frame() %>% map_int(n_distinct) > 1)
   reduce(col_specs, cols_differ, .init = df_all) %>%
     group_by(.data$var) %>%
-    # set the logical to false for each entry that's not the first of the grouping:
-    # mutate(varlab_diff = ifelse(row_number() == 1, .data$varlab_diff, FALSE)) %>%
     mutate(any_diff = .data$ex_diff |
              .data$val_diff | .data$varlab_diff | .data$vallab_diff) %>%
     ungroup()
