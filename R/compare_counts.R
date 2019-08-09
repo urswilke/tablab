@@ -1,4 +1,4 @@
-#' Compare counts and labels of a list dataframes
+#' Compare counts of a list dataframes
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
@@ -20,9 +20,9 @@
 #' df2[1, "Species"] <- 2
 #'
 #' # compare the dataframes counts:
-#' compare_counts(list(df1, df2))
+#' cmp_cts(list(df1, df2))
 #' # compare the dataframes and only show the counts where values have changed:
-#' compare_counts(list(df1, df2)) %>% dplyr::filter(val1 != val2)
+#' cmp_cts(list(df1, df2)) %>% dplyr::filter(val1 != val2)
 #'
 #' # Create another modified copy
 #' df3 <- df2
@@ -30,14 +30,14 @@
 #'
 #' # compare the dataframes counts:
 #' l <- list(df1, df2, df3)
-#' cmp <- compare_counts(l)
+#' cmp <- cmp_cts(l)
 #' cmp
 #'
 #' # compare the dataframes and only show the counts where values have changed:
 #' cmp %>% dplyr::filter(!(val1 == val2 & val2 == val3))
 #'
 
-compare_counts <- function(l, id = "id", include_ids = FALSE) {
+cmp_cts <- function(l, id = "id", include_ids = FALSE) {
   # argument checks
   assert_that(length(l) >= 2)
   walk(l, ~ assert_that(is.data.frame(.x)))
@@ -50,7 +50,7 @@ compare_counts <- function(l, id = "id", include_ids = FALSE) {
   is.string(id)
 
 
-  df_cnt <-
+  df_cts <-
     list_longed_ex(l, id) %>%
     # imap(~rename_at(.x, vars(c("val")), ~paste0(., !!.y))) %>%
     add_list_suffix(c("val")) %>%
@@ -60,9 +60,9 @@ compare_counts <- function(l, id = "id", include_ids = FALSE) {
     summarise(n = n(), ids = list(!!ensym(id))) %>%
     ungroup()
   if (include_ids == FALSE){
-    df_cnt <- df_cnt %>% select(-.data$ids)
+    df_cts <- df_cts %>% select(-.data$ids)
   }
-  df_cnt
+  df_cts
 
 }
 

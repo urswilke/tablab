@@ -1,4 +1,4 @@
-#' Compare counts and labels of a list dataframes
+#' Compare counts and labels of a list of dataframes
 #'
 #' @param l List of dataframes.
 #' @param id name of the key variable in the dataframes.
@@ -9,7 +9,6 @@
 #' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl map_int
 #' @importFrom assertthat assert_that not_empty is.string
 #' @importFrom rlang .data parse_exprs
-#' @importFrom readr parse_number
 #' @export
 #' @examples
 #' # load spss data
@@ -56,17 +55,17 @@ cmp_all <- function(l, id = "id", include_ids = FALSE, col_groups = c("index", "
   l <- unname(l)
   col_groups <- match.arg(col_groups)
 
-  df_cnt <- compare_counts(l, id, include_ids)
+  df_cts <- cmp_cts(l, id, include_ids)
 
-  df_cnt_n_vallab <-
+  df_cts_n_vallabs <-
     l %>% map( ~ tab_vallabs(.x)) %>%
     add_list_suffix(c("val", "vallab")) %>%
-    reduce(left_join, .init = df_cnt)
+    reduce(left_join, .init = df_cts)
 
   df_non_ex_vallabs <-cmp_no_cts_vallabs(l, id)
 
   df_all_vallabs <-
-    bind_rows(df_cnt_n_vallab,
+    bind_rows(df_cts_n_vallabs,
               df_non_ex_vallabs)
   # print(df_all_vallabs)
 
@@ -79,15 +78,13 @@ cmp_all <- function(l, id = "id", include_ids = FALSE, col_groups = c("index", "
   # create the logical columns indicating differences:
   col_specs <- c("ex", "varlab", "val", "vallab")
   # The reduce command creates logical columns in the dataframe for each element
-  # in col_spec, indicating if there are differences in the rows in df_cnt,
+  # in col_spec, indicating if there are differences in the rows in df_cts,
   # e.g., for the element "val" in col_specs, it creates:
-  # df_cnt %>% mutate(val_diff = select(df_cnt, matches("^val\\d+$")) %>% t %>% as.data.frame() %>% map_int(n_distinct) > 1)
+  # df_all %>% mutate(val_diff = select(df_all, matches("^val\\d+$")) %>% t %>% as.data.frame() %>% map_int(n_distinct) > 1)
   df_all <-
     reduce(col_specs, cols_differ, .init = df_all) %>%
-    group_by(.data$var) %>%
     mutate(any_diff = .data$ex_diff |
-             .data$val_diff | .data$varlab_diff | .data$vallab_diff) %>%
-    ungroup()
+             .data$val_diff | .data$varlab_diff | .data$vallab_diff)
 
   if (col_groups == "index") {
     match_exprs <- parse_exprs(paste0("matches('", 1:length(l), "')"))
@@ -103,11 +100,11 @@ cmp_all <- function(l, id = "id", include_ids = FALSE, col_groups = c("index", "
 
 }
 
-cols_differ <- function(df_cnt, col_spec) {
+cols_differ <- function(df_cts, col_spec) {
   match_str <- paste0("^", col_spec, "\\d+$")
   col_name <- paste0(col_spec, "_diff")
-  diff_lgl <- df_cnt %>% select(matches(match_str)) %>% is_diff_in_cols()
-  df_cnt %>% mutate(!!col_name := diff_lgl)
+  diff_lgl <- df_cts %>% select(matches(match_str)) %>% is_diff_in_cols()
+  df_cts %>% mutate(!!col_name := diff_lgl)
 }
 
 is_diff_in_cols <- function(df) {
