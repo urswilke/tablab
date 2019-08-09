@@ -82,9 +82,9 @@
 
 cmp_all <- function(l, id = "id",
                     include_ids = FALSE,
-                    spec_diffs = c("ex", "val", "vallab", "varlab"),
+                    spec_diffs = c("vallab", "varlab", "ex"),
                     include_diffs = TRUE,
-                    col_groups = c("index", "spec")){
+                    col_groups = c("spec", "index")){
   # Change list element names to 1, ..., length(l) (if list is named):
   l <- unname(l)
   col_groups <- match.arg(col_groups)
@@ -132,10 +132,11 @@ cmp_all <- function(l, id = "id",
   }
   else if (col_groups == "spec") {
     # This sorts the dataframe columns by according to the sequence in spec_diffs:
-    match_exprs <- parse_exprs(paste0("matches('", c(spec_diffs, "any"), "(\\\\d+|_diff)$')"))
+    match_exprs <- parse_exprs(paste0("matches('", c("val", spec_diffs, "any"), "(\\\\d+|_diff)$')"))
   }
   df_all %>%
     select(.data$var,
+           matches("^val\\d+$"),
            n,
            !!!match_exprs) %>%
     mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
