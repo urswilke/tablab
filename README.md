@@ -34,8 +34,9 @@ dcmisc besteht bisher aus 2 Funktionen:
 ``` r
 # variable label-Tabelle erstellen:
 tab_varlabs(df)
+#> No variable in the data.frame has a variable label
 #> # A tibble: 0 x 2
-#> # … with 2 variables: var <chr>, varlab <lgl>
+#> # … with 2 variables: var <chr>, varlab <chr>
 
 # value label-Tabelle erstellen:
 tab_vallabs(df)
