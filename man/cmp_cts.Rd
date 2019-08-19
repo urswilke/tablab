@@ -13,14 +13,14 @@ cmp_cts(l, id = "id", include_ids = FALSE)
 
 \item{include_ids}{Logical denoting whether a list column of the ids should
 be included in the results. The ids in the list show at which values of
-\code{id} the variable \code{var} contains the value \code{val1}.}
+\code{id} the variable \code{var} contains the numeric value \code{nv1} or character (string) value \code{cv1}.}
 }
 \value{
-Dataframe consisting of 9 columns \code{var}, \code{val},
-\code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n},
+Dataframe consisting of columns \code{var}, \code{val}, ...,
+\code{vallab1}, \code{vallab2}, ..., & \code{n},
 containing a comparison of the counts of variable values (and their
 respective value labels) of the two dataframes in long format.
-\code{vals_differ} & \code{vallabs_differ} are logical columns indicating
+\code{nv_differ} or \code{cv_differ} & \code{vallabs_differ} are logical columns indicating
 if all values / value labels are equal.
 }
 \description{
@@ -40,7 +40,7 @@ df2[1, "Species"] <- 2
 # compare the dataframes counts:
 cmp_cts(list(df1, df2))
 # compare the dataframes and only show the counts where values have changed:
-cmp_cts(list(df1, df2)) \%>\% dplyr::filter(val1 != val2)
+cmp_cts(list(df1, df2)) \%>\% dplyr::filter(nv1 != nv2)
 
 # Create another modified copy
 df3 <- df2
@@ -52,6 +52,6 @@ cmp <- cmp_cts(l)
 cmp
 
 # compare the dataframes and only show the counts where values have changed:
-cmp \%>\% dplyr::filter(!(val1 == val2 & val2 == val3))
+cmp \%>\% dplyr::filter(!(nv1 == nv2 & nv2 == nv3))
 
 }

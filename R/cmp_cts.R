@@ -4,17 +4,19 @@
 #' @param id name of the key variable in the dataframes.
 #' @param include_ids Logical denoting whether a list column of the ids should
 #'   be included in the results. The ids in the list show at which values of
-#'   \code{id} the variable \code{var} contains the value \code{val1}.
-#' @return Dataframe consisting of 9 columns \code{var}, \code{val},
-#'   \code{vallab1}, \code{vallab2}, \code{df1}, \code{df2} & \code{n},
+#'   \code{id} the variable \code{var} contains the numeric value \code{nv1} or character (string) value \code{cv1}.
+#' @return Dataframe consisting of columns \code{var}, \code{val}, ...,
+#'   \code{vallab1}, \code{vallab2}, ..., & \code{n},
 #'   containing a comparison of the counts of variable values (and their
 #'   respective value labels) of the two dataframes in long format.
-#'   \code{vals_differ} & \code{vallabs_differ} are logical columns indicating
+#'   \code{nv_differ} or \code{cv_differ} & \code{vallabs_differ} are logical columns indicating
 #'   if all values / value labels are equal.
 #' @importFrom dplyr full_join count group_by_at tally rename ungroup select
-#'   matches mutate_at
+#'   matches mutate_at mutate
 #' @importFrom purrr map imap reduce walk set_names map2 map_dfr map2_lgl
 #' @importFrom assertthat assert_that not_empty is.string
+#' @importFrom tibble lst
+#' @importFrom rlang sym quo
 #' @export
 #' @examples
 #' # load spss data
@@ -30,7 +32,7 @@
 #' # compare the dataframes counts:
 #' cmp_cts(list(df1, df2))
 #' # compare the dataframes and only show the counts where values have changed:
-#' cmp_cts(list(df1, df2)) %>% dplyr::filter(val1 != val2)
+#' cmp_cts(list(df1, df2)) %>% dplyr::filter(nv1 != nv2)
 #'
 #' # Create another modified copy
 #' df3 <- df2
@@ -42,7 +44,7 @@
 #' cmp
 #'
 #' # compare the dataframes and only show the counts where values have changed:
-#' cmp %>% dplyr::filter(!(val1 == val2 & val2 == val3))
+#' cmp %>% dplyr::filter(!(nv1 == nv2 & nv2 == nv3))
 #'
 
 cmp_cts <- function(l, id = "id", include_ids = FALSE) {
@@ -56,15 +58,17 @@ cmp_cts <- function(l, id = "id", include_ids = FALSE) {
   walk(l, ~ assert_that(not_empty(.x)))
 
   is.string(id)
-
-
+  # val_cols <- paste0("val", 1:length(l)) %>% set_names() %>% map_chr(~paste0("quo(", ., "[1])")) %>% rlang::parse_exprs() %>% set_names(~paste0("val", 1:length(l)))
+  # funs <- lst(n = quo(n()), !!!val_cols, type = quo(.data$type[1]), ids = quo(list(!!sym(id))))
   df_cts <-
-    list_longed_ex(l, id) %>%
+    l %>% map(~longen(.x, id)) %>%
+  # print(df_cts)
+  # df_cts %>%
     # imap(~rename_at(.x, vars(c("val")), ~paste0(., !!.y))) %>%
-    add_list_suffix(c("val")) %>%
+    add_list_suffix(c("nv", "cv")) %>%
     reduce(full_join, by = c(id, "var")) %>%
     mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
-    group_by_at(vars("var", matches("\\d+$"))) %>%
+    group_by_at(vars("var", matches("^(n|c)v\\d+$"))) %>%
     summarise(n = n(), ids = list(!!ensym(id))) %>%
     ungroup() %>%
     mutate(var = as.character(.data$var))
@@ -76,6 +80,87 @@ cmp_cts <- function(l, id = "id", include_ids = FALSE) {
 }
 
 
-list_longed_ex <- function(l, id) {
-  l %>% imap(~longen(.x, id = {{ id }}) %>% mutate(!!paste0("ex", .y) := TRUE))
+# list_longed_ex <- function(l, id) {
+#   l %>% imap(~longen(.x, id = {{ id }}) %>% mutate(!!paste0("ex", .y) := TRUE))
+# }
+
+
+
+
+#' Create long format of a dataframe, keeping the id column.
+#'
+#' @param df Dataframe with a key variable (\code{id}).
+#' @param id name of the key variable in the dataframe.
+#' @return Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val},
+#'   containing the dataframe in long format (based on dplyr::gather).
+#' @importFrom tidyr gather spread
+#' @importFrom dplyr mutate mutate_all arrange
+#' @importFrom purrr imap_dfr
+#' @importFrom assertthat assert_that not_empty is.string
+#' @importFrom rlang := ensym .data
+#' @export
+#' @examples
+#' # load spss data
+#' path <- system.file("examples", "iris.sav", package = "haven")
+#' df <- haven::read_sav(path) %>%
+#'   # add id column
+#'   tibble::rownames_to_column("id")
+#' df %>% longen()
+
+longen <- function(df, id = "id") {
+  res <-
+    df %>%
+    unattr() %>%
+    gather("var", "val", -{{ id }}) %>%
+    full_join(df %>% select(-{{ id }}) %>% tab_types(), by = "var") %>%
+    spread(.data$type, .data$val, convert = T) %>%
+    mutate(var = factor(.data$var, levels = names(df))) %>%
+    arrange(.data$var) %>%
+    mutate(var = as.character(.data$var))
+  if (!"cv" %in% names(res)) {
+    res["cv"] <- NA_character_
+  }
+  if (!"nv" %in% names(res)) {
+    res["nv"] <- NA_real_
+  }
+  res
+
 }
+#   df <- df %>% unattr()
+#   # print(str(df))
+#
+#   df_types <- df %>% select(-{{ id }}) %>% tab_types()
+#   res <-
+#     df_types %>%
+#     split(.$type) %>% # %T>% print()  %>%
+#     map(~pull(.x, var)) %>%
+#     map(~select(df, {{ id }}, .x)) %>%
+#     imap_dfr(~.x %>% gather(var, !!.y, -!!ensym(id), convert = T), .id ="type")
+#   # print((res))
+#   if (is.null(res$character)){
+#     res$character <- NA_character_
+#   }
+#   if (is.null(res$numeric)){
+#     res$numeric <- NA_real_
+#   }
+#   res %>%
+#     mutate(character = as.character(character)) %>%
+#     # group_by(type) %>%
+#     mutate(val = case_when(type == "character" ~ as.list(character),
+#                            type == "numeric" ~ as.list(numeric))) #%>%
+#     # # # mutate(character = ifelse(is.null(.$character), NA_character_, character),
+#     # # #        numeric = ifelse(is.null(.$numeric), NA_real_, numeric)) %>%
+#     # # rowwise() %>%
+#     # group_by(type, var, character, numeric) %>%
+#     # # mutate(listval = coalesce(list(character), list(numeric)))%T>% print() %>%
+#     # # mutate(listval = case_when(type == "character" ~ as.list(character),
+#     # #                            type == "numeric" ~ as.list(numeric))) %>%
+#     # # unite(val, character, numeric, remove = F) %>%
+#     # # summarise(val = listval[1], ids = list(!!ensym(id))) %>%
+#     # summarise(val = val[1],
+#     #           ids = list(!!ensym(id))) %>%
+#     # ungroup() %>%
+#     # mutate(var = factor(var, levels = names(df))) %>%
+#     # arrange(var) %>%
+#     # mutate(var = as.character(var))
+# }

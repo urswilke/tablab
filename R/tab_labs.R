@@ -17,7 +17,7 @@
 #' path <- system.file("examples", "iris.sav", package = "haven")
 #' df <- haven::read_sav(path)
 #' tab_labs(df)
-tab_labs <- labs <- function(df, rm_non_labelled = FALSE){
+tab_labs <- function(df, rm_non_labelled = FALSE){
   # argument checks
   assert_that(is.data.frame(df))
   not_empty(df)
@@ -28,7 +28,7 @@ tab_labs <- labs <- function(df, rm_non_labelled = FALSE){
     full_join(df %>% tab_vallabs(), by = "var")
   if (rm_non_labelled == TRUE){
     result <-
-      result %>% filter(!(is.na(.data$varlab) & is.na(.data$val)))
+      result %>% filter(!(is.na(.data$varlab) & is.na(.data$nv) & is.na(.data$cv)))
   }
   result
 }

@@ -4,9 +4,9 @@
 \alias{cmp_all}
 \title{Compare counts and labels of a list of dataframes}
 \usage{
-cmp_all(l, id = "id", include_ids = FALSE, spec_diffs = c("ex",
-  "val", "vallab", "varlab"), include_diffs = TRUE,
-  col_groups = c("index", "spec"))
+cmp_all(l, id = "id", include_ids = FALSE, spec_diffs = c("nv", "cv",
+  "vallab", "varlab"), include_diffs = TRUE, col_groups = c("spec",
+  "index"))
 }
 \arguments{
 \item{l}{List of dataframes.}
@@ -65,11 +65,11 @@ df2$Species <- haven::labelled(df2$Species,
 # compare the dataframes counts:
 cmp_all(list(df1, df2))
 # compare the dataframes and only show the counts where values have changed:
-cmp_all(list(df1, df2)) \%>\% dplyr::filter(val1 != val2)
+cmp_all(list(df1, df2)) \%>\% dplyr::filter(nv1 != nv2)
 # This results in the same rows:
-cmp_all(list(df1, df2), spec_diffs = "val") \%>\% dplyr::filter(any_diff)
+cmp_all(list(df1, df2), spec_diffs = "nv") \%>\% dplyr::filter(any_diff)
 # Or alternatively:
-cmp_all(list(df1, df2)) \%>\% dplyr::filter(val_diff)
+cmp_all(list(df1, df2)) \%>\% dplyr::filter(nv_diff)
 # compare the dataframes and only show the counts where value labels have changed:
 cmp_all(list(df1, df2)) \%>\% dplyr::filter(vallab1 != vallab2)
 
@@ -87,8 +87,8 @@ cmp <- cmp_all(l)
 cmp
 
 # compare the dataframes and only show the counts where values have changed:
-cmp \%>\% dplyr::filter(val_diff)
+cmp \%>\% dplyr::filter(nv_diff)
 
 # Show where either values or value labels differ:
-cmp \%>\% dplyr::filter(val_diff | vallab_diff)
+cmp \%>\% dplyr::filter(nv_diff | vallab_diff)
 }

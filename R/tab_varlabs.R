@@ -15,7 +15,7 @@
 #' df <- haven::read_sav(path)
 #' attr(df$Sepal.Width, "label") <- "width of the sepal"
 #' tab_varlabs(df)
-tab_varlabs <- varl <- function(df) {
+tab_varlabs <- function(df) {
   # argument checks
   assert_that(is.data.frame(df))
   not_empty(df)

@@ -24,4 +24,5 @@ Imports:
     assertthat,
     rlang,
     tidyr,
-    stringr
+    stringr,
+    forcats
