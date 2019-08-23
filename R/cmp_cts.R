@@ -129,41 +129,131 @@ longen <- function(df, id = "id") {
   res
 
 }
-#   df <- df %>% unattr()
-#   # print(str(df))
-#
-#   df_types <- df %>% select(-{{ id }}) %>% tab_types()
-#   res <-
-#     df_types %>%
-#     split(.$type) %>% # %T>% print()  %>%
-#     map(~pull(.x, var)) %>%
-#     map(~select(df, {{ id }}, .x)) %>%
-#     imap_dfr(~.x %>% gather(var, !!.y, -!!ensym(id), convert = T), .id ="type")
-#   # print((res))
-#   if (is.null(res$character)){
-#     res$character <- NA_character_
-#   }
-#   if (is.null(res$numeric)){
-#     res$numeric <- NA_real_
-#   }
-#   res %>%
-#     mutate(character = as.character(character)) %>%
-#     # group_by(type) %>%
-#     mutate(val = case_when(type == "character" ~ as.list(character),
-#                            type == "numeric" ~ as.list(numeric))) #%>%
-#     # # # mutate(character = ifelse(is.null(.$character), NA_character_, character),
-#     # # #        numeric = ifelse(is.null(.$numeric), NA_real_, numeric)) %>%
-#     # # rowwise() %>%
-#     # group_by(type, var, character, numeric) %>%
-#     # # mutate(listval = coalesce(list(character), list(numeric)))%T>% print() %>%
-#     # # mutate(listval = case_when(type == "character" ~ as.list(character),
-#     # #                            type == "numeric" ~ as.list(numeric))) %>%
-#     # # unite(val, character, numeric, remove = F) %>%
-#     # # summarise(val = listval[1], ids = list(!!ensym(id))) %>%
-#     # summarise(val = val[1],
-#     #           ids = list(!!ensym(id))) %>%
-#     # ungroup() %>%
-#     # mutate(var = factor(var, levels = names(df))) %>%
-#     # arrange(var) %>%
-#     # mutate(var = as.character(var))
-# }
+
+
+
+#' Compare the variable labels between a list of dataframes
+#'
+#' @param l A list of dataframes.
+#'
+#' @return A dataframe comparing the \code{varlab}s for all variables in the
+#'   dataframes. The logical column \code{varlab_diff} indicates, if there are
+#'   differences.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(fbnr = 1:10,
+#' sex = haven::labelled(c(2, 1, 2, 1, 1, 2, 2, 1, 2, 1),
+#'                       label = "sex",
+#'                       labels = c(MALES = 1, FEMALES = 2)),
+#'                       age = c(24, 23, 23, 41, 23, 39, 30, 18, 31, 48))
+#' df2 <- df %>% dplyr::mutate(new_var = 1)
+#' attr(df2$new_var, "label")  <-  "some variable label"
+#' attr(df2$sex, "label")  <-  NULL
+#' cmp_varlabs(list(df, df2))
+cmp_varlabs <- function(l) {
+  l <- unname(l)
+  l %>%
+    map(tab_varlabs) %>%
+    # add_list_suffix("varlab") %>%
+    # reduce(full_join, by = "var") %>%
+    list_join(by = c("var")) %>%
+    cols_differ("varlab")
+}
+
+
+
+
+#' Compare the value labels between a list of dataframes
+#'
+#' @param l A list of dataframes.
+#'
+#' @return A dataframe comparing the \code{vallab}s for all labelled values of the variables in the
+#'   dataframes. The logical column \code{vallab_diff} indicates, if there are
+#'   differences.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(fbnr = 1:10,
+#' sex = haven::labelled(c(2, 1, 2, 1, 1, 2, 2, 1, 2, 1),
+#'                       label = "sex",
+#'                       labels = c(MALES = 1, FEMALES = 2)),
+#'                       age = c(24, 23, 23, 41, 23, 39, 30, 18, 31, 48))
+#' df2 <- data.frame(fbnr = 1:10,
+#'                   sex = haven::labelled(c(2, 1, 2, 1, 1, 2, 2, 1, 2, 1),
+#'                                         label = "sex",
+#'                                         labels = c(m = 0, f = 1)),
+#'                   age = c(24, 23, 23, 41, 23, 39, 30, 18, 31, 48))
+#' cmp_vallabs(list(df, df2))
+#' # The values are ordered by appearance in the dataframes. Compare:
+#' cmp_vallabs(list(df2, df))
+cmp_vallabs <- function(l) {
+  l <- unname(l)
+  l %>%
+    map(tab_vallabs) %>%
+    # add_list_suffix("vallab") %>%
+    # reduce(full_join, by = c("var", "nv", "cv")) %>%
+    list_join(by = c("var", "nv", "cv")) %>%
+    cols_differ("vallab")
+}
+
+
+
+
+#' Compare the existence of variables in a list of dataframes
+#'
+#' @param l A list of dataframes.
+#'
+#' @return A dataframe comparing the existence \code{ex1},  \code{ex2}, ... for
+#'   all variables \code{var} in the dataframes in \code{l}. The logical column
+#'   \code{ex_diff} indicates, if there are differences.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(fbnr = 1:10,
+#'                  sex = c(2, 1, 2, 1, 1, 2, 2, 1, 2, 1),
+#'                  age = c("24", "23", "23", "41", "23", "39", "30", "18", "31", "48"))
+#' df2 <- df %>% dplyr::mutate(new_var = 1) %>% dplyr::select(-sex)
+#' cmp_vars(list(df, df2))
+cmp_vars <- function(l) {
+  l <- unname(l)
+  map(l, ~tibble(var = names(.x))) %>% imap(~mutate(.x, !!paste0("ex",.y) := TRUE)) %>%
+    reduce(full_join, by = "var") %>%
+    cols_differ("ex")
+
+}
+
+
+
+
+
+
+
+#' Compare the types of variables in a list of dataframes
+#'
+#' @param l A list of dataframes.
+#'
+#' @return A dataframe comparing the types \code{type1},  \code{type2}, ... for
+#'   all variables \code{var} in the dataframes in \code{l}. The logical column
+#'   \code{type_diff} indicates, if there are differences.
+#' @export
+#'
+#' @examples
+#' df <- data.frame(fbnr = 1:10,
+#'                  sex = c(2, 1, 2, 1, 1, 2, 2, 1, 2, 1),
+#'                  age = c("24", "23", "23", "41", "23", "39", "30", "18", "31", "48"))
+#' df2 <- df %>%
+#' dplyr::mutate(new_var = 1,
+#'               age = as.numeric(age)) %>%
+#'   dplyr::select(-sex)
+#' cmp_types(list(df, df2))
+cmp_types <- function(l) {
+  l <- unname(l)
+  map(l, ~unattr(.x) %>% tab_types()) %>%
+    # add_list_suffix("type") %>%
+    # # %>% mutate(class = map_chr(unattr(.x), class))) %>%
+    # reduce(full_join, by = "var") %>%
+    list_join(by = "var") %>%
+    cols_differ("type")
+
+}
