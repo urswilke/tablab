@@ -164,11 +164,6 @@ cmp_all <- function(l, id = "id",
 
 }
 
-factor_arrange <- function(df, var = var, levels) {
-  df %>% mutate(var = factor(.data$var, levels = levels)) %>%
-    arrange(.data$var) %>%
-    mutate(var = as.character(.data$var))
-}
 
 
 
@@ -240,26 +235,6 @@ cmp_vallabs <- function(l) {
 
 
 
-
-cols_differ <- function(df_cts, col_spec) {
-  match_str <- paste0("^", col_spec, "\\d+$")
-  col_name <- paste0(col_spec, "_diff")
-  diff_lgl <- df_cts %>% select(matches(match_str)) %>% is_diff_in_cols()
-  df_cts %>% mutate(!!col_name := diff_lgl)
-}
-
-is_diff_in_cols <- function(df) {
-  df %>% t() %>% as.data.frame() %>% map_int(n_distinct) > 1
-}
-
-add_list_suffix <- function(l, cols) {
-  l %>%
-    imap(~rename_at(.x, vars(cols), ~paste0(., !!.y)))
-}
-
-list_join <- function(l, join=full_join, by) {
-  l %>% add_list_suffix(setdiff(names(l[[1]]), by)) %>% reduce(join, by = by)
-}
 
 rearrange_cols <- function(spec_diffs, inds, include_diffs, col_groups, include_ids) {
   if (include_diffs) {
