@@ -269,3 +269,31 @@ tab_all <- function(df, id, include_ids = FALSE) {
     full_join(df %>% tab_vallabs(), by = c("var", "nv", "cv")) %>%
     full_join(df %>% tab_varlabs(), by = "var")
 }
+
+#' Tabulate the variables' types in a dataframe
+#'
+#' @param df A dataframe.
+#'
+#' @return A dataframe consisting of 2 columns: The \code{var}iable and its
+#'   \code{type}.
+#' @export
+#' @description First \code{unattr()} is being called on df. This should result
+#'   in a dataframe of only two types: numeric or character without attributes.
+#'   These 2 types are then returned.
+#' @examples
+#' df <- data.frame(fbnr = 1:10,
+#'                  sex = c(2, 1, 2, 1, 1, 2, 2, 1, 2, 1),
+#'                  age = c("24", "23", "23", "41", "23", "39", "30", "18", "31", "48"))
+#' tab_types(df)
+tab_types <- function(df) {
+  df %>%
+    unattr() %>%
+    map_chr(class) %>%
+    enframe("var", "type") %>%
+    mutate(type = dplyr::case_when(type == "numeric"   ~ "nv",
+                                   type == "character" ~ "cv")) %>%
+    factor_arrange(levels = names(df))
+  # mutate(var = factor(.data$var, levels = names(df))) %>%
+  # arrange(.data$var) %>%
+  # mutate(var = as.character(.data$var))
+}
