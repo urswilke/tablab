@@ -37,18 +37,11 @@
 #' tab_cts(df, "fbnr")
 tab_cts <- function(df, id = "id", include_ids = FALSE) {
   res <-
-    # df %>%
-    # # select(-{{ id }}) %>%
-    # mutate_all(as.vector) %>%
-    # gather("var", "val", -{{ id }}, factor_key = TRUE) %>%
     longen(df, id) %>%
     group_by(.data$var, .data$nv, .data$cv) %>%
     summarise(n = n(), ids = list(!!rlang::ensym(id))) %>%
     ungroup() %>%
     factor_arrange(levels = names(df))
-    # mutate(var = factor(.data$var, levels = names(df))) %>%
-    # arrange(.data$var) %>%
-    # mutate(var = as.character(.data$var))
   if (include_ids == FALSE) {
     res <-
       res %>% select(-.data$ids)
