@@ -118,6 +118,8 @@ add_list_suffix <- function(l, cols) {
 }
 
 list_join <- function(l, join=full_join, by) {
-  l %>% add_list_suffix(setdiff(names(l[[1]]), by)) %>% reduce(join, by = by)
+  col_names <- names(l[[1]])
+  by <- match.arg(by, col_names, several.ok = TRUE)
+  l %>% add_list_suffix(setdiff(col_names, by)) %>% reduce(join, by = by)
 }
 
