@@ -1,3 +1,46 @@
+
+
+#' Create long format of a dataframe, keeping the id column.
+#'
+#' @param df Dataframe with a key variable (\code{id}).
+#' @param id name of the key variable in the dataframe.
+#' @return Dataframe consisting of 3 columns \code{id}, \code{var} & \code{val},
+#'   containing the dataframe in long format (based on dplyr::gather).
+#' @importFrom tidyr gather spread
+#' @importFrom dplyr mutate mutate_all arrange
+#' @importFrom purrr imap_dfr
+#' @importFrom assertthat assert_that not_empty is.string
+#' @importFrom rlang := ensym .data
+#' @export
+#' @examples
+#' # load spss data
+#' path <- system.file("examples", "iris.sav", package = "haven")
+#' df <- haven::read_sav(path) %>%
+#'   # add id column
+#'   tibble::rownames_to_column("id")
+#' df %>% longen()
+
+longen <- function(df, id = "id") {
+  res <-
+    df %>%
+    unattr() %>%
+    gather("var", "val", -{{ id }}) %>%
+    full_join(df %>% select(-{{ id }}) %>% tab_types(), by = "var") %>%
+    spread(.data$type, .data$val, convert = T) %>%
+    factor_arrange(levels = names(df))
+  # mutate(var = factor(.data$var, levels = names(df))) %>%
+  # arrange(.data$var) %>%
+  # mutate(var = as.character(.data$var))
+  if (!"cv" %in% names(res)) {
+    res["cv"] <- NA_character_
+  }
+  if (!"nv" %in% names(res)) {
+    res["nv"] <- NA_real_
+  }
+  res
+
+}
+
 #' Remove attributes from all variables of a dataframe
 #'
 #' @param df A dataframe
