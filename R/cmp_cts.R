@@ -65,8 +65,9 @@ cmp_cts <- function(l, id = "id", include_ids = FALSE) {
   # print(df_cts)
   # df_cts %>%
     # imap(~rename_at(.x, vars(c("val")), ~paste0(., !!.y))) %>%
-    add_list_suffix(c("nv", "cv")) %>%
-    reduce(full_join, by = c(id, "var")) %>%
+    # add_list_suffix(c("nv", "cv")) %>%
+    # reduce(full_join, by = c(id, "var")) %>%
+    list_join(by = c(id, "var")) %>%
     mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
     group_by_at(vars("var", matches("^(n|c)v\\d+$"))) %>%
     summarise(n = n(), ids = list(!!ensym(id))) %>%

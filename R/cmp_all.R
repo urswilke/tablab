@@ -109,8 +109,9 @@ cmp_all <- function(l, id = "id",
 
   df_all <-
     map(l, ~join_labs2long(.x, id)) %>%
-    add_list_suffix(c("nv", "cv", "vallab", "varlab")) %>%
-    reduce(full_join, by = c(id, "var", "nv_join", "cv_join")) %>%
+    # add_list_suffix(c("nv", "cv", "vallab", "varlab")) %>%
+    # reduce(full_join, by = c(id, "var", "nv_join", "cv_join")) %>%
+    list_join(by = c(id, "var", "nv_join", "cv_join")) %>%
     group_by_at(vars(.data$var, matches("^(nv|cv|varlab|vallab)\\d+"))) %>%
     summarise(n=sum(!is.na(!!ensym(id))), ids=ifelse(n == 0, list(NULL), list(!!ensym(id)))) %>%
     ungroup()
@@ -192,8 +193,9 @@ cmp_varlabs <- function(l) {
   l <- unname(l)
   l %>%
     map(tab_varlabs) %>%
-    add_list_suffix("varlab") %>%
-    reduce(full_join, by = "var") %>%
+    # add_list_suffix("varlab") %>%
+    # reduce(full_join, by = "var") %>%
+    list_join(by = c("var")) %>%
     cols_differ("varlab")
 }
 
@@ -227,8 +229,9 @@ cmp_vallabs <- function(l) {
   l <- unname(l)
   l %>%
     map(tab_vallabs) %>%
-    add_list_suffix("vallab") %>%
-    reduce(full_join, by = c("var", "nv", "cv")) %>%
+    # add_list_suffix("vallab") %>%
+    # reduce(full_join, by = c("var", "nv", "cv")) %>%
+    list_join(by = c("var", "nv", "cv")) %>%
     cols_differ("vallab")
 }
 
@@ -250,6 +253,10 @@ is_diff_in_cols <- function(df) {
 add_list_suffix <- function(l, cols) {
   l %>%
     imap(~rename_at(.x, vars(cols), ~paste0(., !!.y)))
+}
+
+list_join <- function(l, join=full_join, by) {
+  l %>% add_list_suffix(setdiff(names(l[[1]]), by)) %>% reduce(join, by = by)
 }
 
 rearrange_cols <- function(spec_diffs, inds, include_diffs, col_groups, include_ids) {

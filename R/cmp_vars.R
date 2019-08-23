@@ -48,9 +48,10 @@ cmp_vars <- function(l) {
 cmp_types <- function(l) {
   l <- unname(l)
   map(l, ~unattr(.x) %>% tab_types()) %>%
-    add_list_suffix("type") %>%
-    # %>% mutate(class = map_chr(unattr(.x), class))) %>%
-    reduce(full_join, by = "var") %>%
+    # add_list_suffix("type") %>%
+    # # %>% mutate(class = map_chr(unattr(.x), class))) %>%
+    # reduce(full_join, by = "var") %>%
+    list_join(by = "var") %>%
     cols_differ("type")
 
 }
