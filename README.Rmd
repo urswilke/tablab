@@ -36,7 +36,7 @@ Install the package via:
 
 ## Introduction
 
-The package dcmisc consists of 2 families of functions:
+The package dcmisc mainly consists of 2 families of functions:
 
 * `tab_*` tabulating count and label information of dataframes (denoted `df`), and
 * `cmp_*` comparing this data for all dataframes in a list `l`.
@@ -44,6 +44,7 @@ The package dcmisc consists of 2 families of functions:
 The following attributes are tabulated / compared:
 
 * `var` The name of the variables in the dataframe(s).
+* `type` The type of the variables in the dataframe(s).
 * `varlab` The variable label of the variable in the dataframe. 
 * `val` The value of the variable in the dataframe. 
 * `vallab` The value label of the variable in the dataframe. 
