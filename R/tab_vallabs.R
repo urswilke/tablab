@@ -44,9 +44,10 @@ tab_vallabs <- function(df) {
     res %>%
       # reorder columns
       select(-.data$type, .data$var, .data$nv, .data$cv, .data$vallab) %>%
-      mutate(var = factor(.data$var, levels = names(df))) %>%
-      arrange(.data$var) %>%
-      mutate(var = as.character(.data$var))
+      factor_arrange(levels = names(df))
+      # mutate(var = factor(.data$var, levels = names(df))) %>%
+      # arrange(.data$var) %>%
+      # mutate(var = as.character(.data$var))
   }
   # if no labelled variables exist, return empty tibble:
   else {

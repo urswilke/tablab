@@ -68,11 +68,12 @@ cmp_cts <- function(l, id = "id", include_ids = FALSE) {
     # add_list_suffix(c("nv", "cv")) %>%
     # reduce(full_join, by = c(id, "var")) %>%
     list_join(by = c(id, "var")) %>%
-    mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
+    # mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
     group_by_at(vars("var", matches("^(n|c)v\\d+$"))) %>%
     summarise(n = n(), ids = list(!!ensym(id))) %>%
     ungroup() %>%
-    mutate(var = as.character(.data$var))
+    factor_arrange(levels = unique(.data$var))
+    # mutate(var = as.character(.data$var))
   if (include_ids == FALSE){
     df_cts <- df_cts %>% select(-.data$ids)
   }
@@ -115,9 +116,10 @@ longen <- function(df, id = "id") {
     gather("var", "val", -{{ id }}) %>%
     full_join(df %>% select(-{{ id }}) %>% tab_types(), by = "var") %>%
     spread(.data$type, .data$val, convert = T) %>%
-    mutate(var = factor(.data$var, levels = names(df))) %>%
-    arrange(.data$var) %>%
-    mutate(var = as.character(.data$var))
+    factor_arrange(levels = names(df))
+    # mutate(var = factor(.data$var, levels = names(df))) %>%
+    # arrange(.data$var) %>%
+    # mutate(var = as.character(.data$var))
   if (!"cv" %in% names(res)) {
     res["cv"] <- NA_character_
   }

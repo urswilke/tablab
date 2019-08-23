@@ -45,9 +45,10 @@ tab_cts <- function(df, id = "id", include_ids = FALSE) {
     group_by(.data$var, .data$nv, .data$cv) %>%
     summarise(n = n(), ids = list(!!rlang::ensym(id))) %>%
     ungroup() %>%
-    mutate(var = factor(.data$var, levels = names(df))) %>%
-    arrange(.data$var) %>%
-    mutate(var = as.character(.data$var))
+    factor_arrange(levels = names(df))
+    # mutate(var = factor(.data$var, levels = names(df))) %>%
+    # arrange(.data$var) %>%
+    # mutate(var = as.character(.data$var))
   if (include_ids == FALSE) {
     res <-
       res %>% select(-.data$ids)

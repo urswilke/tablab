@@ -78,7 +78,8 @@ tab_types <- function(df) {
     enframe("var", "type") %>%
     mutate(type = dplyr::case_when(type == "numeric"   ~ "nv",
                                    type == "character" ~ "cv")) %>%
-    mutate(var = factor(.data$var, levels = names(df))) %>%
-    arrange(.data$var) %>%
-    mutate(var = as.character(.data$var))
+    factor_arrange(levels = names(df))
+    # mutate(var = factor(.data$var, levels = names(df))) %>%
+    # arrange(.data$var) %>%
+    # mutate(var = as.character(.data$var))
 }

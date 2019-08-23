@@ -156,17 +156,19 @@ cmp_all <- function(l, id = "id",
                          include_ids = include_ids)
   # print(cols)
   df_all %>%
-    mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
-    arrange(.data$var) %>%
-    # select(.data$var,
-    #        # matches("^val\\d+$"),
-    #        n,
-    #        !!!match_exprs) %>%
-    select(cols) %>%
-    mutate(var = as.character(.data$var))
+    # mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
+    # arrange(.data$var) %>%
+    # mutate(var = as.character(.data$var)) %>%
+    factor_arrange(levels = unique(.data$var)) %>%
+    select(cols)
 
 }
 
+factor_arrange <- function(df, var = var, levels) {
+  df %>% mutate(var = factor(.data$var, levels = levels)) %>%
+    arrange(.data$var) %>%
+    mutate(var = as.character(.data$var))
+}
 
 
 
