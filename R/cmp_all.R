@@ -159,7 +159,7 @@ cmp_all <- function(l, id = "id",
     # mutate(var = factor(.data$var, levels = unique(.data$var))) %>%
     # arrange(.data$var) %>%
     # mutate(var = as.character(.data$var)) %>%
-    factor_arrange(levels = unique(.data$var)) %>%
+    factor_arrange(levels = l %>% map(names) %>% reduce(union)) %>%
     select(cols)
 
 }
