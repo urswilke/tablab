@@ -1,4 +1,4 @@
 library(testthat)
-library(dcmisc)
+library(tablab)
 
-test_check("dcmisc")
+test_check("tablab")

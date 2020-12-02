@@ -17,26 +17,26 @@ knitr::opts_chunk$set(
 )
 library(knitr)
 ```
-# dcmisc
+# tablab
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/dcmisc)](https://cran.r-project.org/package=dcmisc)
+[![CRAN status](https://www.r-pkg.org/badges/version/tablab)](https://cran.r-project.org/package=tablab)
 <!-- badges: end -->
 
-The goal of dcmisc is to tabulate and compare variables' values and their labels of labelled dataframes.
+The goal of tablab is to tabulate and compare variables' values and their labels of labelled dataframes.
 
 ## Installation
 
 Install the package via:
 
 ```{r, install}
-# install.packages("K:/Tools/R/self-written packages/dcmisc/", type = "source", repos = NULL)
+# install.packages("K:/Tools/R/self-written packages/tablab/", type = "source", repos = NULL)
 ```
 
 ## Introduction
 
-The package dcmisc mainly consists of 2 families of functions:
+The package tablab mainly consists of 2 families of functions:
 
 * `tab_*` tabulating count and label information of dataframes (denoted `df`), and
 * `cmp_*` comparing this data for all dataframes in a list `l`.
@@ -55,7 +55,7 @@ Comparisons further include `ex`, denoting whether the value is existent in the 
 
 
 ```{r data}
-library(dcmisc)
+library(tablab)
 library(tidyverse)
 
 
