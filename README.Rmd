@@ -151,13 +151,13 @@ list(df, df2) %>%
 Show all cases (including a column with the ids), where the values in the first dataframe are equal to 1 and 2:
 
 ```{r, val1_1or2}
-list(df, df2) %>% 
-  cmp_all(include_ids = TRUE, 
-          spec_diffs = c("val"), 
-          col_groups = "spec") %>% 
-  filter(val1 %in% 1:2) %>% 
-  DT::datatable(class = "compact",                   
-                options = list(scrollX = TRUE))
+# list(df, df2) %>% 
+#   cmp_all(include_ids = TRUE, 
+#           spec_diffs = c("val"), 
+#           col_groups = "spec") %>% 
+#   filter(val1 %in% 1:2) %>% 
+#   DT::datatable(class = "compact",                   
+#                 options = list(scrollX = TRUE))
 ```
 
 
