@@ -1,31 +1,30 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# dcmisc
+# tablab
 
 <!-- badges: start -->
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![CRAN
-status](https://www.r-pkg.org/badges/version/dcmisc)](https://cran.r-project.org/package=dcmisc)
+status](https://www.r-pkg.org/badges/version/tablab)](https://cran.r-project.org/package=tablab)
 <!-- badges: end -->
 
-The goal of dcmisc is to tabulate and compare variables’ values and
+The goal of tablab is to tabulate and compare variables’ values and
 their labels of labelled dataframes.
 
 ## Installation
 
-Install the package
-via:
+Install the package via:
 
 ``` r
-# install.packages("K:/Tools/R/self-written packages/dcmisc/", type = "source", repos = NULL)
+# install.packages("K:/Tools/R/self-written packages/tablab/", type = "source", repos = NULL)
 ```
 
 ## Introduction
 
-The package dcmisc consists of 2 families of functions:
+The package tablab mainly consists of 2 families of functions:
 
   - `tab_*` tabulating count and label information of dataframes
     (denoted `df`), and
@@ -34,6 +33,7 @@ The package dcmisc consists of 2 families of functions:
 The following attributes are tabulated / compared:
 
   - `var` The name of the variables in the dataframe(s).
+  - `type` The type of the variables in the dataframe(s).
   - `varlab` The variable label of the variable in the dataframe.
   - `val` The value of the variable in the dataframe.
   - `vallab` The value label of the variable in the dataframe.
@@ -44,16 +44,8 @@ in the dataframe.
 ## Example
 
 ``` r
-library(dcmisc)
+library(tablab)
 library(tidyverse)
-#> ── Attaching packages ────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
-#> ✔ ggplot2 3.2.0     ✔ purrr   0.3.2
-#> ✔ tibble  2.1.3     ✔ dplyr   0.8.3
-#> ✔ tidyr   0.8.3     ✔ stringr 1.4.0
-#> ✔ readr   1.3.1     ✔ forcats 0.4.0
-#> ── Conflicts ───────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-#> ✖ dplyr::filter() masks stats::filter()
-#> ✖ dplyr::lag()    masks stats::lag()
 
 
 path <- system.file("examples", "iris.sav", package = "haven")
@@ -90,48 +82,23 @@ df
 #> 10    10 1 [MALES]      48 2 [steady relationship]
 ```
 
+Create modified copy:
+
 ``` r
-df2 <- df %>% slice(-c(9:10)) %>% mutate(new_var = 1)
+df2 <- 
+  df %>% 
+  # Remove rows 9 & 10:
+  slice(-c(9:10)) %>% 
+  # Create Variable new_var equal to 1:
+  mutate(new_var = 1)
+# Change variable label:
 attr(df2$new_var, "label")  <-  "new something"
-
-df2[1:2,"sex"] <- 3
-attr(df2$sex, "labels")  <-  c(male = 1, female = 2, `Third Gender` = 3)
-attr(df2$sex, "label")  <-  NULL
-df2[3:4,"marital"] <- 9
-attr(df2$marital, "labels")  <-  c("single" = 1,
-                                   "steady relationship" = 2,
-                                   "living with partner" = 3,
-                                   "married first time" = 4,
-                                   "remarried" = 5,
-                                   "separated" = 6,
-                                   "divorced" = 7,
-                                   "widowed" = 8,
-                                   "married to Jesus" = 9)
-df2
-#> # A tibble: 8 x 5
-#>      id              sex   age                 marital new_var
-#>   <int>        <dbl+lbl> <dbl>               <dbl+lbl>   <dbl>
-#> 1     1 3 [Third Gender]    24 1 [single]                    1
-#> 2     2 3 [Third Gender]    23 7 [divorced]                  1
-#> 3     3 2 [female]          23 9 [married to Jesus]          1
-#> 4     4 1 [male]            41 9 [married to Jesus]          1
-#> 5     5 1 [male]            23 4 [married first time]        1
-#> 6     6 2 [female]          39 5 [remarried]                 1
-#> 7     7 2 [female]          30 3 [living with partner]       1
-#> 8     8 1 [male]            18 8 [widowed]                   1
-```
-
-Put both dataframes in list:
-
-``` r
-l <- list(df, df2)
 ```
 
 Tabulate the variable labels for the dataframes in the list:
 
 ``` r
-# variable label-Tabelle erstellen:
-l %>% map(tab_varlabs)
+list(df, df2) %>% map(tab_varlabs)
 #> [[1]]
 #> # A tibble: 2 x 2
 #>   var     varlab        
@@ -140,75 +107,150 @@ l %>% map(tab_varlabs)
 #> 2 marital marital status
 #> 
 #> [[2]]
-#> # A tibble: 2 x 2
+#> # A tibble: 3 x 2
 #>   var     varlab        
 #>   <chr>   <chr>         
-#> 1 marital marital status
-#> 2 new_var new something
+#> 1 sex     sex           
+#> 2 marital marital status
+#> 3 new_var new something
 ```
 
-Tabulate the variable labels for the dataframes in the list:
+Change value:
 
 ``` r
-# value label-Tabelle erstellen:
-l %>% map(tab_vallabs)
-#> [[1]]
-#> # A tibble: 10 x 3
-#>    var       val vallab             
-#>    <chr>   <dbl> <chr>              
-#>  1 sex         1 MALES              
-#>  2 sex         2 FEMALES            
-#>  3 marital     1 single             
-#>  4 marital     2 steady relationship
-#>  5 marital     3 living with partner
-#>  6 marital     4 married first time 
-#>  7 marital     5 remarried          
-#>  8 marital     6 separated          
-#>  9 marital     7 divorced           
-#> 10 marital     8 widowed            
-#> 
-#> [[2]]
-#> # A tibble: 12 x 3
-#>    var       val vallab             
-#>    <chr>   <dbl> <chr>              
-#>  1 sex         1 male               
-#>  2 sex         2 female             
-#>  3 sex         3 Third Gender       
-#>  4 marital     1 single             
-#>  5 marital     2 steady relationship
-#>  6 marital     3 living with partner
-#>  7 marital     4 married first time 
-#>  8 marital     5 remarried          
-#>  9 marital     6 separated          
-#> 10 marital     7 divorced           
-#> 11 marital     8 widowed            
-#> 12 marital     9 married to Jesus
+df2[1:2,"sex"] <- 3
 ```
 
 Tabulate the count comparison:
 
 ``` r
-l %>% cmp_cts() %>% DT::datatable()
+list(df, df2) %>% cmp_cts()
+#> # A tibble: 25 x 6
+#>    var     nv1 cv1     nv2 cv2       n
+#>    <chr> <int> <chr> <int> <chr> <int>
+#>  1 sex       1 <NA>      1 <NA>      3
+#>  2 sex       1 <NA>      3 <NA>      1
+#>  3 sex       1 <NA>     NA <NA>      1
+#>  4 sex       2 <NA>      2 <NA>      3
+#>  5 sex       2 <NA>      3 <NA>      1
+#>  6 sex       2 <NA>     NA <NA>      1
+#>  7 age      18 <NA>     18 <NA>      1
+#>  8 age      23 <NA>     23 <NA>      3
+#>  9 age      24 <NA>     24 <NA>      1
+#> 10 age      30 <NA>     30 <NA>      1
+#> # … with 15 more rows
+# %>% DT::datatable(class = "compact",                   
+#                                   options = list(scrollX = TRUE))
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
-
-Tabulate the comparison of count and label data:
+More label and value modifications:
 
 ``` r
-l %>% cmp_all() %>% DT::datatable()
-#> Joining, by = c("var", "val1")
-#> Joining, by = c("var", "val2")
-#> Joining, by = c("var", "val")
-#> Joining, by = c("var", "val")
-#> Joining, by = c("var", "vallab")
-#> Joining, by = c("var", "val1")
-#> Joining, by = c("var", "val2")
-#> Joining, by = "var"
-#> Joining, by = "var"
+attr(df2$sex, "labels")  <-  c(male = 1, female = 2, `Third Gender` = 3)
+# Remove variable label:
+attr(df2$sex, "label")  <-  NULL
+# Change variable "marital" to 9 in rows 3 & 4:
+df2[3:4,"marital"] <- 9
+# Add another value label for the code 9:
+attr(df2$marital, "labels") <- c(attr(df2$marital, "labels"), c("other" = 9))
+
+df2
+#> # A tibble: 8 x 5
+#>      id              sex   age                 marital new_var
+#>   <int>        <dbl+lbl> <dbl>               <dbl+lbl>   <dbl>
+#> 1     1 3 [Third Gender]    24 1 [single]                    1
+#> 2     2 3 [Third Gender]    23 7 [divorced]                  1
+#> 3     3 2 [female]          23 9 [other]                     1
+#> 4     4 1 [male]            41 9 [other]                     1
+#> 5     5 1 [male]            23 4 [married first time]        1
+#> 6     6 2 [female]          39 5 [remarried]                 1
+#> 7     7 2 [female]          30 3 [living with partner]       1
+#> 8     8 1 [male]            18 8 [widowed]                   1
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+Tabulate the variable labels for the dataframes in the list:
+
+``` r
+list(df, df2) %>% map(tab_vallabs)
+#> [[1]]
+#> # A tibble: 10 x 4
+#>    var        nv vallab              cv   
+#>    <chr>   <dbl> <chr>               <chr>
+#>  1 sex         1 MALES               <NA> 
+#>  2 sex         2 FEMALES             <NA> 
+#>  3 marital     1 single              <NA> 
+#>  4 marital     2 steady relationship <NA> 
+#>  5 marital     3 living with partner <NA> 
+#>  6 marital     4 married first time  <NA> 
+#>  7 marital     5 remarried           <NA> 
+#>  8 marital     6 separated           <NA> 
+#>  9 marital     7 divorced            <NA> 
+#> 10 marital     8 widowed             <NA> 
+#> 
+#> [[2]]
+#> # A tibble: 12 x 4
+#>    var        nv vallab              cv   
+#>    <chr>   <dbl> <chr>               <chr>
+#>  1 sex         1 male                <NA> 
+#>  2 sex         2 female              <NA> 
+#>  3 sex         3 Third Gender        <NA> 
+#>  4 marital     1 single              <NA> 
+#>  5 marital     2 steady relationship <NA> 
+#>  6 marital     3 living with partner <NA> 
+#>  7 marital     4 married first time  <NA> 
+#>  8 marital     5 remarried           <NA> 
+#>  9 marital     6 separated           <NA> 
+#> 10 marital     7 divorced            <NA> 
+#> 11 marital     8 widowed             <NA> 
+#> 12 marital     9 other               <NA>
+```
+
+Tabulate the comparison of count and label data and only show rows with
+differences:
+
+``` r
+list(df, df2) %>% 
+  cmp_all() %>% 
+  filter(any_diff)
+#> # A tibble: 15 x 15
+#>    var       n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1 vallab2
+#>    <chr> <int> <dbl> <dbl> <lgl>   <chr> <chr> <lgl>   <chr>   <chr>  
+#>  1 sex       3     1     1 FALSE   <NA>  <NA>  FALSE   MALES   male   
+#>  2 sex       1     1     3 TRUE    <NA>  <NA>  FALSE   MALES   Third …
+#>  3 sex       1     1    NA TRUE    <NA>  <NA>  FALSE   MALES   <NA>   
+#>  4 sex       3     2     2 FALSE   <NA>  <NA>  FALSE   FEMALES female 
+#>  5 sex       1     2     3 TRUE    <NA>  <NA>  FALSE   FEMALES Third …
+#>  6 sex       1     2    NA TRUE    <NA>  <NA>  FALSE   FEMALES <NA>   
+#>  7 age       1    31    NA TRUE    <NA>  <NA>  FALSE   <NA>    <NA>   
+#>  8 age       1    48    NA TRUE    <NA>  <NA>  FALSE   <NA>    <NA>   
+#>  9 mari…     1     2     9 TRUE    <NA>  <NA>  FALSE   steady… other  
+#> 10 mari…     1     2    NA TRUE    <NA>  <NA>  FALSE   steady… <NA>   
+#> 11 mari…     1     4    NA TRUE    <NA>  <NA>  FALSE   marrie… <NA>   
+#> 12 mari…     1     6     9 TRUE    <NA>  <NA>  FALSE   separa… other  
+#> 13 mari…     0    NA     2 TRUE    <NA>  <NA>  FALSE   <NA>    steady…
+#> 14 mari…     0    NA     6 TRUE    <NA>  <NA>  FALSE   <NA>    separa…
+#> 15 new_…     8    NA     1 TRUE    <NA>  <NA>  FALSE   <NA>    <NA>   
+#> # … with 5 more variables: vallab_diff <lgl>, varlab1 <chr>, varlab2 <chr>,
+#> #   varlab_diff <lgl>, any_diff <lgl>
+# %>% 
+#   DT::datatable(class = "compact",                   
+#                 options = list(scrollX = TRUE))
+```
+
+Show all cases (including a column with the ids), where the values in
+the first dataframe are equal to 1 and 2:
+
+``` r
+# list(df, df2) %>% 
+#   cmp_all(include_ids = TRUE, 
+#           spec_diffs = c("val"), 
+#           col_groups = "spec") %>% 
+#   filter(val1 %in% 1:2) %>% 
+#   DT::datatable(class = "compact",                   
+#                 options = list(scrollX = TRUE))
+```
+
+# Alte Sachen
 
 ## weitere infos
 
@@ -220,9 +262,8 @@ nicht im Kommentar) und nur nachdem die library schon geladen wurde
   
 # message, wenn keine value label im data.frame sind
 tab_vallabs(data.frame(NA))
-#> no variable in data.frame of type haven::labelled
-#> # A tibble: 0 x 3
-#> # … with 3 variables: var <chr>, val <dbl>, vallab <chr>
+#> # A tibble: 0 x 4
+#> # … with 4 variables: var <chr>, nv <dbl>, cv <chr>, vallab <chr>
 ```
 
 informative Fehler-Nachricht wenn df kein data.frame ist:

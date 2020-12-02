@@ -1,7 +1,7 @@
 ---
 output: 
-    # github_document: default
-    html_document: default
+    github_document: default
+    # html_document: default
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -110,8 +110,9 @@ df2[1:2,"sex"] <- 3
 Tabulate the count comparison:
 
 ```{r, tab_cts}
-list(df, df2) %>% cmp_cts() %>% DT::datatable(class = "compact",                   
-                                  options = list(scrollX = TRUE))
+list(df, df2) %>% cmp_cts()
+# %>% DT::datatable(class = "compact",                   
+#                                   options = list(scrollX = TRUE))
 
 ```
 
@@ -143,9 +144,10 @@ Tabulate the comparison of count and label data and only show rows with differen
 ```{r, anydiff}
 list(df, df2) %>% 
   cmp_all() %>% 
-  filter(any_diff) %>% 
-  DT::datatable(class = "compact",                   
-                options = list(scrollX = TRUE))
+  filter(any_diff)
+# %>% 
+#   DT::datatable(class = "compact",                   
+#                 options = list(scrollX = TRUE))
 ```
 
 Show all cases (including a column with the ids), where the values in the first dataframe are equal to 1 and 2:
