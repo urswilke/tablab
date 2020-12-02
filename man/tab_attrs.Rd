@@ -12,7 +12,9 @@ tab_attrs(df)
 \value{
 Dataframe with one row per variable in \code{df}, containing the
 following columns: "var", "varlab", "val", "vallab", "format.spss",
-"labels", "display_width" & "class"
+"labels", "display_width" & "class". In contrast to \code{tab_types()} the
+class shows the original type as it is imported by haven. This means
+labelled numerics or characters belong to the class haven_labelled.
 }
 \description{
 Tabulate a dataframe's variables' attributes

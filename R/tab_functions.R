@@ -75,8 +75,12 @@ tab_varlabs <- function(df) {
 
   # check if dataframe has labelled variables:
   if (any(map_lgl(df, ~has_attr(.x, "label")))) {
+    # df %>%
+    #   map_dfr(~attr(.x, "label", exact = TRUE) %>% enframe(name = NULL, value = "varlab"), .id = "var")
     df %>%
-      map_dfr(~attr(.x, "label", exact = TRUE) %>% enframe(name = NULL, value = "varlab"), .id = "var")
+      map(~attr(.x, "label", exact = TRUE) ) %>%
+      enframe("var", "varlab") %>%
+      unnest(cols = "varlab")
   }
   else {
     message("No variable in the data.frame has a variable label")

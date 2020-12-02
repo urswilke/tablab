@@ -59,6 +59,7 @@ unattr <- function(df) {
     mutate_if(is.factor, as_labelled) %>%
     mutate_if(is.integer, as.numeric) %>%
     mutate_all(as.vector)
+  # print(df %>% map_chr(typeof))
   stopifnot(unique(map_chr(df, class)) %in% c("character", "numeric"))
   df
 }
@@ -123,3 +124,10 @@ list_join <- function(l, join=full_join, by) {
   l %>% add_list_suffix(setdiff(col_names, by)) %>% reduce(join, by = by)
 }
 
+# Taken from:
+# http://www.cookbook-r.com/Manipulating_data/Comparing_vectors_or_factors_with_NA/
+compareNA <- function(v1, v2) {
+  same <- (v1 == v2) | (is.na(v1) & is.na(v2))
+  same[is.na(same)] <- FALSE
+  same
+}
