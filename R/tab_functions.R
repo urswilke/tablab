@@ -128,7 +128,7 @@ tab_vallabs <- function(df) {
 
     # print(res)
     res <- res %>%
-      imap_dfr(~unnest(.x, cols = c(val, vallab)) %>% rename(!!.y := val))
+      imap_dfr(~rename(.x, !!.y := val) %>% unnest(cols = c(!!.y, vallab)))
     if (!"cv" %in% names(res)) {
       res["cv"] <- NA_character_
     }
