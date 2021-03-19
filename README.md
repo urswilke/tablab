@@ -213,23 +213,23 @@ list(df, df2) %>%
   cmp_all() %>% 
   filter(any_diff)
 #> # A tibble: 15 x 15
-#>    var       n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1 vallab2
-#>    <chr> <int> <dbl> <dbl> <lgl>   <chr> <chr> <lgl>   <chr>   <chr>  
-#>  1 sex       3     1     1 FALSE   <NA>  <NA>  FALSE   MALES   male   
-#>  2 sex       1     1     3 TRUE    <NA>  <NA>  FALSE   MALES   Third …
-#>  3 sex       1     1    NA TRUE    <NA>  <NA>  FALSE   MALES   <NA>   
-#>  4 sex       3     2     2 FALSE   <NA>  <NA>  FALSE   FEMALES female 
-#>  5 sex       1     2     3 TRUE    <NA>  <NA>  FALSE   FEMALES Third …
-#>  6 sex       1     2    NA TRUE    <NA>  <NA>  FALSE   FEMALES <NA>   
-#>  7 age       1    31    NA TRUE    <NA>  <NA>  FALSE   <NA>    <NA>   
-#>  8 age       1    48    NA TRUE    <NA>  <NA>  FALSE   <NA>    <NA>   
-#>  9 mari…     1     2     9 TRUE    <NA>  <NA>  FALSE   steady… other  
-#> 10 mari…     1     2    NA TRUE    <NA>  <NA>  FALSE   steady… <NA>   
-#> 11 mari…     1     4    NA TRUE    <NA>  <NA>  FALSE   marrie… <NA>   
-#> 12 mari…     1     6     9 TRUE    <NA>  <NA>  FALSE   separa… other  
-#> 13 mari…     0    NA     2 TRUE    <NA>  <NA>  FALSE   <NA>    steady…
-#> 14 mari…     0    NA     6 TRUE    <NA>  <NA>  FALSE   <NA>    separa…
-#> 15 new_…     8    NA     1 TRUE    <NA>  <NA>  FALSE   <NA>    <NA>   
+#>    var        n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1      vallab2    
+#>    <chr>  <int> <dbl> <dbl> <lgl>   <chr> <chr> <lgl>   <chr>        <chr>      
+#>  1 sex        3     1     1 FALSE   <NA>  <NA>  FALSE   MALES        male       
+#>  2 sex        1     1     3 TRUE    <NA>  <NA>  FALSE   MALES        Third Gend…
+#>  3 sex        1     1    NA TRUE    <NA>  <NA>  FALSE   MALES        <NA>       
+#>  4 sex        3     2     2 FALSE   <NA>  <NA>  FALSE   FEMALES      female     
+#>  5 sex        1     2     3 TRUE    <NA>  <NA>  FALSE   FEMALES      Third Gend…
+#>  6 sex        1     2    NA TRUE    <NA>  <NA>  FALSE   FEMALES      <NA>       
+#>  7 age        1    31    NA TRUE    <NA>  <NA>  FALSE   <NA>         <NA>       
+#>  8 age        1    48    NA TRUE    <NA>  <NA>  FALSE   <NA>         <NA>       
+#>  9 marit…     1     2     9 TRUE    <NA>  <NA>  FALSE   steady rela… other      
+#> 10 marit…     1     2    NA TRUE    <NA>  <NA>  FALSE   steady rela… <NA>       
+#> 11 marit…     1     4    NA TRUE    <NA>  <NA>  FALSE   married fir… <NA>       
+#> 12 marit…     1     6     9 TRUE    <NA>  <NA>  FALSE   separated    other      
+#> 13 marit…     0    NA     2 TRUE    <NA>  <NA>  FALSE   <NA>         steady rel…
+#> 14 marit…     0    NA     6 TRUE    <NA>  <NA>  FALSE   <NA>         separated  
+#> 15 new_v…     8    NA     1 TRUE    <NA>  <NA>  FALSE   <NA>         <NA>       
 #> # … with 5 more variables: vallab_diff <lgl>, varlab1 <chr>, varlab2 <chr>,
 #> #   varlab_diff <lgl>, any_diff <lgl>
 # %>% 
