@@ -25,12 +25,6 @@ tables
 ``` r
 library(dcmisc)
 
-# Stata-Datensatz laden:
-# df <- haven::read_dta("K:/Projects/DW Hilti Software Strategy/Daten/10_MergeFiles.dta")
-# geht natürlich auch mit SPSS Datensätzen:
-# df <- haven::read_sav("K:/Projects/DW Hilti Software Strategy/Daten/10_MergeFiles.sav")
-# beide Befehle ohne Kommentar schreiben. Das versteht R natürlich nur auf dem  Windows-System...
-# alternativ:
 path <- system.file("examples", "iris.sav", package = "haven")
 df <- haven::read_sav(path)
 ```
