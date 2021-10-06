@@ -59,7 +59,6 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
 <div id="tablab" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#tablab" class="anchor"></a>tablab</h1></div>
@@ -282,28 +281,6 @@
 <span class="co">#                 options = list(scrollX = TRUE))</span></code></pre></div>
 </div>
 </div>
-<div id="alte-sachen" class="section level1">
-<h1 class="hasAnchor">
-<a href="#alte-sachen" class="anchor"></a>Alte Sachen</h1>
-<div id="weitere-infos" class="section level2">
-<h2 class="hasAnchor">
-<a href="#weitere-infos" class="anchor"></a>weitere infos</h2>
-<p>Hilfe anzeigen lassen über: ?tab_varlabs oder ?tab_vallabs oder durch Mit-cursor-auf-eine-der-Funktionen-Gehen und F1 drücken (das geht aber nicht im Kommentar) und nur nachdem die library schon geladen wurde</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># message, wenn keine value label im data.frame sind</span>
-<span class="fu"><a href="reference/tab_vallabs.html">tab_vallabs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 0 × 4</span>
-<span class="co">#&gt; # … with 4 variables: var &lt;chr&gt;, nv &lt;dbl&gt;, cv &lt;chr&gt;, vallab &lt;chr&gt;</span></code></pre></div>
-<p>informative Fehler-Nachricht wenn df kein data.frame ist:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># tab_vallabs(1)</span></code></pre></div>
-<p>erzeugt den Fehler:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Error: df is not a data frame</span></code></pre></div>
-<p>wenn Du anfängst eine der Funktionen zu schreiben, kommt dann auch eine kleine informative Hilfe-Box für die geforderten Eingangs-Argumente, sobald die autocomplete-Vorschäge erscheinen (so wie das Excel auch macht…)</p>
-</div>
-</div>
-
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
