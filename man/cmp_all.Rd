@@ -4,9 +4,14 @@
 \alias{cmp_all}
 \title{Compare counts and labels of a list of dataframes}
 \usage{
-cmp_all(l, id = "id", include_ids = FALSE, spec_diffs = c("nv", "cv",
-  "vallab", "varlab"), include_diffs = TRUE, col_groups = c("spec",
-  "index"))
+cmp_all(
+  l,
+  id = "id",
+  include_ids = FALSE,
+  spec_diffs = c("nv", "cv", "vallab", "varlab"),
+  include_diffs = TRUE,
+  col_groups = c("spec", "index")
+)
 }
 \arguments{
 \item{l}{List of dataframes.}

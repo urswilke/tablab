@@ -56,12 +56,12 @@ Copy of \code{df} with the overwritten cells explained above
 }
 \description{
 longen_id_sum <- function(df, id = "id") {
-df %>%
-tab_cts(id, include_ids = TRUE) %>%
-left_join(df %>% unattr() %>% tab_attrs() %>% select(.data$var, .data$class)) %>%
-group_by(.data$class) %>%
-mutate(val = case_when(class == "numeric" ~ as.numeric(.data$val) %>% as.list(),
-class == "character" ~ .data$val %>% as.list()))
+df \%>\%
+tab_cts(id, include_ids = TRUE) \%>\%
+left_join(df \%>\% unattr() \%>\% tab_attrs() \%>\% select(.data$var, .data$class)) \%>\%
+group_by(.data$class) \%>\%
+mutate(val = case_when(class == "numeric" ~ as.numeric(.data$val) \%>\% as.list(),
+class == "character" ~ .data$val \%>\% as.list()))
 }
 Set variable of a dataframe to a value in the rows of a list of ids.
 }
