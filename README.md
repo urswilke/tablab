@@ -249,35 +249,3 @@ the first dataframe are equal to 1 and 2:
 #   DT::datatable(class = "compact",                   
 #                 options = list(scrollX = TRUE))
 ```
-
-# Alte Sachen
-
-## weitere infos
-
-Hilfe anzeigen lassen über: ?tab\_varlabs oder ?tab\_vallabs oder durch
-Mit-cursor-auf-eine-der-Funktionen-Gehen und F1 drücken (das geht aber
-nicht im Kommentar) und nur nachdem die library schon geladen wurde
-
-``` r
-# message, wenn keine value label im data.frame sind
-tab_vallabs(data.frame(NA))
-#> # A tibble: 0 × 4
-#> # … with 4 variables: var <chr>, nv <dbl>, cv <chr>, vallab <chr>
-```
-
-informative Fehler-Nachricht wenn df kein data.frame ist:
-
-``` r
-# tab_vallabs(1)
-```
-
-erzeugt den Fehler:
-
-``` r
-# Error: df is not a data frame
-```
-
-wenn Du anfängst eine der Funktionen zu schreiben, kommt dann auch eine
-kleine informative Hilfe-Box für die geforderten Eingangs-Argumente,
-sobald die autocomplete-Vorschäge erscheinen (so wie das Excel auch
-macht…)
