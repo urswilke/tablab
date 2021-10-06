@@ -19,24 +19,24 @@ their labels of labelled dataframes.
 Install the package via:
 
 ``` r
-# install.packages("K:/Tools/R/self-written packages/tablab/", type = "source", repos = NULL)
+devtools::install_github("urswilke/tablab")
 ```
 
 ## Introduction
 
 The package tablab mainly consists of 2 families of functions:
 
-  - `tab_*` tabulating count and label information of dataframes
+-   `tab_*` tabulating count and label information of dataframes
     (denoted `df`), and
-  - `cmp_*` comparing this data for all dataframes in a list `l`.
+-   `cmp_*` comparing this data for all dataframes in a list `l`.
 
 The following attributes are tabulated / compared:
 
-  - `var` The name of the variables in the dataframe(s).
-  - `type` The type of the variables in the dataframe(s).
-  - `varlab` The variable label of the variable in the dataframe.
-  - `val` The value of the variable in the dataframe.
-  - `vallab` The value label of the variable in the dataframe.
+-   `var` The name of the variables in the dataframe(s).
+-   `type` The type of the variables in the dataframe(s).
+-   `varlab` The variable label of the variable in the dataframe.
+-   `val` The value of the variable in the dataframe.
+-   `vallab` The value label of the variable in the dataframe.
 
 Comparisons further include `ex`, denoting whether the value is existent
 in the dataframe.
@@ -67,7 +67,7 @@ df <- tibble(id = 1:10,
                                             "widowed" = 8))
        )
 df
-#> # A tibble: 10 x 4
+#> # A tibble: 10 × 4
 #>       id         sex   age                 marital
 #>    <int>   <dbl+lbl> <dbl>               <dbl+lbl>
 #>  1     1 2 [FEMALES]    24 1 [single]             
@@ -100,14 +100,14 @@ Tabulate the variable labels for the dataframes in the list:
 ``` r
 list(df, df2) %>% map(tab_varlabs)
 #> [[1]]
-#> # A tibble: 2 x 2
+#> # A tibble: 2 × 2
 #>   var     varlab        
 #>   <chr>   <chr>         
 #> 1 sex     sex           
 #> 2 marital marital status
 #> 
 #> [[2]]
-#> # A tibble: 3 x 2
+#> # A tibble: 3 × 2
 #>   var     varlab        
 #>   <chr>   <chr>         
 #> 1 sex     sex           
@@ -125,7 +125,7 @@ Tabulate the count comparison:
 
 ``` r
 list(df, df2) %>% cmp_cts()
-#> # A tibble: 25 x 6
+#> # A tibble: 25 × 6
 #>    var     nv1 cv1     nv2 cv2       n
 #>    <chr> <int> <chr> <int> <chr> <int>
 #>  1 sex       1 <NA>      1 <NA>      3
@@ -155,7 +155,7 @@ df2[3:4,"marital"] <- 9
 attr(df2$marital, "labels") <- c(attr(df2$marital, "labels"), c("other" = 9))
 
 df2
-#> # A tibble: 8 x 5
+#> # A tibble: 8 × 5
 #>      id              sex   age                 marital new_var
 #>   <int>        <dbl+lbl> <dbl>               <dbl+lbl>   <dbl>
 #> 1     1 3 [Third Gender]    24 1 [single]                    1
@@ -173,7 +173,7 @@ Tabulate the variable labels for the dataframes in the list:
 ``` r
 list(df, df2) %>% map(tab_vallabs)
 #> [[1]]
-#> # A tibble: 10 x 4
+#> # A tibble: 10 × 4
 #>    var        nv vallab              cv   
 #>    <chr>   <dbl> <chr>               <chr>
 #>  1 sex         1 MALES               <NA> 
@@ -188,7 +188,7 @@ list(df, df2) %>% map(tab_vallabs)
 #> 10 marital     8 widowed             <NA> 
 #> 
 #> [[2]]
-#> # A tibble: 12 x 4
+#> # A tibble: 12 × 4
 #>    var        nv vallab              cv   
 #>    <chr>   <dbl> <chr>               <chr>
 #>  1 sex         1 male                <NA> 
@@ -212,24 +212,24 @@ differences:
 list(df, df2) %>% 
   cmp_all() %>% 
   filter(any_diff)
-#> # A tibble: 15 x 15
-#>    var        n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1      vallab2    
-#>    <chr>  <int> <dbl> <dbl> <lgl>   <chr> <chr> <lgl>   <chr>        <chr>      
-#>  1 sex        3     1     1 FALSE   <NA>  <NA>  FALSE   MALES        male       
-#>  2 sex        1     1     3 TRUE    <NA>  <NA>  FALSE   MALES        Third Gend…
-#>  3 sex        1     1    NA TRUE    <NA>  <NA>  FALSE   MALES        <NA>       
-#>  4 sex        3     2     2 FALSE   <NA>  <NA>  FALSE   FEMALES      female     
-#>  5 sex        1     2     3 TRUE    <NA>  <NA>  FALSE   FEMALES      Third Gend…
-#>  6 sex        1     2    NA TRUE    <NA>  <NA>  FALSE   FEMALES      <NA>       
-#>  7 age        1    31    NA TRUE    <NA>  <NA>  FALSE   <NA>         <NA>       
-#>  8 age        1    48    NA TRUE    <NA>  <NA>  FALSE   <NA>         <NA>       
-#>  9 marit…     1     2     9 TRUE    <NA>  <NA>  FALSE   steady rela… other      
-#> 10 marit…     1     2    NA TRUE    <NA>  <NA>  FALSE   steady rela… <NA>       
-#> 11 marit…     1     4    NA TRUE    <NA>  <NA>  FALSE   married fir… <NA>       
-#> 12 marit…     1     6     9 TRUE    <NA>  <NA>  FALSE   separated    other      
-#> 13 marit…     0    NA     2 TRUE    <NA>  <NA>  FALSE   <NA>         steady rel…
-#> 14 marit…     0    NA     6 TRUE    <NA>  <NA>  FALSE   <NA>         separated  
-#> 15 new_v…     8    NA     1 TRUE    <NA>  <NA>  FALSE   <NA>         <NA>       
+#> # A tibble: 15 × 15
+#>    var         n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1     vallab2    
+#>    <chr>   <int> <dbl> <dbl> <lgl>   <chr> <chr> <lgl>   <chr>       <chr>      
+#>  1 sex         3     1     1 FALSE   <NA>  <NA>  FALSE   MALES       male       
+#>  2 sex         1     1     3 TRUE    <NA>  <NA>  FALSE   MALES       Third Gend…
+#>  3 sex         1     1    NA TRUE    <NA>  <NA>  FALSE   MALES       <NA>       
+#>  4 sex         3     2     2 FALSE   <NA>  <NA>  FALSE   FEMALES     female     
+#>  5 sex         1     2     3 TRUE    <NA>  <NA>  FALSE   FEMALES     Third Gend…
+#>  6 sex         1     2    NA TRUE    <NA>  <NA>  FALSE   FEMALES     <NA>       
+#>  7 age         1    31    NA TRUE    <NA>  <NA>  FALSE   <NA>        <NA>       
+#>  8 age         1    48    NA TRUE    <NA>  <NA>  FALSE   <NA>        <NA>       
+#>  9 marital     1     2     9 TRUE    <NA>  <NA>  FALSE   steady rel… other      
+#> 10 marital     1     2    NA TRUE    <NA>  <NA>  FALSE   steady rel… <NA>       
+#> 11 marital     1     4    NA TRUE    <NA>  <NA>  FALSE   married fi… <NA>       
+#> 12 marital     1     6     9 TRUE    <NA>  <NA>  FALSE   separated   other      
+#> 13 marital     0    NA     2 TRUE    <NA>  <NA>  FALSE   <NA>        steady rel…
+#> 14 marital     0    NA     6 TRUE    <NA>  <NA>  FALSE   <NA>        separated  
+#> 15 new_var     8    NA     1 TRUE    <NA>  <NA>  FALSE   <NA>        <NA>       
 #> # … with 5 more variables: vallab_diff <lgl>, varlab1 <chr>, varlab2 <chr>,
 #> #   varlab_diff <lgl>, any_diff <lgl>
 # %>% 
@@ -259,10 +259,9 @@ Mit-cursor-auf-eine-der-Funktionen-Gehen und F1 drücken (das geht aber
 nicht im Kommentar) und nur nachdem die library schon geladen wurde
 
 ``` r
-  
 # message, wenn keine value label im data.frame sind
 tab_vallabs(data.frame(NA))
-#> # A tibble: 0 x 4
+#> # A tibble: 0 × 4
 #> # … with 4 variables: var <chr>, nv <dbl>, cv <chr>, vallab <chr>
 ```
 

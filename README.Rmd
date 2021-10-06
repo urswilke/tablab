@@ -30,8 +30,8 @@ The goal of tablab is to tabulate and compare variables' values and their labels
 
 Install the package via:
 
-```{r, install}
-# install.packages("K:/Tools/R/self-written packages/tablab/", type = "source", repos = NULL)
+```{r, install, eval=FALSE}
+devtools::install_github("urswilke/tablab")
 ```
 
 ## Introduction
