@@ -5,8 +5,12 @@ dftest <- data.frame(id = 1:3, x, y)
 vall <- tab_varlabs(dftest)
 varl <- tab_varlabs(dftest)
 allstats <- tab_all(dftest, id = "id")
+allattrs <- tab_attrs(dftest)
 test_that("result of tab_vallabs is a data.frame", {
   expect_true(is.data.frame(vall))
+})
+test_that("result of tab_vallabs is a data.frame", {
+  expect_true(is.data.frame(varl))
 })
 
 test_that("variable label table print is reproduced", {
@@ -19,8 +23,13 @@ test_that("value label table print is reproduced", {
     vall
   })
 })
-test_that("all attributes table print is reproduced", {
+test_that("all table print is reproduced", {
   testthat::expect_snapshot_output({
     allstats
+  })
+})
+test_that("all attributes table print is reproduced", {
+  testthat::expect_snapshot_output({
+    allattrs
   })
 })
