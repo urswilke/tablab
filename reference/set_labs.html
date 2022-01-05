@@ -107,9 +107,14 @@ value labels stored in the attribute "labels" (For more information type
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10 1<span style="color: #949494;"> [MALES]</span>      48 2<span style="color: #949494;"> [steady relationship]</span></span>
 <span class="r-in"><span class="co"># store all labels in df_attr:</span></span>
 <span class="r-in"><span class="va">df_attrs</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="tab_attrs.html">tab_attrs</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Result 2 must be a single string, not a character vector of length 3</span>
 <span class="r-in"><span class="va">df_attrs</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'df_attrs' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   var     varlab    val       vallab    labels    label          class  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> fbnr    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #BB0000;">NA</span>             integer</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sex     <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;dbl [2]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;dbl [2]&gt;</span> sex            double </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> age     <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #BB0000;">NA</span>             double </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> marital <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;dbl [8]&gt;</span> <span style="color: #949494;">&lt;chr [8]&gt;</span> <span style="color: #949494;">&lt;dbl [8]&gt;</span> marital status double </span>
 <span class="r-in"><span class="co"># Remove all attributes from df:</span></span>
 <span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_all</a></span><span class="op">(</span><span class="va">as.vector</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">df</span></span>
@@ -132,21 +137,20 @@ value labels stored in the attribute "labels" (For more information type
 <span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">map2_dfc</a></span><span class="op">(</span><span class="va">.</span>,</span>
 <span class="r-in">                  <span class="va">df_attrs</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/transpose.html" class="external-link">transpose</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span class="r-in">                  <span class="op">~</span><span class="op">{</span><span class="fu">set_labs</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">$</span><span class="va">labels</span>, <span class="va">.y</span><span class="op">$</span><span class="va">varlab</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in purrr::transpose(.):</span> object 'df_attrs' not found</span>
 <span class="r-in"><span class="va">df</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fbnr   sex   age marital</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1     2    24       1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     2     1    23       7</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     3     2    23       2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     4     1    41       6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     5     1    23       4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     6     2    39       5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     7     2    30       3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8     1    18       8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9     2    31       4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10     1    48       2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fbnr         sex   age                 marital</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1 2<span style="color: #949494;"> [FEMALES]</span>    24 1<span style="color: #949494;"> [single]</span>             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     2 1<span style="color: #949494;"> [MALES]</span>      23 7<span style="color: #949494;"> [divorced]</span>           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     3 2<span style="color: #949494;"> [FEMALES]</span>    23 2<span style="color: #949494;"> [steady relationship]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>     4 1<span style="color: #949494;"> [MALES]</span>      41 6<span style="color: #949494;"> [separated]</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>     5 1<span style="color: #949494;"> [MALES]</span>      23 4<span style="color: #949494;"> [married first time]</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>     6 2<span style="color: #949494;"> [FEMALES]</span>    39 5<span style="color: #949494;"> [remarried]</span>          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>     7 2<span style="color: #949494;"> [FEMALES]</span>    30 3<span style="color: #949494;"> [living with partner]</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8 1<span style="color: #949494;"> [MALES]</span>      18 8                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9 2<span style="color: #949494;"> [FEMALES]</span>    31 4<span style="color: #949494;"> [married first time]</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10 1<span style="color: #949494;"> [MALES]</span>      48 2<span style="color: #949494;"> [steady relationship]</span></span>
 <span class="r-in"><span class="co"># Constructed in this way, the dataframe including the label information could be</span></span>
 <span class="r-in"><span class="co"># exported to SPSS or Stata via haven:</span></span>
 <span class="r-in"><span class="co"># haven::write_sav(df, "test.sav")</span></span>
