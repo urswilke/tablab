@@ -222,7 +222,7 @@ tab_attrs <- function(df) {
       .x[["class"]] <- NULL;
       .x}) %>%
     map_dfr(~tibble(!!!.x), .id = "var") %>%
-    full_join(df %>% map_chr(class) %>% enframe("var", "class"), by = "var") %>%
+    full_join(df %>% map_chr(typeof) %>% enframe("var", "class"), by = "var") %>%
     # filter(!sapply(varlab, is.null)) %>%
     select(.data$var, .data$varlab, .data$val, .data$vallab, .data$labels, everything())
 }
