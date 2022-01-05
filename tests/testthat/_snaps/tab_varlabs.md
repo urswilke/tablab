@@ -1,0 +1,28 @@
+# variable label table print is reproduced
+
+    # A tibble: 2 x 2
+      var   varlab      
+      <chr> <chr>       
+    1 x     varlab      
+    2 y     char_var_lab
+
+# value label table print is reproduced
+
+    # A tibble: 2 x 2
+      var   varlab      
+      <chr> <chr>       
+    1 x     varlab      
+    2 y     char_var_lab
+
+# all attributes table print is reproduced
+
+    # A tibble: 6 x 6
+      var      nv cv        n vallab varlab      
+      <chr> <int> <chr> <int> <chr>  <chr>       
+    1 x         1 <NA>      1 1lab   varlab      
+    2 x         2 <NA>      1 2lab   varlab      
+    3 x         3 <NA>      1 3lab   varlab      
+    4 y        NA A         1 1lab   char_var_lab
+    5 y        NA B         1 2lab   char_var_lab
+    6 y        NA C         1 3lab   char_var_lab
+
