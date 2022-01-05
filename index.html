@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tablab</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -59,22 +55,22 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="tablab" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#tablab" class="anchor"></a>tablab</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="tablab">tablab<a class="anchor" aria-label="anchor" href="#tablab"></a>
+</h1></div>
 <!-- badges: start -->
 
 <p>The goal of tablab is to tabulate and compare variables’ values and their labels of labelled dataframes.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Install the package via:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"urswilke/tablab"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>The package tablab mainly consists of 2 families of functions:</p>
 <ul>
 <li>
@@ -97,24 +93,24 @@
 </ul>
 <p>Comparisons further include <code>ex</code>, denoting whether the value is existent in the dataframe.</p>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tablab</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tablab</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
 
-<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"iris.sav"</span>, package <span class="op">=</span> <span class="st">"haven"</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html">read_sav</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
+<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"iris.sav"</span>, package <span class="op">=</span> <span class="st">"haven"</span><span class="op">)</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,
-       sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,
+       sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,
                              label <span class="op">=</span> <span class="st">"sex"</span>,
-                             labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
-       age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,
-       marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,
+                             labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
+       age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,
+       marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,
                                  label <span class="op">=</span> <span class="st">"marital status"</span>,
-                                 labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,
+                                 labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,
                                             <span class="st">"steady relationship"</span> <span class="op">=</span> <span class="fl">2</span>,
                                             <span class="st">"living with partner"</span> <span class="op">=</span> <span class="fl">3</span>,
                                             <span class="st">"married first time"</span> <span class="op">=</span> <span class="fl">4</span>,
@@ -140,16 +136,16 @@
 <p>Create modified copy:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df2</span> <span class="op">&lt;-</span> 
-  <span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="va">df</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># Remove rows 9 &amp; 10:</span>
-  <span class="fu">slice</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">slice</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># Create Variable new_var equal to 1:</span>
   <span class="fu">mutate</span><span class="op">(</span>new_var <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="co"># Change variable label:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">new_var</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="st">"new something"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">new_var</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="st">"new something"</span></code></pre></div>
 <p>Tabulate the variable labels for the dataframes in the list:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">map</span><span class="op">(</span><span class="va">tab_varlabs</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">map</span><span class="op">(</span><span class="va">tab_varlabs</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; # A tibble: 2 × 2</span>
 <span class="co">#&gt;   var     varlab        </span>
@@ -169,7 +165,7 @@
 <code class="sourceCode R"><span class="va">df2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="st">"sex"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">3</span></code></pre></div>
 <p>Tabulate the count comparison:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/cmp_cts.html">cmp_cts</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/cmp_cts.html">cmp_cts</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 25 × 6</span>
 <span class="co">#&gt;    var     nv1 cv1     nv2 cv2       n</span>
 <span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt;</span>
@@ -188,13 +184,13 @@
 <span class="co">#                                   options = list(scrollX = TRUE))</span></code></pre></div>
 <p>More label and value modifications:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"labels"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>male <span class="op">=</span> <span class="fl">1</span>, female <span class="op">=</span> <span class="fl">2</span>, `Third Gender` <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"labels"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>male <span class="op">=</span> <span class="fl">1</span>, female <span class="op">=</span> <span class="fl">2</span>, `Third Gender` <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="co"># Remove variable label:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="cn">NULL</span>
+<span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="cn">NULL</span>
 <span class="co"># Change variable "marital" to 9 in rows 3 &amp; 4:</span>
 <span class="va">df2</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="st">"marital"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">9</span>
 <span class="co"># Add another value label for the code 9:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"other"</span> <span class="op">=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"other"</span> <span class="op">=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">df2</span>
 <span class="co">#&gt; # A tibble: 8 × 5</span>
@@ -210,7 +206,7 @@
 <span class="co">#&gt; 8     8 1 [male]            18 8 [widowed]                   1</span></code></pre></div>
 <p>Tabulate the variable labels for the dataframes in the list:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">map</span><span class="op">(</span><span class="va">tab_vallabs</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu">map</span><span class="op">(</span><span class="va">tab_vallabs</span><span class="op">)</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; # A tibble: 10 × 4</span>
 <span class="co">#&gt;    var        nv vallab              cv   </span>
@@ -244,9 +240,9 @@
 <span class="co">#&gt; 12 marital     9 other               &lt;NA&gt;</span></code></pre></div>
 <p>Tabulate the comparison of count and label data and only show rows with differences:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="reference/cmp_all.html">cmp_all</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">any_diff</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="reference/cmp_all.html">cmp_all</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">any_diff</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 15 × 15</span>
 <span class="co">#&gt;    var         n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1     vallab2    </span>
 <span class="co">#&gt;    &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;       &lt;chr&gt;      </span>
@@ -285,43 +281,55 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Urs Wilke <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7257-2524" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing tablab</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
-<li><a href="https://cran.r-project.org/package=tablab"><img src="https://www.r-pkg.org/badges/version/tablab" alt="CRAN status"></a></li>
+<li>Urs Wilke <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-7257-2524" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://cran.r-project.org/package=tablab" class="external-link"><img src="https://www.r-pkg.org/badges/version/tablab" alt="CRAN status"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Urs Wilke.</p>
+  <p></p>
+<p>Developed by Urs Wilke.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -329,6 +337,8 @@
 
   
 
+
+  
 
   </body>
 </html>
