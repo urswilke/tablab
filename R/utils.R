@@ -40,6 +40,20 @@ longen <- function(df, id = "id") {
   res
 
 }
+#' Remove attributes from a vector
+#'
+#' @param x vector
+#'
+#' @return x with attributes removed
+#' @export
+#'
+#' @examples
+#' x <- haven::labelled(1:3, label = "variable_label")
+#' strip_attributes(x)
+strip_attributes <- function(x) {
+  attributes(x) <- NULL
+  x
+}
 
 #' Remove attributes from all variables of a dataframe
 #'
@@ -56,10 +70,11 @@ longen <- function(df, id = "id") {
 
 unattr <- function(df) {
   df <- df %>%
-    mutate_if(is.factor, as_labelled) %>%
-    mutate_if(is.integer, as.numeric) %>%
-    mutate_all(as.vector)
-  # print(df %>% map_chr(typeof))
+    mutate(across(.fns = strip_attributes)) %>%
+  #   mutate_if(is.factor, as_labelled) %>%
+    mutate_if(is.integer, as.numeric)
+  #   mutate_all(as.vector)
+  # # print(df %>% map_chr(typeof))
   stopifnot(unique(map_chr(df, class)) %in% c("character", "numeric"))
   df
 }
