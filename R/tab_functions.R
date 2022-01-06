@@ -270,6 +270,21 @@ tab_attrs <- function(df) {
 #'   )
 #' tab_all(df, "fbnr")
 tab_all <- function(df, id, include_ids = FALSE) {
+  #does something similar, but doesn't handle the types right:
+  # df %>% purrr::imap_dfr(~tibble::tibble(
+  #   var = .y,
+  #   varlab = list(attr(.x, "label", exact = TRUE)),
+  #   vallab = list(attr(.x, "labels")),
+  #   counts = list(
+  #     table("value" = tablab::strip_attributes(.x)) %>%
+  #       as.data.frame(responseName = "n")
+  #   ),
+  #   type = list(typeof(.x))
+  # )) %>%
+  #   unnest(c(varlab, type), keep_empty = TRUE) %>%
+  #   pivot_wider(names_from = type, values_from = vallab) %>%
+  #   unnest(c(integer, character, counts), keep_empty = TRUE)
+
   df %>%
     tab_cts(id, include_ids) %>%
     full_join(df %>% tab_vallabs(), by = c("var", "nv", "cv")) %>%
