@@ -38,15 +38,76 @@ The following attributes are tabulated / compared:
 -   `val` The value of the variable in the dataframe.
 -   `vallab` The value label of the variable in the dataframe.
 
-Comparisons further include `ex`, denoting whether the value is existent
-in the dataframe.
+## Examples
 
-## Example
+### Simple example
+
+Assume you have a dataframe of labelled variables:
 
 ``` r
 library(tablab)
-library(tidyverse)
+library(dplyr)
+library(purrr)
+set.seed(1)
 
+x <- haven::labelled(
+  sample(1:10), 
+  label = "variable label", 
+  labels = c("1lab" =1 , "2lab" = 2, "3lab" = 3)
+)
+y <- haven::labelled(
+  LETTERS[sample(2:6, size = 10, replace = TRUE)], 
+  label = "char_var_lab", 
+  labels = c("Alab" ="A" , "Blab" = "B", "Clab" = "C")
+)
+
+df <- data.frame(id = 1:10, x, y)
+df
+#>    id  x y
+#> 1   1  9 D
+#> 2   2  4 D
+#> 3   3  7 B
+#> 4   4  1 F
+#> 5   5  2 F
+#> 6   6  5 C
+#> 7   7  3 C
+#> 8   8 10 B
+#> 9   9  6 F
+#> 10 10  8 F
+```
+
+tablab consists of functions to tabulate summaries of these labelled
+dataframes. See for instance the function:
+
+``` r
+tab_all(df)
+#> # A tibble: 15 × 6
+#>    var      nv cv        n vallab varlab        
+#>    <chr> <int> <chr> <int> <chr>  <chr>         
+#>  1 x         1 <NA>      1 1lab   variable label
+#>  2 x         2 <NA>      1 2lab   variable label
+#>  3 x         3 <NA>      1 3lab   variable label
+#>  4 x         4 <NA>      1 <NA>   variable label
+#>  5 x         5 <NA>      1 <NA>   variable label
+#>  6 x         6 <NA>      1 <NA>   variable label
+#>  7 x         7 <NA>      1 <NA>   variable label
+#>  8 x         8 <NA>      1 <NA>   variable label
+#>  9 x         9 <NA>      1 <NA>   variable label
+#> 10 x        10 <NA>      1 <NA>   variable label
+#> 11 y        NA B         2 Blab   char_var_lab  
+#> 12 y        NA C         2 Clab   char_var_lab  
+#> 13 y        NA D         2 <NA>   char_var_lab  
+#> 14 y        NA F         4 <NA>   char_var_lab  
+#> 15 y        NA A        NA Alab   char_var_lab
+```
+
+The result shows for every variable `var` in the data, its
+numeric/character values `nv`/`cv`, their counts `n`, as well as the
+variable and value labels `varlab` and `vallab`.
+
+### More examples
+
+``` r
 
 path <- system.file("examples", "iris.sav", package = "haven")
 df <- haven::read_sav(path)
@@ -139,8 +200,6 @@ list(df, df2) %>% cmp_cts()
 #>  9 age      24 <NA>     24 <NA>      1
 #> 10 age      30 <NA>     30 <NA>      1
 #> # … with 15 more rows
-# %>% DT::datatable(class = "compact",                   
-#                                   options = list(scrollX = TRUE))
 ```
 
 More label and value modifications:
@@ -232,20 +291,4 @@ list(df, df2) %>%
 #> 15 new_var     8    NA     1 TRUE    <NA>  <NA>  FALSE   <NA>        <NA>       
 #> # … with 5 more variables: vallab_diff <lgl>, varlab1 <chr>, varlab2 <chr>,
 #> #   varlab_diff <lgl>, any_diff <lgl>
-# %>% 
-#   DT::datatable(class = "compact",                   
-#                 options = list(scrollX = TRUE))
-```
-
-Show all cases (including a column with the ids), where the values in
-the first dataframe are equal to 1 and 2:
-
-``` r
-# list(df, df2) %>% 
-#   cmp_all(include_ids = TRUE, 
-#           spec_diffs = c("val"), 
-#           col_groups = "spec") %>% 
-#   filter(val1 %in% 1:2) %>% 
-#   DT::datatable(class = "compact",                   
-#                 options = list(scrollX = TRUE))
 ```

@@ -49,14 +49,43 @@ The following attributes are tabulated / compared:
 * `val` The value of the variable in the dataframe. 
 * `vallab` The value label of the variable in the dataframe. 
 
-Comparisons further include `ex`, denoting whether the value is existent in the dataframe.
 
-## Example
+## Examples
 
+### Simple example
+Assume you have a dataframe of labelled variables:
+
+```{r}
+library(tablab)
+library(dplyr)
+library(purrr)
+set.seed(1)
+
+x <- haven::labelled(
+  sample(1:10), 
+  label = "variable label", 
+  labels = c("1lab" =1 , "2lab" = 2, "3lab" = 3)
+)
+y <- haven::labelled(
+  LETTERS[sample(2:6, size = 10, replace = TRUE)], 
+  label = "char_var_lab", 
+  labels = c("Alab" ="A" , "Blab" = "B", "Clab" = "C")
+)
+
+df <- data.frame(id = 1:10, x, y)
+df
+```
+
+tablab consists of functions to tabulate summaries of these labelled dataframes. See for instance the function:
+```{r}
+tab_all(df)
+```
+
+The result shows for every variable `var` in the data, its numeric/character values `nv`/`cv`, their counts `n`, as well as the variable and value labels `varlab` and `vallab`.
+
+### More examples
 
 ```{r data}
-library(tablab)
-library(tidyverse)
 
 
 path <- system.file("examples", "iris.sav", package = "haven")
@@ -111,8 +140,6 @@ Tabulate the count comparison:
 
 ```{r, tab_cts}
 list(df, df2) %>% cmp_cts()
-# %>% DT::datatable(class = "compact",                   
-#                                   options = list(scrollX = TRUE))
 
 ```
 
@@ -145,20 +172,5 @@ Tabulate the comparison of count and label data and only show rows with differen
 list(df, df2) %>% 
   cmp_all() %>% 
   filter(any_diff)
-# %>% 
-#   DT::datatable(class = "compact",                   
-#                 options = list(scrollX = TRUE))
-```
-
-Show all cases (including a column with the ids), where the values in the first dataframe are equal to 1 and 2:
-
-```{r, val1_1or2}
-# list(df, df2) %>% 
-#   cmp_all(include_ids = TRUE, 
-#           spec_diffs = c("val"), 
-#           col_groups = "spec") %>% 
-#   filter(val1 %in% 1:2) %>% 
-#   DT::datatable(class = "compact",                   
-#                 options = list(scrollX = TRUE))
 ```
 
