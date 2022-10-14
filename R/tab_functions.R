@@ -83,7 +83,7 @@ tab_varlabs <- function(df) {
       unnest(cols = "varlab")
   }
   else {
-    message("No variable in the data.frame has a variable label")
+    # message("No variable in the data.frame has a variable label")
     tibble(var = character(), varlab = character())
   }
 
@@ -145,7 +145,7 @@ tab_vallabs <- function(df) {
   }
   # if no labelled variables exist, return empty tibble:
   else {
-    message("no variable in data.frame of type haven::labelled")
+    # message("no variable in data.frame of type haven::labelled")
     tibble(var = character(), nv = double(), cv = character(), vallab = character())
   }
 }
