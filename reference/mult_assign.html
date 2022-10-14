@@ -44,37 +44,44 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mult_assign</span><span class="op">(</span><span class="va">df</span>, <span class="va">id</span>, <span class="va">df_cts</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mult_assign</span><span class="op">(</span><span class="va">df</span>, <span class="va">id</span>, <span class="va">df_cts</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>The dataframe to be modified</p></dd>
+
+
 <dt>id</dt>
 <dd><p>The name of the id column (character vector)</p></dd>
+
+
 <dt>df_cts</dt>
 <dd><p>A dataframe including the following columns: "var", "val" &amp;
 "ids", such as generated, e.g., by tab_cts(df, include_ids = TRUE)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The variables <code>var</code> in the dataframe df are set to val for all
+    
+
+<p>The variables <code>var</code> in the dataframe df are set to val for all
 the ids in <code>ids</code>. This done for every tripple of these variables
 contained in the rows of df_cts</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>fbnr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
-<span class="r-in">             sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">             age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Produce data summary:</span></span>
-<span class="r-in"><span class="va">df_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="tab_cts.html">tab_cts</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"fbnr"</span>, include_ids <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Take the id column of df and reassign variables with all the values given in df_cts:</span></span>
-<span class="r-in"><span class="va">df_copy</span> <span class="op">&lt;-</span> <span class="fu">mult_assign</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="st">"fbnr"</span><span class="op">]</span>, <span class="st">"fbnr"</span>, <span class="va">df_cts</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Now both should be equal</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df_copy</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>fbnr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span></span>
+<span class="r-in"><span>             sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Produce data summary:</span></span></span>
+<span class="r-in"><span><span class="va">df_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="tab_cts.html">tab_cts</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"fbnr"</span>, include_ids <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Take the id column of df and reassign variables with all the values given in df_cts:</span></span></span>
+<span class="r-in"><span><span class="va">df_copy</span> <span class="op">&lt;-</span> <span class="fu">mult_assign</span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="st">"fbnr"</span><span class="op">]</span>, <span class="st">"fbnr"</span>, <span class="va">df_cts</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Now both should be equal</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df_copy</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>
@@ -90,7 +97,7 @@ contained in the rows of df_cts</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

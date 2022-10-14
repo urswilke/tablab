@@ -44,51 +44,61 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tab_cts</span><span class="op">(</span><span class="va">df</span>, id <span class="op">=</span> <span class="st">"id"</span>, include_ids <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tab_cts</span><span class="op">(</span><span class="va">df</span>, id <span class="op">=</span> <span class="st">"id"</span>, include_ids <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>df</dt>
 <dd><p>Dataframe</p></dd>
+
+
 <dt>id</dt>
 <dd><p>Character string of the id variable</p></dd>
+
+
 <dt>include_ids</dt>
 <dd><p>Logical denoting whether a list column <code>ids</code> should
 be included in the results.
 The ids in each list show at which values of
 <code>id</code> the variable <code>var</code> contains the value <code>val</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Dataframe consisting of columns <code>var</code>, <code>val</code> &amp; <code>n</code>containing a tabulation of the counts of variables' values.</p>
+    
+
+<p>Dataframe consisting of columns <code>var</code>, <code>val</code> &amp; <code>n</code></p>
+
+
+<p>containing a tabulation of the counts of variables' values.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    fbnr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
-<span class="r-in">    sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">                          label <span class="op">=</span> <span class="st">"sex"</span>,</span>
-<span class="r-in">                          labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,</span>
-<span class="r-in">    marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">      label <span class="op">=</span> <span class="st">"marital status"</span>,</span>
-<span class="r-in">      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">        <span class="st">"steady relationship"</span> <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">        <span class="st">"living with partner"</span> <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">        <span class="st">"married first time"</span> <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">        <span class="st">"remarried"</span> <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">        <span class="st">"separated"</span> <span class="op">=</span> <span class="fl">6</span>,</span>
-<span class="r-in">        <span class="st">"divorced"</span> <span class="op">=</span> <span class="fl">7</span>,</span>
-<span class="r-in">        <span class="st">"widowed"</span> <span class="op">=</span> <span class="fl">8</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="fu">tab_cts</span><span class="op">(</span><span class="va">df</span>, <span class="st">"fbnr"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    fbnr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                          label <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
+<span class="r-in"><span>                          labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      label <span class="op">=</span> <span class="st">"marital status"</span>,</span></span>
+<span class="r-in"><span>      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"steady relationship"</span> <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"living with partner"</span> <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"married first time"</span> <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"remarried"</span> <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"separated"</span> <span class="op">=</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"divorced"</span> <span class="op">=</span> <span class="fl">7</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"widowed"</span> <span class="op">=</span> <span class="fl">8</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">tab_cts</span><span class="op">(</span><span class="va">df</span>, <span class="st">"fbnr"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    var        nv cv        n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -124,7 +134,7 @@ The ids in each list show at which values of
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

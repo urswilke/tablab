@@ -59,14 +59,13 @@
 <div class="page-header"><h1 id="tablab">tablab<a class="anchor" aria-label="anchor" href="#tablab"></a>
 </h1></div>
 <!-- badges: start -->
-
 <p>The goal of tablab is to tabulate and compare variables’ values and their labels of labelled dataframes.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Install the package via:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"urswilke/tablab"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"urswilke/tablab"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -100,223 +99,223 @@
 </h3>
 <p>Assume you have a dataframe of labelled variables:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tablab</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org" class="external-link">purrr</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>, 
-  label <span class="op">=</span> <span class="st">"variable label"</span>, 
-  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1lab"</span> <span class="op">=</span><span class="fl">1</span> , <span class="st">"2lab"</span> <span class="op">=</span> <span class="fl">2</span>, <span class="st">"3lab"</span> <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span>
-  <span class="va">LETTERS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span>, size <span class="op">=</span> <span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span>, 
-  label <span class="op">=</span> <span class="st">"char_var_lab"</span>, 
-  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alab"</span> <span class="op">=</span><span class="st">"A"</span> , <span class="st">"Blab"</span> <span class="op">=</span> <span class="st">"B"</span>, <span class="st">"Clab"</span> <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-<span class="va">df</span>
-<span class="co">#&gt;    id  x y</span>
-<span class="co">#&gt; 1   1  9 D</span>
-<span class="co">#&gt; 2   2  4 D</span>
-<span class="co">#&gt; 3   3  7 B</span>
-<span class="co">#&gt; 4   4  1 F</span>
-<span class="co">#&gt; 5   5  2 F</span>
-<span class="co">#&gt; 6   6  5 C</span>
-<span class="co">#&gt; 7   7  3 C</span>
-<span class="co">#&gt; 8   8 10 B</span>
-<span class="co">#&gt; 9   9  6 F</span>
-<span class="co">#&gt; 10 10  8 F</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">tablab</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>, </span>
+<span>  label <span class="op">=</span> <span class="st">"variable label"</span>, </span>
+<span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1lab"</span> <span class="op">=</span><span class="fl">1</span> , <span class="st">"2lab"</span> <span class="op">=</span> <span class="fl">2</span>, <span class="st">"3lab"</span> <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span></span>
+<span>  <span class="va">LETTERS</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span>, size <span class="op">=</span> <span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>  label <span class="op">=</span> <span class="st">"char_var_lab"</span>, </span>
+<span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alab"</span> <span class="op">=</span><span class="st">"A"</span> , <span class="st">"Blab"</span> <span class="op">=</span> <span class="st">"B"</span>, <span class="st">"Clab"</span> <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span>
+<span><span class="va">df</span></span>
+<span><span class="co">#&gt;    id  x y</span></span>
+<span><span class="co">#&gt; 1   1  9 D</span></span>
+<span><span class="co">#&gt; 2   2  4 D</span></span>
+<span><span class="co">#&gt; 3   3  7 B</span></span>
+<span><span class="co">#&gt; 4   4  1 F</span></span>
+<span><span class="co">#&gt; 5   5  2 F</span></span>
+<span><span class="co">#&gt; 6   6  5 C</span></span>
+<span><span class="co">#&gt; 7   7  3 C</span></span>
+<span><span class="co">#&gt; 8   8 10 B</span></span>
+<span><span class="co">#&gt; 9   9  6 F</span></span>
+<span><span class="co">#&gt; 10 10  8 F</span></span></code></pre></div>
 <p>tablab consists of functions to tabulate summaries of these labelled dataframes. See for instance the function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/tab_all.html">tab_all</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 15 × 6</span>
-<span class="co">#&gt;    var      nv cv        n vallab varlab        </span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;         </span>
-<span class="co">#&gt;  1 x         1 &lt;NA&gt;      1 1lab   variable label</span>
-<span class="co">#&gt;  2 x         2 &lt;NA&gt;      1 2lab   variable label</span>
-<span class="co">#&gt;  3 x         3 &lt;NA&gt;      1 3lab   variable label</span>
-<span class="co">#&gt;  4 x         4 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span>
-<span class="co">#&gt;  5 x         5 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span>
-<span class="co">#&gt;  6 x         6 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span>
-<span class="co">#&gt;  7 x         7 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span>
-<span class="co">#&gt;  8 x         8 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span>
-<span class="co">#&gt;  9 x         9 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span>
-<span class="co">#&gt; 10 x        10 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span>
-<span class="co">#&gt; 11 y        NA B         2 Blab   char_var_lab  </span>
-<span class="co">#&gt; 12 y        NA C         2 Clab   char_var_lab  </span>
-<span class="co">#&gt; 13 y        NA D         2 &lt;NA&gt;   char_var_lab  </span>
-<span class="co">#&gt; 14 y        NA F         4 &lt;NA&gt;   char_var_lab  </span>
-<span class="co">#&gt; 15 y        NA A        NA Alab   char_var_lab</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/tab_all.html">tab_all</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 15 × 6</span></span>
+<span><span class="co">#&gt;    var      nv cv        n vallab varlab        </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt;  1 x         1 &lt;NA&gt;      1 1lab   variable label</span></span>
+<span><span class="co">#&gt;  2 x         2 &lt;NA&gt;      1 2lab   variable label</span></span>
+<span><span class="co">#&gt;  3 x         3 &lt;NA&gt;      1 3lab   variable label</span></span>
+<span><span class="co">#&gt;  4 x         4 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span></span>
+<span><span class="co">#&gt;  5 x         5 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span></span>
+<span><span class="co">#&gt;  6 x         6 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span></span>
+<span><span class="co">#&gt;  7 x         7 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span></span>
+<span><span class="co">#&gt;  8 x         8 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span></span>
+<span><span class="co">#&gt;  9 x         9 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span></span>
+<span><span class="co">#&gt; 10 x        10 &lt;NA&gt;      1 &lt;NA&gt;   variable label</span></span>
+<span><span class="co">#&gt; 11 y        NA B         2 Blab   char_var_lab  </span></span>
+<span><span class="co">#&gt; 12 y        NA C         2 Clab   char_var_lab  </span></span>
+<span><span class="co">#&gt; 13 y        NA D         2 &lt;NA&gt;   char_var_lab  </span></span>
+<span><span class="co">#&gt; 14 y        NA F         4 &lt;NA&gt;   char_var_lab  </span></span>
+<span><span class="co">#&gt; 15 y        NA A        NA Alab   char_var_lab</span></span></code></pre></div>
 <p>The result shows for every variable <code>var</code> in the data, its numeric/character values <code>nv</code>/<code>cv</code>, their counts <code>n</code>, as well as the variable and value labels <code>varlab</code> and <code>vallab</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="more-examples">More examples<a class="anchor" aria-label="anchor" href="#more-examples"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"iris.sav"</span>, package <span class="op">=</span> <span class="st">"haven"</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,
-       sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,
-                             label <span class="op">=</span> <span class="st">"sex"</span>,
-                             labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
-       age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,
-       marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,
-                                 label <span class="op">=</span> <span class="st">"marital status"</span>,
-                                 labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,
-                                            <span class="st">"steady relationship"</span> <span class="op">=</span> <span class="fl">2</span>,
-                                            <span class="st">"living with partner"</span> <span class="op">=</span> <span class="fl">3</span>,
-                                            <span class="st">"married first time"</span> <span class="op">=</span> <span class="fl">4</span>,
-                                            <span class="st">"remarried"</span> <span class="op">=</span> <span class="fl">5</span>,
-                                            <span class="st">"separated"</span> <span class="op">=</span> <span class="fl">6</span>,
-                                            <span class="st">"divorced"</span> <span class="op">=</span> <span class="fl">7</span>,
-                                            <span class="st">"widowed"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
-       <span class="op">)</span>
-<span class="va">df</span>
-<span class="co">#&gt; # A tibble: 10 × 4</span>
-<span class="co">#&gt;       id         sex   age                 marital</span>
-<span class="co">#&gt;    &lt;int&gt;   &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt;</span>
-<span class="co">#&gt;  1     1 2 [FEMALES]    24 1 [single]             </span>
-<span class="co">#&gt;  2     2 1 [MALES]      23 7 [divorced]           </span>
-<span class="co">#&gt;  3     3 2 [FEMALES]    23 2 [steady relationship]</span>
-<span class="co">#&gt;  4     4 1 [MALES]      41 6 [separated]          </span>
-<span class="co">#&gt;  5     5 1 [MALES]      23 4 [married first time] </span>
-<span class="co">#&gt;  6     6 2 [FEMALES]    39 5 [remarried]          </span>
-<span class="co">#&gt;  7     7 2 [FEMALES]    30 3 [living with partner]</span>
-<span class="co">#&gt;  8     8 1 [MALES]      18 8 [widowed]            </span>
-<span class="co">#&gt;  9     9 2 [FEMALES]    31 4 [married first time] </span>
-<span class="co">#&gt; 10    10 1 [MALES]      48 2 [steady relationship]</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"examples"</span>, <span class="st">"iris.sav"</span>, package <span class="op">=</span> <span class="st">"haven"</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/read_spss.html" class="external-link">read_sav</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
+<span>       sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>                             label <span class="op">=</span> <span class="st">"sex"</span>,</span>
+<span>                             labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>       age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,</span>
+<span>       marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                                 label <span class="op">=</span> <span class="st">"marital status"</span>,</span>
+<span>                                 labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                                            <span class="st">"steady relationship"</span> <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                                            <span class="st">"living with partner"</span> <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                                            <span class="st">"married first time"</span> <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>                                            <span class="st">"remarried"</span> <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>                                            <span class="st">"separated"</span> <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>                                            <span class="st">"divorced"</span> <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>                                            <span class="st">"widowed"</span> <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span>       <span class="op">)</span></span>
+<span><span class="va">df</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 4</span></span>
+<span><span class="co">#&gt;       id         sex   age                 marital</span></span>
+<span><span class="co">#&gt;    &lt;int&gt;   &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt;</span></span>
+<span><span class="co">#&gt;  1     1 2 [FEMALES]    24 1 [single]             </span></span>
+<span><span class="co">#&gt;  2     2 1 [MALES]      23 7 [divorced]           </span></span>
+<span><span class="co">#&gt;  3     3 2 [FEMALES]    23 2 [steady relationship]</span></span>
+<span><span class="co">#&gt;  4     4 1 [MALES]      41 6 [separated]          </span></span>
+<span><span class="co">#&gt;  5     5 1 [MALES]      23 4 [married first time] </span></span>
+<span><span class="co">#&gt;  6     6 2 [FEMALES]    39 5 [remarried]          </span></span>
+<span><span class="co">#&gt;  7     7 2 [FEMALES]    30 3 [living with partner]</span></span>
+<span><span class="co">#&gt;  8     8 1 [MALES]      18 8 [widowed]            </span></span>
+<span><span class="co">#&gt;  9     9 2 [FEMALES]    31 4 [married first time] </span></span>
+<span><span class="co">#&gt; 10    10 1 [MALES]      48 2 [steady relationship]</span></span></code></pre></div>
 <p>Create modified copy:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df2</span> <span class="op">&lt;-</span> 
-  <span class="va">df</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># Remove rows 9 &amp; 10:</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># Create Variable new_var equal to 1:</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>new_var <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co"># Change variable label:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">new_var</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="st">"new something"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df2</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">df</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># Remove rows 9 &amp; 10:</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">9</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># Create Variable new_var equal to 1:</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>new_var <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co"># Change variable label:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">new_var</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="st">"new something"</span></span></code></pre></div>
 <p>Tabulate the variable labels for the dataframes in the list:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">tab_varlabs</span><span class="op">)</span>
-<span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; # A tibble: 2 × 2</span>
-<span class="co">#&gt;   var     varlab        </span>
-<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;         </span>
-<span class="co">#&gt; 1 sex     sex           </span>
-<span class="co">#&gt; 2 marital marital status</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; # A tibble: 3 × 2</span>
-<span class="co">#&gt;   var     varlab        </span>
-<span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;         </span>
-<span class="co">#&gt; 1 sex     sex           </span>
-<span class="co">#&gt; 2 marital marital status</span>
-<span class="co">#&gt; 3 new_var new something</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">tab_varlabs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
+<span><span class="co">#&gt;   var     varlab        </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt; 1 sex     sex           </span></span>
+<span><span class="co">#&gt; 2 marital marital status</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 2</span></span>
+<span><span class="co">#&gt;   var     varlab        </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;         </span></span>
+<span><span class="co">#&gt; 1 sex     sex           </span></span>
+<span><span class="co">#&gt; 2 marital marital status</span></span>
+<span><span class="co">#&gt; 3 new_var new something</span></span></code></pre></div>
 <p>Change value:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="st">"sex"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">3</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="st">"sex"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">3</span></span></code></pre></div>
 <p>Tabulate the count comparison:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/cmp_cts.html">cmp_cts</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 25 × 6</span>
-<span class="co">#&gt;    var     nv1 cv1     nv2 cv2       n</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt;</span>
-<span class="co">#&gt;  1 sex       1 &lt;NA&gt;      1 &lt;NA&gt;      3</span>
-<span class="co">#&gt;  2 sex       1 &lt;NA&gt;      3 &lt;NA&gt;      1</span>
-<span class="co">#&gt;  3 sex       1 &lt;NA&gt;     NA &lt;NA&gt;      1</span>
-<span class="co">#&gt;  4 sex       2 &lt;NA&gt;      2 &lt;NA&gt;      3</span>
-<span class="co">#&gt;  5 sex       2 &lt;NA&gt;      3 &lt;NA&gt;      1</span>
-<span class="co">#&gt;  6 sex       2 &lt;NA&gt;     NA &lt;NA&gt;      1</span>
-<span class="co">#&gt;  7 age      18 &lt;NA&gt;     18 &lt;NA&gt;      1</span>
-<span class="co">#&gt;  8 age      23 &lt;NA&gt;     23 &lt;NA&gt;      3</span>
-<span class="co">#&gt;  9 age      24 &lt;NA&gt;     24 &lt;NA&gt;      1</span>
-<span class="co">#&gt; 10 age      30 &lt;NA&gt;     30 &lt;NA&gt;      1</span>
-<span class="co">#&gt; # … with 15 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="reference/cmp_cts.html">cmp_cts</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 25 × 6</span></span>
+<span><span class="co">#&gt;    var     nv1 cv1     nv2 cv2       n</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt; &lt;chr&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 sex       1 &lt;NA&gt;      1 &lt;NA&gt;      3</span></span>
+<span><span class="co">#&gt;  2 sex       1 &lt;NA&gt;      3 &lt;NA&gt;      1</span></span>
+<span><span class="co">#&gt;  3 sex       1 &lt;NA&gt;     NA &lt;NA&gt;      1</span></span>
+<span><span class="co">#&gt;  4 sex       2 &lt;NA&gt;      2 &lt;NA&gt;      3</span></span>
+<span><span class="co">#&gt;  5 sex       2 &lt;NA&gt;      3 &lt;NA&gt;      1</span></span>
+<span><span class="co">#&gt;  6 sex       2 &lt;NA&gt;     NA &lt;NA&gt;      1</span></span>
+<span><span class="co">#&gt;  7 age      18 &lt;NA&gt;     18 &lt;NA&gt;      1</span></span>
+<span><span class="co">#&gt;  8 age      23 &lt;NA&gt;     23 &lt;NA&gt;      3</span></span>
+<span><span class="co">#&gt;  9 age      24 &lt;NA&gt;     24 &lt;NA&gt;      1</span></span>
+<span><span class="co">#&gt; 10 age      30 &lt;NA&gt;     30 &lt;NA&gt;      1</span></span>
+<span><span class="co">#&gt; # … with 15 more rows</span></span></code></pre></div>
 <p>More label and value modifications:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"labels"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>male <span class="op">=</span> <span class="fl">1</span>, female <span class="op">=</span> <span class="fl">2</span>, `Third Gender` <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co"># Remove variable label:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="cn">NULL</span>
-<span class="co"># Change variable "marital" to 9 in rows 3 &amp; 4:</span>
-<span class="va">df2</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="st">"marital"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">9</span>
-<span class="co"># Add another value label for the code 9:</span>
-<span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"other"</span> <span class="op">=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">df2</span>
-<span class="co">#&gt; # A tibble: 8 × 5</span>
-<span class="co">#&gt;      id              sex   age                 marital new_var</span>
-<span class="co">#&gt;   &lt;int&gt;        &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1 3 [Third Gender]    24 1 [single]                    1</span>
-<span class="co">#&gt; 2     2 3 [Third Gender]    23 7 [divorced]                  1</span>
-<span class="co">#&gt; 3     3 2 [female]          23 9 [other]                     1</span>
-<span class="co">#&gt; 4     4 1 [male]            41 9 [other]                     1</span>
-<span class="co">#&gt; 5     5 1 [male]            23 4 [married first time]        1</span>
-<span class="co">#&gt; 6     6 2 [female]          39 5 [remarried]                 1</span>
-<span class="co">#&gt; 7     7 2 [female]          30 3 [living with partner]       1</span>
-<span class="co">#&gt; 8     8 1 [male]            18 8 [widowed]                   1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"labels"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>male <span class="op">=</span> <span class="fl">1</span>, female <span class="op">=</span> <span class="fl">2</span>, `Third Gender` <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co"># Remove variable label:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">sex</span>, <span class="st">"label"</span><span class="op">)</span>  <span class="op">&lt;-</span>  <span class="cn">NULL</span></span>
+<span><span class="co"># Change variable "marital" to 9 in rows 3 &amp; 4:</span></span>
+<span><span class="va">df2</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="st">"marital"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">9</span></span>
+<span><span class="co"># Add another value label for the code 9:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">df2</span><span class="op">$</span><span class="va">marital</span>, <span class="st">"labels"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"other"</span> <span class="op">=</span> <span class="fl">9</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df2</span></span>
+<span><span class="co">#&gt; # A tibble: 8 × 5</span></span>
+<span><span class="co">#&gt;      id              sex   age                 marital new_var</span></span>
+<span><span class="co">#&gt;   &lt;int&gt;        &lt;dbl+lbl&gt; &lt;dbl&gt;               &lt;dbl+lbl&gt;   &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     1 3 [Third Gender]    24 1 [single]                    1</span></span>
+<span><span class="co">#&gt; 2     2 3 [Third Gender]    23 7 [divorced]                  1</span></span>
+<span><span class="co">#&gt; 3     3 2 [female]          23 9 [other]                     1</span></span>
+<span><span class="co">#&gt; 4     4 1 [male]            41 9 [other]                     1</span></span>
+<span><span class="co">#&gt; 5     5 1 [male]            23 4 [married first time]        1</span></span>
+<span><span class="co">#&gt; 6     6 2 [female]          39 5 [remarried]                 1</span></span>
+<span><span class="co">#&gt; 7     7 2 [female]          30 3 [living with partner]       1</span></span>
+<span><span class="co">#&gt; 8     8 1 [male]            18 8 [widowed]                   1</span></span></code></pre></div>
 <p>Tabulate the variable labels for the dataframes in the list:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">tab_vallabs</span><span class="op">)</span>
-<span class="co">#&gt; [[1]]</span>
-<span class="co">#&gt; # A tibble: 10 × 4</span>
-<span class="co">#&gt;    var        nv vallab              cv   </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;</span>
-<span class="co">#&gt;  1 sex         1 MALES               &lt;NA&gt; </span>
-<span class="co">#&gt;  2 sex         2 FEMALES             &lt;NA&gt; </span>
-<span class="co">#&gt;  3 marital     1 single              &lt;NA&gt; </span>
-<span class="co">#&gt;  4 marital     2 steady relationship &lt;NA&gt; </span>
-<span class="co">#&gt;  5 marital     3 living with partner &lt;NA&gt; </span>
-<span class="co">#&gt;  6 marital     4 married first time  &lt;NA&gt; </span>
-<span class="co">#&gt;  7 marital     5 remarried           &lt;NA&gt; </span>
-<span class="co">#&gt;  8 marital     6 separated           &lt;NA&gt; </span>
-<span class="co">#&gt;  9 marital     7 divorced            &lt;NA&gt; </span>
-<span class="co">#&gt; 10 marital     8 widowed             &lt;NA&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [[2]]</span>
-<span class="co">#&gt; # A tibble: 12 × 4</span>
-<span class="co">#&gt;    var        nv vallab              cv   </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;</span>
-<span class="co">#&gt;  1 sex         1 male                &lt;NA&gt; </span>
-<span class="co">#&gt;  2 sex         2 female              &lt;NA&gt; </span>
-<span class="co">#&gt;  3 sex         3 Third Gender        &lt;NA&gt; </span>
-<span class="co">#&gt;  4 marital     1 single              &lt;NA&gt; </span>
-<span class="co">#&gt;  5 marital     2 steady relationship &lt;NA&gt; </span>
-<span class="co">#&gt;  6 marital     3 living with partner &lt;NA&gt; </span>
-<span class="co">#&gt;  7 marital     4 married first time  &lt;NA&gt; </span>
-<span class="co">#&gt;  8 marital     5 remarried           &lt;NA&gt; </span>
-<span class="co">#&gt;  9 marital     6 separated           &lt;NA&gt; </span>
-<span class="co">#&gt; 10 marital     7 divorced            &lt;NA&gt; </span>
-<span class="co">#&gt; 11 marital     8 widowed             &lt;NA&gt; </span>
-<span class="co">#&gt; 12 marital     9 other               &lt;NA&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">tab_vallabs</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [[1]]</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 4</span></span>
+<span><span class="co">#&gt;    var        nv vallab              cv   </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1 sex         1 MALES               &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  2 sex         2 FEMALES             &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  3 marital     1 single              &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  4 marital     2 steady relationship &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  5 marital     3 living with partner &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  6 marital     4 married first time  &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  7 marital     5 remarried           &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  8 marital     6 separated           &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  9 marital     7 divorced            &lt;NA&gt; </span></span>
+<span><span class="co">#&gt; 10 marital     8 widowed             &lt;NA&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [[2]]</span></span>
+<span><span class="co">#&gt; # A tibble: 12 × 4</span></span>
+<span><span class="co">#&gt;    var        nv vallab              cv   </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1 sex         1 male                &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  2 sex         2 female              &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  3 sex         3 Third Gender        &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  4 marital     1 single              &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  5 marital     2 steady relationship &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  6 marital     3 living with partner &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  7 marital     4 married first time  &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  8 marital     5 remarried           &lt;NA&gt; </span></span>
+<span><span class="co">#&gt;  9 marital     6 separated           &lt;NA&gt; </span></span>
+<span><span class="co">#&gt; 10 marital     7 divorced            &lt;NA&gt; </span></span>
+<span><span class="co">#&gt; 11 marital     8 widowed             &lt;NA&gt; </span></span>
+<span><span class="co">#&gt; 12 marital     9 other               &lt;NA&gt;</span></span></code></pre></div>
 <p>Tabulate the comparison of count and label data and only show rows with differences:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="reference/cmp_all.html">cmp_all</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">any_diff</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 15 × 15</span>
-<span class="co">#&gt;    var         n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1     vallab2    </span>
-<span class="co">#&gt;    &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;       &lt;chr&gt;      </span>
-<span class="co">#&gt;  1 sex         3     1     1 FALSE   &lt;NA&gt;  &lt;NA&gt;  FALSE   MALES       male       </span>
-<span class="co">#&gt;  2 sex         1     1     3 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   MALES       Third Gend…</span>
-<span class="co">#&gt;  3 sex         1     1    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   MALES       &lt;NA&gt;       </span>
-<span class="co">#&gt;  4 sex         3     2     2 FALSE   &lt;NA&gt;  &lt;NA&gt;  FALSE   FEMALES     female     </span>
-<span class="co">#&gt;  5 sex         1     2     3 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   FEMALES     Third Gend…</span>
-<span class="co">#&gt;  6 sex         1     2    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   FEMALES     &lt;NA&gt;       </span>
-<span class="co">#&gt;  7 age         1    31    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        &lt;NA&gt;       </span>
-<span class="co">#&gt;  8 age         1    48    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        &lt;NA&gt;       </span>
-<span class="co">#&gt;  9 marital     1     2     9 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   steady rel… other      </span>
-<span class="co">#&gt; 10 marital     1     2    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   steady rel… &lt;NA&gt;       </span>
-<span class="co">#&gt; 11 marital     1     4    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   married fi… &lt;NA&gt;       </span>
-<span class="co">#&gt; 12 marital     1     6     9 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   separated   other      </span>
-<span class="co">#&gt; 13 marital     0    NA     2 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        steady rel…</span>
-<span class="co">#&gt; 14 marital     0    NA     6 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        separated  </span>
-<span class="co">#&gt; 15 new_var     8    NA     1 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        &lt;NA&gt;       </span>
-<span class="co">#&gt; # … with 5 more variables: vallab_diff &lt;lgl&gt;, varlab1 &lt;chr&gt;, varlab2 &lt;chr&gt;,</span>
-<span class="co">#&gt; #   varlab_diff &lt;lgl&gt;, any_diff &lt;lgl&gt;</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">df2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="reference/cmp_all.html">cmp_all</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">any_diff</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 15 × 15</span></span>
+<span><span class="co">#&gt;    var         n   nv1   nv2 nv_diff cv1   cv2   cv_diff vallab1     vallab2    </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;   &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt;   &lt;chr&gt;       &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt;  1 sex         3     1     1 FALSE   &lt;NA&gt;  &lt;NA&gt;  FALSE   MALES       male       </span></span>
+<span><span class="co">#&gt;  2 sex         1     1     3 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   MALES       Third Gend…</span></span>
+<span><span class="co">#&gt;  3 sex         1     1    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   MALES       &lt;NA&gt;       </span></span>
+<span><span class="co">#&gt;  4 sex         3     2     2 FALSE   &lt;NA&gt;  &lt;NA&gt;  FALSE   FEMALES     female     </span></span>
+<span><span class="co">#&gt;  5 sex         1     2     3 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   FEMALES     Third Gend…</span></span>
+<span><span class="co">#&gt;  6 sex         1     2    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   FEMALES     &lt;NA&gt;       </span></span>
+<span><span class="co">#&gt;  7 age         1    31    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        &lt;NA&gt;       </span></span>
+<span><span class="co">#&gt;  8 age         1    48    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        &lt;NA&gt;       </span></span>
+<span><span class="co">#&gt;  9 marital     1     2     9 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   steady rel… other      </span></span>
+<span><span class="co">#&gt; 10 marital     1     2    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   steady rel… &lt;NA&gt;       </span></span>
+<span><span class="co">#&gt; 11 marital     1     4    NA TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   married fi… &lt;NA&gt;       </span></span>
+<span><span class="co">#&gt; 12 marital     1     6     9 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   separated   other      </span></span>
+<span><span class="co">#&gt; 13 marital     0    NA     2 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        steady rel…</span></span>
+<span><span class="co">#&gt; 14 marital     0    NA     6 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        separated  </span></span>
+<span><span class="co">#&gt; 15 new_var     8    NA     1 TRUE    &lt;NA&gt;  &lt;NA&gt;  FALSE   &lt;NA&gt;        &lt;NA&gt;       </span></span>
+<span><span class="co">#&gt; # … with 5 more variables: vallab_diff &lt;lgl&gt;, varlab1 &lt;chr&gt;, varlab2 &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   varlab_diff &lt;lgl&gt;, any_diff &lt;lgl&gt;</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -336,6 +335,7 @@
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+<li><a href="SUPPORT.html">Getting help</a></li>
 </ul>
 </div>
 
@@ -372,7 +372,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

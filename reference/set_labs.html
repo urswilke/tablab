@@ -44,21 +44,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_labs</span><span class="op">(</span><span class="va">x</span>, <span class="va">vallabs</span>, <span class="va">varlab</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">set_labs</span><span class="op">(</span><span class="va">x</span>, <span class="va">vallabs</span>, <span class="va">varlab</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A vector.</p></dd>
+
+
 <dt>vallabs</dt>
 <dd><p>Named vector of value labels.</p></dd>
+
+
 <dt>varlab</dt>
 <dd><p>A string containing the variable label.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function returns the variable <code>x</code> with variable label and
+    
+
+<p>The function returns the variable <code>x</code> with variable label and
 value labels. If <code>vallabs</code> is NULL, the function returns <code>x</code> with
 a variable label stored as the attribute "label". If <code>vallabs</code> is not
 NULL, the function returns <code>x</code> of type haven::labelled with with the
@@ -68,33 +75,33 @@ value labels stored in the attribute "labels" (For more information type
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create toy dataframe:</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span class="r-in">    fbnr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
-<span class="r-in">    sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">                          label <span class="op">=</span> <span class="st">"sex"</span>,</span>
-<span class="r-in">                          labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,</span>
-<span class="r-in">    marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span></span>
-<span class="r-in">      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">      label <span class="op">=</span> <span class="st">"marital status"</span>,</span>
-<span class="r-in">      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">        <span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">        <span class="st">"steady relationship"</span> <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">        <span class="st">"living with partner"</span> <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">        <span class="st">"married first time"</span> <span class="op">=</span> <span class="fl">4</span>,</span>
-<span class="r-in">        <span class="st">"remarried"</span> <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">        <span class="st">"separated"</span> <span class="op">=</span> <span class="fl">6</span>,</span>
-<span class="r-in">        <span class="st">"divorced"</span> <span class="op">=</span> <span class="fl">7</span>,</span>
-<span class="r-in">        <span class="st">"non-occuring label"</span> <span class="op">=</span> <span class="fl">9</span></span>
-<span class="r-in">      <span class="op">)</span></span>
-<span class="r-in">    <span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create toy dataframe:</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    fbnr <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span></span>
+<span class="r-in"><span>    sex <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                          label <span class="op">=</span> <span class="st">"sex"</span>,</span></span>
+<span class="r-in"><span>                          labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MALES <span class="op">=</span> <span class="fl">1</span>, FEMALES <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">23</span>, <span class="fl">23</span>, <span class="fl">41</span>, <span class="fl">23</span>, <span class="fl">39</span>, <span class="fl">30</span>, <span class="fl">18</span>, <span class="fl">31</span>, <span class="fl">48</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    marital <span class="op">=</span> <span class="fu">haven</span><span class="fu">::</span><span class="fu"><a href="https://haven.tidyverse.org/reference/labelled.html" class="external-link">labelled</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">8</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      label <span class="op">=</span> <span class="st">"marital status"</span>,</span></span>
+<span class="r-in"><span>      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"single"</span> <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"steady relationship"</span> <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"living with partner"</span> <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"married first time"</span> <span class="op">=</span> <span class="fl">4</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"remarried"</span> <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"separated"</span> <span class="op">=</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"divorced"</span> <span class="op">=</span> <span class="fl">7</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"non-occuring label"</span> <span class="op">=</span> <span class="fl">9</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fbnr         sex   age                 marital</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fbnr sex           age marital                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span>              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1 2<span style="color: #949494;"> [FEMALES]</span>    24 1<span style="color: #949494;"> [single]</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     2 1<span style="color: #949494;"> [MALES]</span>      23 7<span style="color: #949494;"> [divorced]</span>           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     3 2<span style="color: #949494;"> [FEMALES]</span>    23 2<span style="color: #949494;"> [steady relationship]</span></span>
@@ -105,9 +112,9 @@ value labels stored in the attribute "labels" (For more information type
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8 1<span style="color: #949494;"> [MALES]</span>      18 8                      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9 2<span style="color: #949494;"> [FEMALES]</span>    31 4<span style="color: #949494;"> [married first time]</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10 1<span style="color: #949494;"> [MALES]</span>      48 2<span style="color: #949494;"> [steady relationship]</span></span>
-<span class="r-in"><span class="co"># store all labels in df_attr:</span></span>
-<span class="r-in"><span class="va">df_attrs</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="tab_attrs.html">tab_attrs</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df_attrs</span></span>
+<span class="r-in"><span><span class="co"># store all labels in df_attr:</span></span></span>
+<span class="r-in"><span><span class="va">df_attrs</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="tab_attrs.html">tab_attrs</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df_attrs</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   var     varlab    val       vallab    labels    label          class  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
@@ -115,9 +122,9 @@ value labels stored in the attribute "labels" (For more information type
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> sex     <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;dbl [2]&gt;</span> <span style="color: #949494;">&lt;chr [2]&gt;</span> <span style="color: #949494;">&lt;dbl [2]&gt;</span> sex            double </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> age     <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #949494;">&lt;NULL&gt;</span>    <span style="color: #BB0000;">NA</span>             double </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> marital <span style="color: #949494;">&lt;chr [1]&gt;</span> <span style="color: #949494;">&lt;dbl [8]&gt;</span> <span style="color: #949494;">&lt;chr [8]&gt;</span> <span style="color: #949494;">&lt;dbl [8]&gt;</span> marital status double </span>
-<span class="r-in"><span class="co"># Remove all attributes from df:</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_all</a></span><span class="op">(</span><span class="va">as.vector</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span></span>
+<span class="r-in"><span><span class="co"># Remove all attributes from df:</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate_all.html" class="external-link">mutate_all</a></span><span class="op">(</span><span class="va">as.vector</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     fbnr   sex   age marital</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -131,16 +138,16 @@ value labels stored in the attribute "labels" (For more information type
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8     1    18       8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9     2    31       4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10     1    48       2</span>
-<span class="r-in"><span class="co"># Write back label information from df_attrs</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">map2_dfc</a></span><span class="op">(</span><span class="va">.</span>,</span>
-<span class="r-in">                  <span class="va">df_attrs</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/transpose.html" class="external-link">transpose</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span class="r-in">                  <span class="op">~</span><span class="op">{</span><span class="fu">set_labs</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">$</span><span class="va">labels</span>, <span class="va">.y</span><span class="op">$</span><span class="va">varlab</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span></span>
+<span class="r-in"><span><span class="co"># Write back label information from df_attrs</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="va">df</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html" class="external-link">map2_dfc</a></span><span class="op">(</span><span class="va">.</span>,</span></span>
+<span class="r-in"><span>                  <span class="va">df_attrs</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/transpose.html" class="external-link">transpose</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  <span class="op">~</span><span class="op">{</span><span class="fu">set_labs</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.y</span><span class="op">$</span><span class="va">labels</span>, <span class="va">.y</span><span class="op">$</span><span class="va">varlab</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fbnr         sex   age                 marital</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fbnr sex           age marital                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span>              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1 2<span style="color: #949494;"> [FEMALES]</span>    24 1<span style="color: #949494;"> [single]</span>             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>     2 1<span style="color: #949494;"> [MALES]</span>      23 7<span style="color: #949494;"> [divorced]</span>           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>     3 2<span style="color: #949494;"> [FEMALES]</span>    23 2<span style="color: #949494;"> [steady relationship]</span></span>
@@ -151,10 +158,10 @@ value labels stored in the attribute "labels" (For more information type
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8 1<span style="color: #949494;"> [MALES]</span>      18 8                      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9 2<span style="color: #949494;"> [FEMALES]</span>    31 4<span style="color: #949494;"> [married first time]</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10 1<span style="color: #949494;"> [MALES]</span>      48 2<span style="color: #949494;"> [steady relationship]</span></span>
-<span class="r-in"><span class="co"># Constructed in this way, the dataframe including the label information could be</span></span>
-<span class="r-in"><span class="co"># exported to SPSS or Stata via haven:</span></span>
-<span class="r-in"><span class="co"># haven::write_sav(df, "test.sav")</span></span>
-<span class="r-in"><span class="co"># haven::write_dta(df, "test.dta")</span></span>
+<span class="r-in"><span><span class="co"># Constructed in this way, the dataframe including the label information could be</span></span></span>
+<span class="r-in"><span><span class="co"># exported to SPSS or Stata via haven:</span></span></span>
+<span class="r-in"><span><span class="co"># haven::write_sav(df, "test.sav")</span></span></span>
+<span class="r-in"><span><span class="co"># haven::write_dta(df, "test.dta")</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -169,7 +176,7 @@ value labels stored in the attribute "labels" (For more information type
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
